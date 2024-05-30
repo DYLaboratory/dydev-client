@@ -21,6 +21,11 @@ const Dashboard = Loader(lazy(() => import('src/content/pages/Dashboard')));
 /* Introduction */
 const About = Loader(lazy(() => import('src/content/pages/Introduction/About')));
 
+/* Blog */
+
+/* Reference */
+const Site = Loader(lazy(() => import('src/content/pages/Reference/Site')));
+
 const Overview = Loader(lazy(() => import('src/content/overview')));
 
 // Dashboards
@@ -141,7 +146,7 @@ const routes: RouteObject[] = [
     children: [
       {
         path: '',
-        element: <Navigate to="about" replace />
+        element: <Navigate to='about' replace />
       },
       {
         path: 'about',
@@ -164,12 +169,28 @@ const routes: RouteObject[] = [
     element: <SidebarLayout />,
     children: [
       {
+        path: '',
+        element: <Navigate to='blog' replace />
+      },
+      {
         path: 'blog',
         element: <UserSettings />
       },
       {
         path: 'feed',
         element: <UserSettings />
+      }
+    ]
+  },
+
+  /* reference */
+  {
+    path: 'reference',
+    element: <SidebarLayout />,
+    children: [
+      {
+        path: 'site',
+        element: <Site />
       }
     ]
   },

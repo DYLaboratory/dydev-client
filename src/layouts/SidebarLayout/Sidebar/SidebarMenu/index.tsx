@@ -272,6 +272,31 @@ function SidebarMenu() {
           </SubMenuWrapper>
         </List>
 
+        <List
+          component='div'
+          subheader={
+            <ListSubheader component='div' disableSticky>
+              Reference
+            </ListSubheader>
+          }
+        >
+          <SubMenuWrapper>
+            <List component='div'>
+              <ListItem component='div'>
+                <Button
+                  disableRipple
+                  component={RouterLink}
+                  onClick={closeSidebar}
+                  to='/reference/site'
+                  startIcon={<BrightnessLowTwoToneIcon />}
+                >
+                  Site
+                </Button>
+              </ListItem>
+            </List>
+          </SubMenuWrapper>
+        </List>
+{/*
         <List component='div'>
           <SubMenuWrapper>
             <List component='div'>
@@ -552,6 +577,7 @@ function SidebarMenu() {
             </List>
           </SubMenuWrapper>
         </List>
+*/}
       </MenuWrapper>
     </>
   );

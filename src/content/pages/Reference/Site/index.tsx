@@ -1,15 +1,16 @@
 import { Helmet } from 'react-helmet-async';
 import PageHeader from './PageHeader';
 import PageTitleWrapper from 'src/components/PageTitleWrapper';
-import { Container, Grid } from '@mui/material';
+import { Grid, Container } from '@mui/material';
 import Footer from 'src/components/Footer';
-import FirstCard from 'src/content/pages/Dashboard/FirstCard';
 
-function Dashboard() {
+import RecentOrders from './RecentOrders';
+
+function SiteList() {
   return (
     <>
       <Helmet>
-        <title>Crypto Dashboard</title>
+        <title>Reference Site</title>
       </Helmet>
       <PageTitleWrapper>
         <PageHeader />
@@ -20,10 +21,10 @@ function Dashboard() {
           direction="row"
           justifyContent="center"
           alignItems="stretch"
-          spacing={4}
+          spacing={3}
         >
           <Grid item xs={12}>
-            <FirstCard />
+            <RecentOrders />
           </Grid>
         </Grid>
       </Container>
@@ -32,4 +33,4 @@ function Dashboard() {
   );
 }
 
-export default Dashboard;
+export default SiteList;

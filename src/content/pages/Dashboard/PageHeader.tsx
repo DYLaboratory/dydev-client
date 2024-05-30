@@ -2,15 +2,16 @@ import { Typography, Avatar, Grid } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 
 function PageHeader() {
-  const user = {
-    name: 'Catherine Pike',
-    avatar: '/static/images/avatars/1.jpg'
+  const title = {
+    title: 'Welcome, DY\'s Space',
+    subTitle: 'Today is a good day!',
+    image: '/static/images/avatars/1.jpg'
   };
   const theme = useTheme();
 
   return (
     <Grid container alignItems="center">
-      <Grid item>
+      {/*<Grid item>
         <Avatar
           sx={{
             mr: 2,
@@ -18,16 +19,16 @@ function PageHeader() {
             height: theme.spacing(8)
           }}
           variant="rounded"
-          alt={user.name}
-          src={user.avatar}
+          alt={title.title}
+          src={title.image}
         />
-      </Grid>
+      </Grid>*/}
       <Grid item>
         <Typography variant="h3" component="h3" gutterBottom>
-          Welcome, {user.name}!
+          {title.title}!
         </Typography>
         <Typography variant="subtitle2">
-          Today is a good day to start trading crypto assets!
+          {title.subTitle}
         </Typography>
       </Grid>
     </Grid>
