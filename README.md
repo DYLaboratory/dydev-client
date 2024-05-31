@@ -1,3 +1,6 @@
+# !! README 업데이트 할 것 !!
+
+<!--
 <p align="center">
     <a href="https://bloomui.com" title="BloomUI.com">
         <img src="https://bloomui.s3.us-east-2.amazonaws.com/tokyo-logo.png" alt="Tokyo Free White Typescript React Admin Dashboard">
@@ -59,3 +62,4 @@ We’ve included a few page examples for most used user flows that will give you
         support@bloomui.freshdesk.com
     </a>
 </p>
+-->
