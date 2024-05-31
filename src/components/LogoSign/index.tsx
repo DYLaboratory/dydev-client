@@ -102,7 +102,7 @@ function Logo() {
       title="DY Laboratory"
       arrow
     >
-      <LogoWrapper to="/overview">
+      <LogoWrapper to="/">
         <Badge
           sx={{
             '.MuiBadge-badge': {
@@ -113,7 +113,7 @@ function Logo() {
           }}
           overlap="circular"
           color="success"
-          badgeContent="2.0"
+          badgeContent="1.0"
         >
           <LogoSignWrapper>
             <LogoSign>

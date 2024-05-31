@@ -81,15 +81,15 @@ function Sidebar() {
         />
         <Box p={2}>
           <Button
-            href="https://bloomui.com"
+            href="https://github.com"
             target="_blank"
             rel="noopener noreferrer"
             variant="contained"
-            color="warning"
+            color="primary"
             size="small"
             fullWidth
           >
-            Upgrade to PRO
+            GitHub
           </Button>
         </Box>
       </SidebarWrapper>
