@@ -106,9 +106,9 @@ function Logo() {
         <Badge
           sx={{
             '.MuiBadge-badge': {
-              fontSize: theme.typography.pxToRem(11),
-              right: -2,
-              top: 8
+              fontSize: theme.typography.pxToRem(10),
+              right: 2,
+              top: 5
             }
           }}
           overlap="circular"
@@ -122,6 +122,7 @@ function Logo() {
             </LogoSign>*/}
           </LogoSignWrapper>
         </Badge>
+        <img src="/static/images/overview/main-text.png" alt="" height="45px" width="180px" />
       </LogoWrapper>
     </TooltipWrapper>
   );
