@@ -119,7 +119,7 @@ function FirstCard() {
     <Card>
       <Grid spacing={0} container>
         <Grid item xs={12} md={6}>
-          {/*<WeatherInfo />*/}
+          <WeatherInfo />
         </Grid>
         <Grid
           sx={{

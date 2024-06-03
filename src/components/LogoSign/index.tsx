@@ -116,9 +116,10 @@ function Logo() {
           badgeContent="1.0"
         >
           <LogoSignWrapper>
-            <LogoSign>
+            <img src="/static/images/overview/main-logo.png" alt="" height="50px" width="50px" />
+            {/*<LogoSign>
               <LogoSignInner />
-            </LogoSign>
+            </LogoSign>*/}
           </LogoSignWrapper>
         </Badge>
       </LogoWrapper>

@@ -100,6 +100,10 @@ const RecentOrdersTable: FC<RecentOrdersTableProps> = ({ sites }) => {
       name: 'All'
     },
     {
+      id: 'develop',
+      name: 'Develop'
+    },
+    {
       id: 'reference',
       name: 'Reference'
     },
@@ -108,8 +112,12 @@ const RecentOrdersTable: FC<RecentOrdersTableProps> = ({ sites }) => {
       name: 'Useful'
     },
     {
-      id: 'entertainment',
-      name: 'Entertainment'
+      id: 'entertain',
+      name: 'Entertain'
+    },
+    {
+      id: 'etc',
+      name: 'etc'
     }
   ];
 

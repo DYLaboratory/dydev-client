@@ -44,6 +44,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "build-prod": "dotenv -e .env.prod react-scripts build",
     "eject": "react-scripts eject",
     "clean": "rm -rf node_modules/ && rm -rf yarn.lock && yarn install",
     "clean-win": "del /f /s /q node_modules\\ 1>nul && rmdir /s /q node_modules\\ && del yarn.lock && yarn install",
@@ -74,6 +75,7 @@
     "@types/react-router-dom": "5.3.3",
     "@typescript-eslint/eslint-plugin": "7.9.0",
     "@typescript-eslint/parser": "7.9.0",
+    "dotenv-cli": "^7.4.2",
     "eslint": "8.57.0",
     "eslint-config-airbnb": "19.0.4",
     "eslint-config-airbnb-typescript": "18.0.0",

@@ -23,8 +23,11 @@ const About = Loader(lazy(() => import('src/content/pages/Introduction/About')))
 
 /* Blog */
 
-/* Reference */
-const Site = Loader(lazy(() => import('src/content/pages/Reference/Site')));
+/* Others */
+const Site = Loader(lazy(() => import('src/content/pages/Others/Site')));
+
+/* Login */
+const Login = Loader(lazy(() => import('src/content/pages/Login')));
 
 const Overview = Loader(lazy(() => import('src/content/overview')));
 
@@ -127,6 +130,18 @@ const routes: RouteObject[] = [
     ]
   },
 
+  /* login */
+  {
+    path: '/login',
+    element: <BaseLayout />,
+    children: [
+      {
+        path: '',
+        element: <Login />
+      }
+    ]
+  },
+
   /* dashboard */
   {
     path: '/dashboard',
@@ -139,7 +154,7 @@ const routes: RouteObject[] = [
     ]
   },
 
-  /* introdction */
+  /* introduction */
   {
     path: 'introduction',
     element: <SidebarLayout />,
@@ -183,11 +198,15 @@ const routes: RouteObject[] = [
     ]
   },
 
-  /* reference */
+  /* others */
   {
-    path: 'reference',
+    path: 'others',
     element: <SidebarLayout />,
     children: [
+      {
+        path: '',
+        element: <Navigate to="site" replace />
+      },
       {
         path: 'site',
         element: <Site />
@@ -309,6 +328,12 @@ const routes: RouteObject[] = [
         element: <Forms />
       }
     ]
+  },
+
+  // Error
+  {
+    path: '/*',
+    element: <Navigate to="/status/404" replace />
   }
 ];
 

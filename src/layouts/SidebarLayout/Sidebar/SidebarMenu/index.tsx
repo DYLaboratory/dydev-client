@@ -276,7 +276,7 @@ function SidebarMenu() {
           component='div'
           subheader={
             <ListSubheader component='div' disableSticky>
-              Reference
+              Others
             </ListSubheader>
           }
         >
@@ -287,7 +287,7 @@ function SidebarMenu() {
                   disableRipple
                   component={RouterLink}
                   onClick={closeSidebar}
-                  to='/reference/site'
+                  to='/others/site'
                   startIcon={<BrightnessLowTwoToneIcon />}
                 >
                   Site

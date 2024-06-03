@@ -8,7 +8,7 @@ function RecentOrders() {
   const sites: SiteData[] = [
     {
       id: 1,
-      type: 'reference',
+      type: 'develop',
       name: 'OpenWeatherMap',
       description: 'Open Weather API',
       url: 'https://openweathermap.org/',
@@ -19,6 +19,13 @@ function RecentOrders() {
       name: 'Codepen',
       description: 'Execute HTML, CSS, JS Code',
       url: 'https://codepen.io/',
+    },
+    {
+      id: 3,
+      type: 'reference',
+      name: 'Gabia',
+      description: 'DNS Management',
+      url: 'https://gabia.com/',
     }
   ];
 

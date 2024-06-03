@@ -3,6 +3,7 @@ import TrendingUp from '@mui/icons-material/TrendingUp';
 import { useEffect, useState } from 'react';
 import { CONSTANTS } from 'src/utils/constants';
 import axios from 'axios';
+import apiClient from 'src/services/lib/dylaboAxios';
 
 const AvatarSuccess = styled(Avatar)(
   ({ theme }) => `
@@ -59,22 +60,12 @@ function WeatherInfo() {
 
   const [city, setCity] = useState<string>('Seoul');
 
-  const API_KEY = CONSTANTS.OPENWEATHER_API_KEY;
-  const CURRENT_WEATHER_URL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`;
-
   useEffect(() => {
     const fetchCurrentWeather = async () => {
       try {
-        const response = await axios.get<CurrentWeather>(CURRENT_WEATHER_URL);
+        const response = await apiClient.get<CurrentWeather>("/external/weather", { params: { city: 'Seoul' } });
+
         setCurrentWeather(response.data);
-
-        console.log(response.data);
-
-        const { lat, lon } = response.data.coord;
-        const WEEKLY_WEATHER_URL = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&exclude=hourly,minutely&appid=${API_KEY}&units=metric`;
-
-        const weeklyResponse = await axios.get<Weather>(WEEKLY_WEATHER_URL);
-        setWeeklyWeather(weeklyResponse.data);
         setLoading(false);
       } catch (error) {
         setError(error.message);
@@ -113,9 +104,9 @@ function WeatherInfo() {
         }}
         variant="h4"
       >
-        Account Balance
+        Weather
       </Typography>
-      <Box>
+      <WeatherBox bg={getBackgroundColor(currentWeatherMain)}>
         <Typography variant="h1" gutterBottom>
           {currentWeather?.name}
         </Typography>
@@ -148,7 +139,7 @@ function WeatherInfo() {
             </Typography>
           </Box>
         </Box>
-      </Box>
+      </WeatherBox>
       <Grid container spacing={3}>
         <Grid sm item>
           <Button fullWidth variant="outlined">
@@ -166,3 +157,7 @@ function WeatherInfo() {
 }
 
 export default WeatherInfo;
+
+const WeatherBox = styled(Box)<{ bg: string }>`
+  background: ${(props) => props.bg};
+`
