@@ -32,8 +32,7 @@ function TabPanel(props: TabPanelProps) {
       hidden={value !== index}
       id={`simple-tabpanel-${index}`}
       aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
+      {...other}>
       {value === index && (
         <Box sx={{ p: 3 }}>
           <Typography>{children}</Typography>
@@ -75,8 +74,7 @@ function TabsDemo() {
           direction="row"
           justifyContent="center"
           alignItems="stretch"
-          spacing={3}
-        >
+          spacing={3}>
           <Grid item xs={12}>
             <Card>
               <CardHeader title="Basic Example" />
@@ -90,8 +88,7 @@ function TabsDemo() {
                     indicatorColor="primary"
                     value={value}
                     onChange={handleChange}
-                    aria-label="basic tabs example"
-                  >
+                    aria-label="basic tabs example">
                     <Tab label="Item One" {...a11yProps(0)} />
                     <Tab label="Item Two" {...a11yProps(1)} />
                     <Tab label="Item Three" {...a11yProps(2)} />

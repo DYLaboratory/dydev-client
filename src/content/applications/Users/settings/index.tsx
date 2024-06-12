@@ -1,10 +1,10 @@
-import { useState, ChangeEvent } from 'react';
+import { ChangeEvent, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import PageHeader from './PageHeader';
 import PageTitleWrapper from 'src/components/PageTitleWrapper';
-import { Container, Tabs, Tab, Grid } from '@mui/material';
+import { Container, Grid, Tab, Tabs } from '@mui/material';
 import Footer from 'src/components/Footer';
 import { styled } from '@mui/material/styles';
+import PageHeader from './PageHeader';
 
 import ActivityTab from './ActivityTab';
 import EditProfileTab from './EditProfileTab';
@@ -29,7 +29,7 @@ function ManagementUserSettings() {
     { value: 'security', label: 'Passwords/Security' }
   ];
 
-  const handleTabsChange = (event: ChangeEvent<{}>, value: string): void => {
+  const handleTabsChange = (event: ChangeEvent, value: string): void => {
     setCurrentTab(value);
   };
 
@@ -47,8 +47,7 @@ function ManagementUserSettings() {
           direction="row"
           justifyContent="center"
           alignItems="stretch"
-          spacing={3}
-        >
+          spacing={3}>
           <Grid item xs={12}>
             <TabsWrapper
               onChange={handleTabsChange}
@@ -56,9 +55,8 @@ function ManagementUserSettings() {
               variant="scrollable"
               scrollButtons="auto"
               textColor="primary"
-              indicatorColor="primary"
-            >
-              {tabs.map((tab) => (
+              indicatorColor="primary">
+              {tabs.map(tab => (
                 <Tab key={tab.value} label={tab.label} value={tab.value} />
               ))}
             </TabsWrapper>

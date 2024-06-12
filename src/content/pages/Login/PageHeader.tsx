@@ -1,16 +1,19 @@
-import { Typography } from '@mui/material';
+import { Box, Typography } from "@mui/material";
+import Logo from "src/components/LogoSign";
 
 function PageHeader() {
   const title = {
-    title: "DY Laboratory"
-  }
+    title: 'DYLABO'
+  };
 
   return (
-    <>
-      <Typography variant="h2" component="h3" gutterBottom>
-        {title.title}
-      </Typography>
-    </>
+    <Box
+      mx={2}
+      sx={{
+        width: 52
+      }}>
+      <Logo />
+    </Box>
   );
 }
 

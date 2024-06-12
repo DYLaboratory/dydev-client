@@ -61,8 +61,7 @@ function ChatContent() {
         display="flex"
         alignItems="flex-start"
         justifyContent="flex-start"
-        py={3}
-      >
+        py={3}>
         <Avatar
           variant="rounded"
           sx={{
@@ -77,8 +76,7 @@ function ChatContent() {
           alignItems="flex-start"
           flexDirection="column"
           justifyContent="flex-start"
-          ml={2}
-        >
+          ml={2}>
           <CardWrapperSecondary>
             Hi. Can you send me the missing invoices asap?
           </CardWrapperSecondary>
@@ -88,8 +86,7 @@ function ChatContent() {
               pt: 1,
               display: 'flex',
               alignItems: 'center'
-            }}
-          >
+            }}>
             <ScheduleTwoToneIcon
               sx={{
                 mr: 0.5
@@ -107,15 +104,13 @@ function ChatContent() {
         display="flex"
         alignItems="flex-start"
         justifyContent="flex-end"
-        py={3}
-      >
+        py={3}>
         <Box
           display="flex"
           alignItems="flex-end"
           flexDirection="column"
           justifyContent="flex-end"
-          mr={2}
-        >
+          mr={2}>
           <CardWrapperPrimary>
             Yes, I'll email them right now. I'll let you know once the remaining
             invoices are done.
@@ -126,8 +121,7 @@ function ChatContent() {
               pt: 1,
               display: 'flex',
               alignItems: 'center'
-            }}
-          >
+            }}>
             <ScheduleTwoToneIcon
               sx={{
                 mr: 0.5
@@ -157,21 +151,18 @@ function ChatContent() {
         display="flex"
         alignItems="flex-start"
         justifyContent="flex-end"
-        py={3}
-      >
+        py={3}>
         <Box
           display="flex"
           alignItems="flex-end"
           flexDirection="column"
           justifyContent="flex-end"
-          mr={2}
-        >
+          mr={2}>
           <CardWrapperPrimary>Hey! Are you there?</CardWrapperPrimary>
           <CardWrapperPrimary
             sx={{
               mt: 2
-            }}
-          >
+            }}>
             Heeeelloooo????
           </CardWrapperPrimary>
           <Typography
@@ -180,8 +171,7 @@ function ChatContent() {
               pt: 1,
               display: 'flex',
               alignItems: 'center'
-            }}
-          >
+            }}>
             <ScheduleTwoToneIcon
               sx={{
                 mr: 0.5
@@ -208,8 +198,7 @@ function ChatContent() {
         display="flex"
         alignItems="flex-start"
         justifyContent="flex-start"
-        py={3}
-      >
+        py={3}>
         <Avatar
           variant="rounded"
           sx={{
@@ -224,14 +213,12 @@ function ChatContent() {
           alignItems="flex-start"
           flexDirection="column"
           justifyContent="flex-start"
-          ml={2}
-        >
+          ml={2}>
           <CardWrapperSecondary>Hey there!</CardWrapperSecondary>
           <CardWrapperSecondary
             sx={{
               mt: 1
-            }}
-          >
+            }}>
             How are you? Is it ok if I call you?
           </CardWrapperSecondary>
           <Typography
@@ -240,8 +227,7 @@ function ChatContent() {
               pt: 1,
               display: 'flex',
               alignItems: 'center'
-            }}
-          >
+            }}>
             <ScheduleTwoToneIcon
               sx={{
                 mr: 0.5
@@ -258,15 +244,13 @@ function ChatContent() {
         display="flex"
         alignItems="flex-start"
         justifyContent="flex-end"
-        py={3}
-      >
+        py={3}>
         <Box
           display="flex"
           alignItems="flex-end"
           flexDirection="column"
           justifyContent="flex-end"
-          mr={2}
-        >
+          mr={2}>
           <CardWrapperPrimary>
             Hello, I just got my Amazon order shipped and I’m very happy about
             that.
@@ -274,8 +258,7 @@ function ChatContent() {
           <CardWrapperPrimary
             sx={{
               mt: 1
-            }}
-          >
+            }}>
             Can you confirm?
           </CardWrapperPrimary>
           <Typography
@@ -284,8 +267,7 @@ function ChatContent() {
               pt: 1,
               display: 'flex',
               alignItems: 'center'
-            }}
-          >
+            }}>
             <ScheduleTwoToneIcon
               sx={{
                 mr: 0.5

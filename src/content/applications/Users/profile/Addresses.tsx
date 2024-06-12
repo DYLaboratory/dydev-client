@@ -22,13 +22,12 @@ function Addresses() {
       direction="row"
       justifyContent="center"
       alignItems="stretch"
-      spacing={3}
-    >
+      spacing={3}>
       <Grid item xs={12} sm={6}>
         <Card>
           <CardHeader
             title="Delivery Addresses"
-            subheader={addresses.delivery + ' saved addresses'}
+            subheader={`${addresses.delivery} saved addresses`}
           />
           <Divider />
           <Box p={2}>
@@ -47,8 +46,7 @@ function Addresses() {
             <Button
               fullWidth
               variant="outlined"
-              endIcon={<ArrowForwardTwoTone />}
-            >
+              endIcon={<ArrowForwardTwoTone />}>
               Manage
             </Button>
           </Box>
@@ -58,7 +56,7 @@ function Addresses() {
         <Card>
           <CardHeader
             title="Shipping Addresses"
-            subheader={addresses.shipping + ' saved addresses'}
+            subheader={`${addresses.shipping} saved addresses`}
           />
           <Divider />
           <Box p={2}>
@@ -77,8 +75,7 @@ function Addresses() {
             <Button
               fullWidth
               variant="outlined"
-              endIcon={<ArrowForwardTwoTone />}
-            >
+              endIcon={<ArrowForwardTwoTone />}>
               Manage
             </Button>
           </Box>

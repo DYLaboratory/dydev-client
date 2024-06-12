@@ -1,6 +1,14 @@
 import { useContext } from 'react';
 
-import { alpha, Box, Button, List, ListItem, ListSubheader, styled } from '@mui/material';
+import {
+  alpha,
+  Box,
+  Button,
+  List,
+  ListItem,
+  ListSubheader,
+  styled
+} from '@mui/material';
 import { NavLink as RouterLink } from 'react-router-dom';
 import { SidebarContext } from 'src/contexts/SidebarContext';
 
@@ -139,9 +147,9 @@ const SubMenuWrapper = styled(Box)(
                 background: ${theme.colors.alpha.trueWhite[100]};
                 opacity: 0;
                 transition: ${theme.transitions.create([
-    'transform',
-    'opacity'
-  ])};
+                  'transform',
+                  'opacity'
+                ])};
                 width: 6px;
                 height: 6px;
                 transform: scale(0);
@@ -170,133 +178,122 @@ function SidebarMenu() {
   const { closeSidebar } = useContext(SidebarContext);
 
   return (
-    <>
-      <MenuWrapper>
-        <List component='div'>
-          <SubMenuWrapper>
-            <List component='div'>
-              <ListItem component='div'>
-                <Button
-                  disableRipple
-                  component={RouterLink}
-                  onClick={closeSidebar}
-                  to='/'
-                  startIcon={<DesignServicesTwoToneIcon />}
-                >
-                  Dashboard
-                </Button>
-              </ListItem>
-            </List>
-          </SubMenuWrapper>
-        </List>
-        <List
-          component='div'
-          subheader={
-            <ListSubheader component='div' disableSticky>
-              Introduction
-            </ListSubheader>
-          }
-        >
-          <SubMenuWrapper>
-            <List component='div'>
-              <ListItem component='div'>
-                <Button
-                  disableRipple
-                  component={RouterLink}
-                  onClick={closeSidebar}
-                  to='/introduction/about'
-                  startIcon={<BrightnessLowTwoToneIcon />}
-                >
-                  About
-                </Button>
-              </ListItem>
-              <ListItem component='div'>
-                <Button
-                  disableRipple
-                  component={RouterLink}
-                  onClick={closeSidebar}
-                  to='/introduction/intro'
-                  startIcon={<BrightnessLowTwoToneIcon />}
-                >
-                  Introduction
-                </Button>
-              </ListItem>
-              <ListItem component='div'>
-                <Button
-                  disableRipple
-                  component={RouterLink}
-                  onClick={closeSidebar}
-                  to='/introduction/notice'
-                  startIcon={<MmsTwoToneIcon />}
-                >
-                  Notice
-                </Button>
-              </ListItem>
-            </List>
-          </SubMenuWrapper>
-        </List>
+    <MenuWrapper>
+      <List component="div">
+        <SubMenuWrapper>
+          <List component="div">
+            <ListItem component="div">
+              <Button
+                disableRipple
+                component={RouterLink}
+                onClick={closeSidebar}
+                to="/"
+                startIcon={<DesignServicesTwoToneIcon />}>
+                Dashboard
+              </Button>
+            </ListItem>
+          </List>
+        </SubMenuWrapper>
+      </List>
+      <List
+        component="div"
+        subheader={
+          <ListSubheader component="div" disableSticky>
+            Introduction
+          </ListSubheader>
+        }>
+        <SubMenuWrapper>
+          <List component="div">
+            <ListItem component="div">
+              <Button
+                disableRipple
+                component={RouterLink}
+                onClick={closeSidebar}
+                to="/introduction/about"
+                startIcon={<BrightnessLowTwoToneIcon />}>
+                About
+              </Button>
+            </ListItem>
+            <ListItem component="div">
+              <Button
+                disableRipple
+                component={RouterLink}
+                onClick={closeSidebar}
+                to="/introduction/intro"
+                startIcon={<BrightnessLowTwoToneIcon />}>
+                Introduction
+              </Button>
+            </ListItem>
+            <ListItem component="div">
+              <Button
+                disableRipple
+                component={RouterLink}
+                onClick={closeSidebar}
+                to="/introduction/notice"
+                startIcon={<MmsTwoToneIcon />}>
+                Notice
+              </Button>
+            </ListItem>
+          </List>
+        </SubMenuWrapper>
+      </List>
 
-        <List
-          component='div'
-          subheader={
-            <ListSubheader component='div' disableSticky>
-              Blog
-            </ListSubheader>
-          }
-        >
-          <SubMenuWrapper>
-            <List component='div'>
-              <ListItem component='div'>
-                <Button
-                  disableRipple
-                  component={RouterLink}
-                  onClick={closeSidebar}
-                  to='/blog/feed'
-                  startIcon={<BrightnessLowTwoToneIcon />}
-                >
-                  Feed
-                </Button>
-              </ListItem>
-              <ListItem component='div'>
-                <Button
-                  disableRipple
-                  component={RouterLink}
-                  onClick={closeSidebar}
-                  to='/blog/blog'
-                  startIcon={<BrightnessLowTwoToneIcon />}
-                >
-                  Blog
-                </Button>
-              </ListItem>
-            </List>
-          </SubMenuWrapper>
-        </List>
+      <List
+        component="div"
+        subheader={
+          <ListSubheader component="div" disableSticky>
+            Blog
+          </ListSubheader>
+        }>
+        <SubMenuWrapper>
+          <List component="div">
+            <ListItem component="div">
+              <Button
+                disableRipple
+                component={RouterLink}
+                onClick={closeSidebar}
+                to="/blog/feed"
+                startIcon={<BrightnessLowTwoToneIcon />}>
+                Feed
+              </Button>
+            </ListItem>
+            <ListItem component="div">
+              <Button
+                disableRipple
+                component={RouterLink}
+                onClick={closeSidebar}
+                to="/blog/blog"
+                startIcon={<BrightnessLowTwoToneIcon />}>
+                Blog
+              </Button>
+            </ListItem>
+          </List>
+        </SubMenuWrapper>
+      </List>
 
-        <List
-          component='div'
-          subheader={
-            <ListSubheader component='div' disableSticky>
-              Others
-            </ListSubheader>
-          }
-        >
-          <SubMenuWrapper>
-            <List component='div'>
-              <ListItem component='div'>
-                <Button
-                  disableRipple
-                  component={RouterLink}
-                  onClick={closeSidebar}
-                  to='/others/site'
-                  startIcon={<BrightnessLowTwoToneIcon />}
-                >
-                  Site
-                </Button>
-              </ListItem>
-            </List>
-          </SubMenuWrapper>
-        </List>
-{/*
+      <List
+        component="div"
+        subheader={
+          <ListSubheader component="div" disableSticky>
+            Others
+          </ListSubheader>
+        }>
+        <SubMenuWrapper>
+          <List component="div">
+            <ListItem component="div">
+              <Button
+                disableRipple
+                component={RouterLink}
+                onClick={closeSidebar}
+                to="/others/site"
+                startIcon={<BrightnessLowTwoToneIcon />}>
+                Site
+              </Button>
+            </ListItem>
+          </List>
+        </SubMenuWrapper>
+      </List>
+      {/*
         <List component='div'>
           <SubMenuWrapper>
             <List component='div'>
@@ -578,8 +575,7 @@ function SidebarMenu() {
           </SubMenuWrapper>
         </List>
 */}
-      </MenuWrapper>
-    </>
+    </MenuWrapper>
   );
 }
 

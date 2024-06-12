@@ -12,13 +12,13 @@ interface PageTitleWrapperProps {
   children?: ReactNode;
 }
 
-const PageTitleWrapper: FC<PageTitleWrapperProps> = ({ children }) => {
+function PageTitleWrapper({ children }: PageTitleWrapperProps) {
   return (
     <PageTitle className="MuiPageTitle-wrapper">
       <Container maxWidth="lg">{children}</Container>
     </PageTitle>
   );
-};
+}
 
 PageTitleWrapper.propTypes = {
   children: PropTypes.node.isRequired

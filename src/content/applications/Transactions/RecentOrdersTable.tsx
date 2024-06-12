@@ -1,28 +1,28 @@
-import { FC, ChangeEvent, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import { format } from 'date-fns';
 import numeral from 'numeral';
 import PropTypes from 'prop-types';
 import {
-  Tooltip,
-  Divider,
   Box,
-  FormControl,
-  InputLabel,
   Card,
+  CardHeader,
   Checkbox,
+  Divider,
+  FormControl,
   IconButton,
+  InputLabel,
+  MenuItem,
+  Select,
   Table,
   TableBody,
   TableCell,
+  TableContainer,
   TableHead,
   TablePagination,
   TableRow,
-  TableContainer,
-  Select,
-  MenuItem,
+  Tooltip,
   Typography,
-  useTheme,
-  CardHeader
+  useTheme
 } from '@mui/material';
 
 import Label from 'src/components/Label';
@@ -32,7 +32,7 @@ import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
 import BulkActions from './BulkActions';
 
 interface RecentOrdersTableProps {
-  className?: string;
+  // className?: string;
   cryptoOrders: CryptoOrder[];
 }
 
@@ -40,32 +40,32 @@ interface Filters {
   status?: CryptoOrderStatus;
 }
 
-const getStatusLabel = (cryptoOrderStatus: CryptoOrderStatus): JSX.Element => {
-  const map = {
-    failed: {
-      text: 'Failed',
-      color: 'error'
-    },
-    completed: {
-      text: 'Completed',
-      color: 'success'
-    },
-    pending: {
-      text: 'Pending',
-      color: 'warning'
-    }
-  };
-
-  const { text, color }: any = map[cryptoOrderStatus];
-
-  return <Label color={color}>{text}</Label>;
-};
+// const getStatusLabel = (cryptoOrderStatus: CryptoOrderStatus): JSX.Element => {
+//   const map = {
+//     failed: {
+//       text: 'Failed',
+//       color: 'error'
+//     },
+//     completed: {
+//       text: 'Completed',
+//       color: 'success'
+//     },
+//     pending: {
+//       text: 'Pending',
+//       color: 'warning'
+//     }
+//   };
+//
+//   const { text, color } = map[cryptoOrderStatus];
+//
+//   return <Label color={color}>{text}</Label>;
+// };
 
 const applyFilters = (
   cryptoOrders: CryptoOrder[],
   filters: Filters
 ): CryptoOrder[] => {
-  return cryptoOrders.filter((cryptoOrder) => {
+  return cryptoOrders.filter(cryptoOrder => {
     let matches = true;
 
     if (filters.status && cryptoOrder.status !== filters.status) {
@@ -84,7 +84,7 @@ const applyPagination = (
   return cryptoOrders.slice(page * limit, page * limit + limit);
 };
 
-const RecentOrdersTable: FC<RecentOrdersTableProps> = ({ cryptoOrders }) => {
+function RecentOrdersTable({ cryptoOrders }: RecentOrdersTableProps) {
   const [selectedCryptoOrders, setSelectedCryptoOrders] = useState<string[]>(
     []
   );
@@ -121,7 +121,7 @@ const RecentOrdersTable: FC<RecentOrdersTableProps> = ({ cryptoOrders }) => {
       value = e.target.value;
     }
 
-    setFilters((prevFilters) => ({
+    setFilters(prevFilters => ({
       ...prevFilters,
       status: value
     }));
@@ -132,7 +132,7 @@ const RecentOrdersTable: FC<RecentOrdersTableProps> = ({ cryptoOrders }) => {
   ): void => {
     setSelectedCryptoOrders(
       event.target.checked
-        ? cryptoOrders.map((cryptoOrder) => cryptoOrder.id)
+        ? cryptoOrders.map(cryptoOrder => cryptoOrder.id)
         : []
     );
   };
@@ -142,23 +142,20 @@ const RecentOrdersTable: FC<RecentOrdersTableProps> = ({ cryptoOrders }) => {
     cryptoOrderId: string
   ): void => {
     if (!selectedCryptoOrders.includes(cryptoOrderId)) {
-      setSelectedCryptoOrders((prevSelected) => [
-        ...prevSelected,
-        cryptoOrderId
-      ]);
+      setSelectedCryptoOrders(prevSelected => [...prevSelected, cryptoOrderId]);
     } else {
-      setSelectedCryptoOrders((prevSelected) =>
-        prevSelected.filter((id) => id !== cryptoOrderId)
+      setSelectedCryptoOrders(prevSelected =>
+        prevSelected.filter(id => id !== cryptoOrderId)
       );
     }
   };
 
-  const handlePageChange = (event: any, newPage: number): void => {
+  const handlePageChange = (event, newPage: number): void => {
     setPage(newPage);
   };
 
   const handleLimitChange = (event: ChangeEvent<HTMLInputElement>): void => {
-    setLimit(parseInt(event.target.value));
+    setLimit(parseInt(event.target.value, 10));
   };
 
   const filteredCryptoOrders = applyFilters(cryptoOrders, filters);
@@ -191,9 +188,8 @@ const RecentOrdersTable: FC<RecentOrdersTableProps> = ({ cryptoOrders }) => {
                   value={filters.status || 'all'}
                   onChange={handleStatusChange}
                   label="Status"
-                  autoWidth
-                >
-                  {statusOptions.map((statusOption) => (
+                  autoWidth>
+                  {statusOptions.map(statusOption => (
                     <MenuItem key={statusOption.id} value={statusOption.id}>
                       {statusOption.name}
                     </MenuItem>
@@ -227,7 +223,7 @@ const RecentOrdersTable: FC<RecentOrdersTableProps> = ({ cryptoOrders }) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {paginatedCryptoOrders.map((cryptoOrder) => {
+            {paginatedCryptoOrders.map(cryptoOrder => {
               const isCryptoOrderSelected = selectedCryptoOrders.includes(
                 cryptoOrder.id
               );
@@ -235,8 +231,7 @@ const RecentOrdersTable: FC<RecentOrdersTableProps> = ({ cryptoOrders }) => {
                 <TableRow
                   hover
                   key={cryptoOrder.id}
-                  selected={isCryptoOrderSelected}
-                >
+                  selected={isCryptoOrderSelected}>
                   <TableCell padding="checkbox">
                     <Checkbox
                       color="primary"
@@ -253,8 +248,7 @@ const RecentOrdersTable: FC<RecentOrdersTableProps> = ({ cryptoOrders }) => {
                       fontWeight="bold"
                       color="text.primary"
                       gutterBottom
-                      noWrap
-                    >
+                      noWrap>
                       {cryptoOrder.orderDetails}
                     </Typography>
                     <Typography variant="body2" color="text.secondary" noWrap>
@@ -267,8 +261,7 @@ const RecentOrdersTable: FC<RecentOrdersTableProps> = ({ cryptoOrders }) => {
                       fontWeight="bold"
                       color="text.primary"
                       gutterBottom
-                      noWrap
-                    >
+                      noWrap>
                       {cryptoOrder.orderID}
                     </Typography>
                   </TableCell>
@@ -278,8 +271,7 @@ const RecentOrdersTable: FC<RecentOrdersTableProps> = ({ cryptoOrders }) => {
                       fontWeight="bold"
                       color="text.primary"
                       gutterBottom
-                      noWrap
-                    >
+                      noWrap>
                       {cryptoOrder.sourceName}
                     </Typography>
                     <Typography variant="body2" color="text.secondary" noWrap>
@@ -292,8 +284,7 @@ const RecentOrdersTable: FC<RecentOrdersTableProps> = ({ cryptoOrders }) => {
                       fontWeight="bold"
                       color="text.primary"
                       gutterBottom
-                      noWrap
-                    >
+                      noWrap>
                       {cryptoOrder.amountCrypto}
                       {cryptoOrder.cryptoCurrency}
                     </Typography>
@@ -304,7 +295,7 @@ const RecentOrdersTable: FC<RecentOrdersTableProps> = ({ cryptoOrders }) => {
                     </Typography>
                   </TableCell>
                   <TableCell align="right">
-                    {getStatusLabel(cryptoOrder.status)}
+                    {/* {getStatusLabel(cryptoOrder.status)} */}
                   </TableCell>
                   <TableCell align="right">
                     <Tooltip title="Edit Order" arrow>
@@ -316,8 +307,7 @@ const RecentOrdersTable: FC<RecentOrdersTableProps> = ({ cryptoOrders }) => {
                           color: theme.palette.primary.main
                         }}
                         color="inherit"
-                        size="small"
-                      >
+                        size="small">
                         <EditTwoToneIcon fontSize="small" />
                       </IconButton>
                     </Tooltip>
@@ -328,8 +318,7 @@ const RecentOrdersTable: FC<RecentOrdersTableProps> = ({ cryptoOrders }) => {
                           color: theme.palette.error.main
                         }}
                         color="inherit"
-                        size="small"
-                      >
+                        size="small">
                         <DeleteTwoToneIcon fontSize="small" />
                       </IconButton>
                     </Tooltip>
@@ -353,14 +342,12 @@ const RecentOrdersTable: FC<RecentOrdersTableProps> = ({ cryptoOrders }) => {
       </Box>
     </Card>
   );
-};
+}
 
 RecentOrdersTable.propTypes = {
   cryptoOrders: PropTypes.array.isRequired
 };
 
-RecentOrdersTable.defaultProps = {
-  cryptoOrders: []
-};
+RecentOrdersTable.defaultProps = {};
 
 export default RecentOrdersTable;

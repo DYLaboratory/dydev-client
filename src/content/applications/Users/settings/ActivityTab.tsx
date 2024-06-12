@@ -80,8 +80,7 @@ function ActivityTab() {
           display: { xs: 'block', md: 'flex' },
           alignItems: 'center',
           justifyContent: 'space-between'
-        }}
-      >
+        }}>
         <Box>
           <Button startIcon={<ThumbUpAltTwoToneIcon />} variant="contained">
             Like
@@ -89,8 +88,7 @@ function ActivityTab() {
           <Button
             startIcon={<CommentTwoToneIcon />}
             variant="outlined"
-            sx={{ mx: 2 }}
-          >
+            sx={{ mx: 2 }}>
             Comment
           </Button>
           <Button startIcon={<ShareTwoToneIcon />} variant="outlined">

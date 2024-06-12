@@ -6,7 +6,7 @@ import {
   Divider,
   Avatar,
   useTheme,
-  styled,
+  styled
 } from '@mui/material';
 
 import ShoppingBagTwoToneIcon from '@mui/icons-material/ShoppingBagTwoTone';
@@ -41,8 +41,7 @@ function RecentActivity() {
               <Typography
                 gutterBottom
                 variant="caption"
-                sx={{ fontSize: `${theme.typography.pxToRem(16)}` }}
-              >
+                sx={{ fontSize: `${theme.typography.pxToRem(16)}` }}>
                 Total
               </Typography>
               <Typography variant="h2">485</Typography>
@@ -51,8 +50,7 @@ function RecentActivity() {
               <Typography
                 gutterBottom
                 variant="caption"
-                sx={{ fontSize: `${theme.typography.pxToRem(16)}` }}
-              >
+                sx={{ fontSize: `${theme.typography.pxToRem(16)}` }}>
                 Failed
               </Typography>
               <Typography variant="h2">8</Typography>
@@ -73,8 +71,7 @@ function RecentActivity() {
               <Typography
                 gutterBottom
                 variant="caption"
-                sx={{ fontSize: `${theme.typography.pxToRem(16)}` }}
-              >
+                sx={{ fontSize: `${theme.typography.pxToRem(16)}` }}>
                 Products
               </Typography>
               <Typography variant="h2">64</Typography>
@@ -83,8 +80,7 @@ function RecentActivity() {
               <Typography
                 gutterBottom
                 variant="caption"
-                sx={{ fontSize: `${theme.typography.pxToRem(16)}` }}
-              >
+                sx={{ fontSize: `${theme.typography.pxToRem(16)}` }}>
                 Lists
               </Typography>
               <Typography variant="h2">15</Typography>
@@ -105,8 +101,7 @@ function RecentActivity() {
               <Typography
                 gutterBottom
                 variant="caption"
-                sx={{ fontSize: `${theme.typography.pxToRem(16)}` }}
-              >
+                sx={{ fontSize: `${theme.typography.pxToRem(16)}` }}>
                 Total
               </Typography>
               <Typography variant="h2">654</Typography>
@@ -115,8 +110,7 @@ function RecentActivity() {
               <Typography
                 gutterBottom
                 variant="caption"
-                sx={{ fontSize: `${theme.typography.pxToRem(16)}` }}
-              >
+                sx={{ fontSize: `${theme.typography.pxToRem(16)}` }}>
                 Useful
               </Typography>
               <Typography variant="h2">21</Typography>

@@ -14,8 +14,7 @@ function Footer() {
         display={{ xs: 'block', md: 'flex' }}
         alignItems="center"
         textAlign={{ xs: 'center', md: 'left' }}
-        justifyContent="space-between"
-      >
+        justifyContent="space-between">
         <Box>
           <Typography variant="subtitle1">
             &copy; 2024 - DY Laboratory Dashboard
@@ -25,16 +24,15 @@ function Footer() {
           sx={{
             pt: { xs: 2, md: 0 }
           }}
-          variant="subtitle1"
-        >
+          variant="subtitle1">
           Crafted by{' DY Lee '}
-          {/*<Link
+          {/* <Link
             href="https://bloomui.com"
             target="_blank"
             rel="noopener noreferrer"
           >
             BloomUI.com
-          </Link>*/}
+          </Link> */}
         </Typography>
       </Box>
     </FooterWrapper>

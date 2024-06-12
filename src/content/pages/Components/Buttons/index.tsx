@@ -34,8 +34,7 @@ function Buttons() {
           direction="row"
           justifyContent="center"
           alignItems="stretch"
-          spacing={3}
-        >
+          spacing={3}>
           <Grid item xs={12}>
             <Card>
               <CardHeader title="Contained Buttons" />
@@ -50,8 +49,7 @@ function Buttons() {
                 <Button
                   sx={{ margin: 1 }}
                   variant="contained"
-                  color="secondary"
-                >
+                  color="secondary">
                   Secondary
                 </Button>
                 <Button sx={{ margin: 1 }} variant="contained" disabled>
@@ -61,8 +59,7 @@ function Buttons() {
                   sx={{ margin: 1 }}
                   variant="contained"
                   color="primary"
-                  href="#contained-buttons"
-                >
+                  href="#contained-buttons">
                   Link
                 </Button>
               </CardContent>
@@ -110,8 +107,7 @@ function Buttons() {
                   variant="outlined"
                   sx={{ margin: 1 }}
                   color="primary"
-                  href="#outlined-buttons"
-                >
+                  href="#outlined-buttons">
                   Link
                 </Button>
               </CardContent>
@@ -139,24 +135,21 @@ function Buttons() {
                       variant="outlined"
                       sx={{ margin: 1 }}
                       size="small"
-                      color="primary"
-                    >
+                      color="primary">
                       Small
                     </Button>
                     <Button
                       variant="outlined"
                       sx={{ margin: 1 }}
                       size="medium"
-                      color="primary"
-                    >
+                      color="primary">
                       Medium
                     </Button>
                     <Button
                       variant="outlined"
                       sx={{ margin: 1 }}
                       size="large"
-                      color="primary"
-                    >
+                      color="primary">
                       Large
                     </Button>
                   </div>
@@ -165,24 +158,21 @@ function Buttons() {
                       sx={{ margin: 1 }}
                       variant="contained"
                       size="small"
-                      color="primary"
-                    >
+                      color="primary">
                       Small
                     </Button>
                     <Button
                       sx={{ margin: 1 }}
                       variant="contained"
                       size="medium"
-                      color="primary"
-                    >
+                      color="primary">
                       Medium
                     </Button>
                     <Button
                       sx={{ margin: 1 }}
                       variant="contained"
                       size="large"
-                      color="primary"
-                    >
+                      color="primary">
                       Large
                     </Button>
                   </div>
@@ -190,8 +180,7 @@ function Buttons() {
                     <IconButton
                       aria-label="delete"
                       sx={{ margin: 1 }}
-                      size="small"
-                    >
+                      size="small">
                       <ArrowDownwardIcon fontSize="inherit" />
                     </IconButton>
                     <IconButton aria-label="delete" sx={{ margin: 1 }}>

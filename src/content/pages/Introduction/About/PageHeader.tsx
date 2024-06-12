@@ -3,14 +3,14 @@ import { useTheme } from '@mui/material/styles';
 
 function PageHeader() {
   const user = {
-    name: 'DY\'s Space',
+    name: "DY's Space",
     avatar: '/static/images/avatars/me.jpg'
   };
   const theme = useTheme();
 
   return (
     <Grid container alignItems="center">
-      {/*<Grid item>
+      {/* <Grid item>
         <Avatar
           sx={{
             mr: 2,
@@ -21,14 +21,12 @@ function PageHeader() {
           alt={user.name}
           src={user.avatar}
         />
-      </Grid>*/}
+      </Grid> */}
       <Grid item>
         <Typography variant="h3" component="h3" gutterBottom>
           Welcome, {user.name}!
         </Typography>
-        <Typography variant="subtitle2">
-          Today is a good day!
-        </Typography>
+        <Typography variant="subtitle2">Today is a good day!</Typography>
       </Grid>
     </Grid>
   );

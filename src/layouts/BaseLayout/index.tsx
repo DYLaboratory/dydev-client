@@ -8,18 +8,17 @@ interface BaseLayoutProps {
   children?: ReactNode;
 }
 
-const BaseLayout: FC<BaseLayoutProps> = ({ children }) => {
+function BaseLayout({ children }: BaseLayoutProps) {
   return (
     <Box
       sx={{
         flex: 1,
         height: '100%'
-      }}
-    >
+      }}>
       {children || <Outlet />}
     </Box>
   );
-};
+}
 
 BaseLayout.propTypes = {
   children: PropTypes.node

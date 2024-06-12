@@ -1,11 +1,11 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import {
   Box,
-  Typography,
-  Hidden,
-  Container,
   Button,
-  Grid
+  Container,
+  Grid,
+  Hidden,
+  Typography
 } from '@mui/material';
 import { Helmet } from 'react-helmet-async';
 import RefreshTwoToneIcon from '@mui/icons-material/RefreshTwoTone';
@@ -45,9 +45,9 @@ const TypographySecondary = styled(Typography)(
 
 function Status500() {
   const [pending, setPending] = useState(false);
-  function handleClick() {
+  const handleClick = useCallback(() => {
     setPending(true);
-  }
+  }, []);
 
   return (
     <>
@@ -59,16 +59,14 @@ function Status500() {
           container
           sx={{ height: '100%' }}
           alignItems="stretch"
-          spacing={0}
-        >
+          spacing={0}>
           <Grid
             xs={12}
             md={6}
             alignItems="center"
             display="flex"
             justifyContent="center"
-            item
-          >
+            item>
             <Container maxWidth="sm">
               <Box textAlign="center">
                 <img
@@ -83,8 +81,7 @@ function Status500() {
                   variant="h4"
                   color="text.secondary"
                   fontWeight="normal"
-                  sx={{ mb: 4 }}
-                >
+                  sx={{ mb: 4 }}>
                   The server encountered an internal error and was not able to
                   complete your request
                 </Typography>
@@ -93,8 +90,7 @@ function Status500() {
                   loading={pending}
                   variant="outlined"
                   color="primary"
-                  startIcon={<RefreshTwoToneIcon />}
-                >
+                  startIcon={<RefreshTwoToneIcon />}>
                   Refresh view
                 </LoadingButton>
                 <Button href="/overview" variant="contained" sx={{ ml: 1 }}>
@@ -110,8 +106,7 @@ function Status500() {
               alignItems="center"
               display="flex"
               justifyContent="center"
-              item
-            >
+              item>
               <Container maxWidth="sm">
                 <Box textAlign="center">
                   <TypographyPrimary variant="h1" sx={{ my: 2 }}>
@@ -120,8 +115,7 @@ function Status500() {
                   <TypographySecondary
                     variant="h4"
                     fontWeight="normal"
-                    sx={{ mb: 4 }}
-                  >
+                    sx={{ mb: 4 }}>
                     High performance React template built with lots of powerful
                     Material-UI components across multiple product niches for
                     fast &amp; perfect apps development processes.

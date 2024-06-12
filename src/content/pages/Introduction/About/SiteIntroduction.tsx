@@ -1,8 +1,13 @@
-import PropTypes from 'prop-types';
-import { Avatar, Box, Button, Card, CardMedia, IconButton, Tooltip, Typography } from '@mui/material';
+import {
+  Avatar,
+  Box,
+  Button,
+  Card,
+  CardMedia,
+  IconButton,
+  Typography
+} from '@mui/material';
 import { styled } from '@mui/material/styles';
-
-import ArrowBackTwoToneIcon from '@mui/icons-material/ArrowBackTwoTone';
 import ArrowForwardTwoToneIcon from '@mui/icons-material/ArrowForwardTwoTone';
 import UploadTwoToneIcon from '@mui/icons-material/UploadTwoTone';
 import MoreHorizTwoToneIcon from '@mui/icons-material/MoreHorizTwoTone';
@@ -81,7 +86,7 @@ const site = {
   followers: '465'
 };
 
-const SiteIntroduction = () => {
+function SiteIntroduction() {
   return (
     <>
       <Box display="flex" mb={3}>
@@ -98,12 +103,12 @@ const SiteIntroduction = () => {
         <CardMedia image={site.coverImg} />
         <CardCoverAction>
           <Input accept="image/*" id="change-cover" multiple type="file" />
+          {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
           <label htmlFor="change-cover">
             <Button
               startIcon={<UploadTwoToneIcon />}
               variant="contained"
-              component="span"
-            >
+              component="span">
               Change cover
             </Button>
           </label>
@@ -117,7 +122,9 @@ const SiteIntroduction = () => {
             id="icon-button-file"
             name="icon-button-file"
             type="file"
+            style={{ display: 'none' }}
           />
+          {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
           <label htmlFor="icon-button-file">
             <IconButton component="span" color="primary">
               <UploadTwoToneIcon />
@@ -136,8 +143,7 @@ const SiteIntroduction = () => {
         <Box
           display={{ xs: 'block', md: 'flex' }}
           alignItems="center"
-          justifyContent="space-between"
-        >
+          justifyContent="space-between">
           <Box>
             <Button size="small" variant="contained">
               Follow
@@ -153,19 +159,15 @@ const SiteIntroduction = () => {
             sx={{ mt: { xs: 2, md: 0 } }}
             size="small"
             variant="text"
-            endIcon={<ArrowForwardTwoToneIcon />}
-          >
+            endIcon={<ArrowForwardTwoToneIcon />}>
             See all {site.followers} connections
           </Button>
         </Box>
       </Box>
     </>
   );
-};
+}
 
-SiteIntroduction.propTypes = {
-  // @ts-ignore
-  site: PropTypes.object.isRequired
-};
+SiteIntroduction.propTypes = {};
 
 export default SiteIntroduction;

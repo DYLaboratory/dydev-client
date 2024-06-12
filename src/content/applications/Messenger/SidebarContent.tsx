@@ -1,27 +1,27 @@
-import { useState, ChangeEvent } from 'react';
+import { ChangeEvent, useState } from 'react';
 import {
+  Avatar,
+  AvatarGroup,
   Box,
-  Typography,
+  Button,
+  Divider,
   FormControlLabel,
-  Switch,
-  Tabs,
-  Tab,
-  TextField,
   IconButton,
   InputAdornment,
-  Avatar,
-  List,
-  Button,
-  Tooltip,
-  Divider,
-  AvatarGroup,
-  ListItemButton,
-  ListItemAvatar,
-  ListItemText,
   lighten,
-  styled
+  List,
+  ListItemAvatar,
+  ListItemButton,
+  ListItemText,
+  styled,
+  Switch,
+  Tab,
+  Tabs,
+  TextField,
+  Tooltip,
+  Typography
 } from '@mui/material';
-import { formatDistance, subMinutes, subHours } from 'date-fns';
+import { formatDistance, subHours, subMinutes } from 'date-fns';
 import SettingsTwoToneIcon from '@mui/icons-material/SettingsTwoTone';
 import SearchTwoToneIcon from '@mui/icons-material/SearchTwoTone';
 import Label from 'src/components/Label';
@@ -103,7 +103,7 @@ function SidebarContent() {
     invisible: true
   });
 
-  const handleChange = (event) => {
+  const handleChange = event => {
     setState({
       ...state,
       [event.target.name]: event.target.checked
@@ -118,7 +118,7 @@ function SidebarContent() {
     { value: 'archived', label: 'Archived' }
   ];
 
-  const handleTabsChange = (_event: ChangeEvent<{}>, value: string): void => {
+  const handleTabsChange = (_event: ChangeEvent, value: string): void => {
     setCurrentTab(value);
   };
 
@@ -130,13 +130,11 @@ function SidebarContent() {
           sx={{
             ml: 1.5,
             flex: 1
-          }}
-        >
+          }}>
           <Box
             display="flex"
             alignItems="flex-start"
-            justifyContent="space-between"
-          >
+            justifyContent="space-between">
             <Box>
               <Typography variant="h5" noWrap>
                 {user.name}
@@ -150,8 +148,7 @@ function SidebarContent() {
                 p: 1
               }}
               size="small"
-              color="primary"
-            >
+              color="primary">
               <SettingsTwoToneIcon fontSize="small" />
             </IconButton>
           </Box>
@@ -192,8 +189,7 @@ function SidebarContent() {
           mb: 1,
           mt: 2
         }}
-        variant="h3"
-      >
+        variant="h3">
         Chats
       </Typography>
 
@@ -204,9 +200,8 @@ function SidebarContent() {
           variant="scrollable"
           scrollButtons="auto"
           textColor="primary"
-          indicatorColor="primary"
-        >
-          {tabs.map((tab) => (
+          indicatorColor="primary">
+          {tabs.map(tab => (
             <Tab key={tab.value} label={tab.label} value={tab.value} />
           ))}
         </Tabs>
@@ -374,8 +369,7 @@ function SidebarContent() {
                 mt: 2,
                 textAlign: 'center'
               }}
-              variant="subtitle2"
-            >
+              variant="subtitle2">
               Hurray! There are no archived chats!
             </Typography>
             <Divider
@@ -391,8 +385,7 @@ function SidebarContent() {
           sx={{
             mr: 1
           }}
-          variant="h3"
-        >
+          variant="h3">
           Meetings
         </Typography>
         <Label color="success">
@@ -410,8 +403,7 @@ function SidebarContent() {
               sx={{
                 lineHeight: 1
               }}
-              color="text.primary"
-            >
+              color="text.primary">
               10:00 - 11:30
             </Typography>
             <Typography variant="subtitle1">
@@ -478,8 +470,7 @@ function SidebarContent() {
               sx={{
                 lineHeight: 1
               }}
-              color="text.primary"
-            >
+              color="text.primary">
               14:30 - 16:15
             </Typography>
             <Typography variant="subtitle1">

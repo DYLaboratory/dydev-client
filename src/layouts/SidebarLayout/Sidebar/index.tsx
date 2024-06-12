@@ -15,8 +15,8 @@ import {
   Tooltip
 } from '@mui/material';
 
-import SidebarMenu from './SidebarMenu';
 import Logo from 'src/components/LogoSign';
+import SidebarMenu from './SidebarMenu';
 
 const SidebarWrapper = styled(Box)(
   ({ theme }) => `
@@ -52,16 +52,14 @@ function Sidebar() {
               : darken(theme.colors.alpha.black[100], 0.5),
           boxShadow:
             theme.palette.mode === 'dark' ? theme.sidebar.boxShadow : 'none'
-        }}
-      >
+        }}>
         <Scrollbar>
           <Box mt={3}>
             <Box
               mx={2}
               sx={{
                 width: 52
-              }}
-            >
+              }}>
               <Logo />
             </Box>
           </Box>
@@ -87,8 +85,7 @@ function Sidebar() {
             variant="contained"
             color="primary"
             size="small"
-            fullWidth
-          >
+            fullWidth>
             GitHub
           </Button>
         </Box>
@@ -101,24 +98,21 @@ function Sidebar() {
         open={sidebarToggle}
         onClose={closeSidebar}
         variant="temporary"
-        elevation={9}
-      >
+        elevation={9}>
         <SidebarWrapper
           sx={{
             background:
               theme.palette.mode === 'dark'
                 ? theme.colors.alpha.white[100]
                 : darken(theme.colors.alpha.black[100], 0.5)
-          }}
-        >
+          }}>
           <Scrollbar>
             <Box mt={3}>
               <Box
                 mx={2}
                 sx={{
                   width: 52
-                }}
-              >
+                }}>
                 <Logo />
               </Box>
             </Box>

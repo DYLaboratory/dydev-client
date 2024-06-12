@@ -3,7 +3,7 @@ import { useTheme } from '@mui/material/styles';
 
 function PageHeader() {
   const title = {
-    title: 'Welcome, DY\'s Space',
+    title: "Welcome, DY's Space",
     subTitle: 'Today is a good day!',
     image: '/static/images/avatars/1.jpg'
   };
@@ -11,7 +11,7 @@ function PageHeader() {
 
   return (
     <Grid container alignItems="center">
-      {/*<Grid item>
+      {/* <Grid item>
         <Avatar
           sx={{
             mr: 2,
@@ -22,14 +22,12 @@ function PageHeader() {
           alt={title.title}
           src={title.image}
         />
-      </Grid>*/}
+      </Grid> */}
       <Grid item>
         <Typography variant="h3" component="h3" gutterBottom>
           {title.title}!
         </Typography>
-        <Typography variant="subtitle2">
-          {title.subTitle}
-        </Typography>
+        <Typography variant="subtitle2">{title.subTitle}</Typography>
       </Grid>
     </Grid>
   );

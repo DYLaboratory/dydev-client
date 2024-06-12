@@ -21,13 +21,13 @@ function HeaderTheme() {
   };
 
   return (
-    <>
-      <Tooltip arrow title={theme === themeType.light ? 'Dark Mode' : 'Light Mode'}>
-        <IconButton color='primary' onClick={handleToggleTheme}>
-          <ContrastTwoTone />
-        </IconButton>
-      </Tooltip>
-    </>
+    <Tooltip
+      arrow
+      title={theme === themeType.light ? 'Dark Mode' : 'Light Mode'}>
+      <IconButton color="primary" onClick={handleToggleTheme}>
+        <ContrastTwoTone />
+      </IconButton>
+    </Tooltip>
   );
 }
 

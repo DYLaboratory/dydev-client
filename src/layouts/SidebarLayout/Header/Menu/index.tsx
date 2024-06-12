@@ -63,7 +63,7 @@ const ListWrapper = styled(Box)(
 );
 
 function HeaderMenu() {
-  const ref = useRef<any>(null);
+  const ref = useRef(null);
   const [isOpen, setOpen] = useState<boolean>(false);
 
   const handleOpen = (): void => {
@@ -82,15 +82,13 @@ function HeaderMenu() {
             xs: 'none',
             md: 'block'
           }
-        }}
-      >
+        }}>
         <List disablePadding component={Box} display="flex">
           <ListItem
             classes={{ root: 'MuiListItem-indicators' }}
             button
             component={NavLink}
-            to="/components/buttons"
-          >
+            to="/components/buttons">
             <ListItemText
               primaryTypographyProps={{ noWrap: true }}
               primary="Buttons"
@@ -100,8 +98,7 @@ function HeaderMenu() {
             classes={{ root: 'MuiListItem-indicators' }}
             button
             component={NavLink}
-            to="/components/forms"
-          >
+            to="/components/forms">
             <ListItemText
               primaryTypographyProps={{ noWrap: true }}
               primary="Forms"
@@ -111,8 +108,7 @@ function HeaderMenu() {
             classes={{ root: 'MuiListItem-indicators' }}
             button
             ref={ref}
-            onClick={handleOpen}
-          >
+            onClick={handleOpen}>
             <ListItemText
               primaryTypographyProps={{ noWrap: true }}
               primary={

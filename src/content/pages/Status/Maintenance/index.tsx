@@ -4,8 +4,8 @@ import {
   Container,
   Divider,
   IconButton,
-  Tooltip
-} from '@mui/material';
+  Tooltip, Button
+} from "@mui/material";
 import { Helmet } from 'react-helmet-async';
 import Logo from 'src/components/LogoSign';
 
@@ -13,6 +13,7 @@ import { styled } from '@mui/material/styles';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import InstagramIcon from '@mui/icons-material/Instagram';
+import { StatusProps } from "src/models/props";
 
 const MainContent = styled(Box)(
   () => `
@@ -26,7 +27,7 @@ const MainContent = styled(Box)(
 `
 );
 
-function StatusMaintenance() {
+function StatusMaintenance({ isMain }: StatusProps) {
   return (
     <>
       <Helmet>
@@ -34,7 +35,6 @@ function StatusMaintenance() {
       </Helmet>
       <MainContent>
         <Container maxWidth="md">
-          <Logo />
           <Box textAlign="center">
             <Container maxWidth="xs">
               <Typography variant="h2" sx={{ mt: 4, mb: 2 }}>
@@ -44,8 +44,7 @@ function StatusMaintenance() {
                 variant="h3"
                 color="text.secondary"
                 fontWeight="normal"
-                sx={{ mb: 4 }}
-              >
+                sx={{ mb: 4 }}>
                 We apologize for any inconveniences caused
               </Typography>
             </Container>
@@ -59,8 +58,7 @@ function StatusMaintenance() {
           <Box
             display="flex"
             alignItems="center"
-            justifyContent="space-between"
-          >
+            justifyContent="space-between">
             <Box>
               <Typography component="span" variant="subtitle1">
                 Phone:{' '}
@@ -68,12 +66,16 @@ function StatusMaintenance() {
               <Typography
                 component="span"
                 variant="subtitle1"
-                color="text.primary"
-              >
+                color="text.primary">
                 + 00 1 888 555 444
               </Typography>
             </Box>
-            <Box>
+            {!isMain &&
+              <Button href="/" variant="outlined">
+                Go to homepage
+              </Button>
+            }
+            {/*<Box>
               <Tooltip arrow placement="top" title="Facebook">
                 <IconButton color="primary">
                   <FacebookIcon />
@@ -89,7 +91,7 @@ function StatusMaintenance() {
                   <InstagramIcon />
                 </IconButton>
               </Tooltip>
-            </Box>
+            </Box>*/}
           </Box>
         </Container>
       </MainContent>

@@ -23,7 +23,7 @@ import {
   TableRow,
   TableContainer,
   useTheme,
-  styled,
+  styled
 } from '@mui/material';
 
 import DoneTwoToneIcon from '@mui/icons-material/DoneTwoTone';
@@ -250,7 +250,7 @@ function SecurityTab() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {logs.map((log) => (
+                {logs.map(log => (
                   <TableRow key={log.id} hover>
                     <TableCell>{log.browser}</TableCell>
                     <TableCell>{log.ipaddress}</TableCell>
@@ -268,8 +268,7 @@ function SecurityTab() {
                             color: theme.palette.error.main
                           }}
                           color="inherit"
-                          size="small"
-                        >
+                          size="small">
                           <DeleteTwoToneIcon fontSize="small" />
                         </IconButton>
                       </Tooltip>

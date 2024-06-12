@@ -1,6 +1,6 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from "react";
 
-import { NavLink } from 'react-router-dom';
+import { NavLink } from "react-router-dom";
 
 import {
   Avatar,
@@ -14,14 +14,19 @@ import {
   ListItemText,
   Popover,
   Typography
-} from '@mui/material';
+} from "@mui/material";
 
-import InboxTwoToneIcon from '@mui/icons-material/InboxTwoTone';
-import { styled } from '@mui/material/styles';
-import ExpandMoreTwoToneIcon from '@mui/icons-material/ExpandMoreTwoTone';
-import AccountBoxTwoToneIcon from '@mui/icons-material/AccountBoxTwoTone';
-import LockOpenTwoToneIcon from '@mui/icons-material/LockOpenTwoTone';
-import AccountTreeTwoToneIcon from '@mui/icons-material/AccountTreeTwoTone';
+import InboxTwoToneIcon from "@mui/icons-material/InboxTwoTone";
+import { styled } from "@mui/material/styles";
+import ExpandMoreTwoToneIcon from "@mui/icons-material/ExpandMoreTwoTone";
+import AccountBoxTwoToneIcon from "@mui/icons-material/AccountBoxTwoTone";
+import LockOpenTwoToneIcon from "@mui/icons-material/LockOpenTwoTone";
+import AccountTreeTwoToneIcon from "@mui/icons-material/AccountTreeTwoTone";
+import { useAppDispatch, useAppSelector } from "src/app/hooks";
+import { UserState } from "src/models/state/stateModels";
+import { logOutAsync } from "src/features/auth/authSlice";
+import { useNavigate } from "react-router";
+import { clearLoginUserInfo } from "src/features/user/userSlice";
 
 const UserBoxButton = styled(Button)(
   ({ theme }) => `
@@ -58,14 +63,37 @@ const UserBoxDescription = styled(Typography)(
 `
 );
 
+interface UserInfoType {
+  userId: string;
+  name: string;
+  email: string;
+  lastLoginDateTime: string;
+}
+
 function HeaderUserbox() {
+  const dispatch = useAppDispatch();
+  const loginUser = useAppSelector<UserState>(state => state.user);
+
+  const navigate = useNavigate();
+
+  const [userInfo, setUserInfo] = useState<UserInfoType>({
+    userId: '',
+    name: '',
+    email: '',
+    lastLoginDateTime: ''
+  });
+
   const user = {
     name: 'DY Lee',
     avatar: '/static/images/avatars/me.jpg',
     jobtitle: 'Project Manager'
   };
 
-  const ref = useRef<any>(null);
+  useEffect(() => {
+    setUserInfo({...loginUser});
+  }, [loginUser]);
+
+  const ref = useRef(null);
   const [isOpen, setOpen] = useState<boolean>(false);
 
   const handleOpen = (): void => {
@@ -76,13 +104,23 @@ function HeaderUserbox() {
     setOpen(false);
   };
 
+  const onClickSignOut = async () => {
+    if (confirm('Are you sure you want to Sign Out?')) {
+      await dispatch(logOutAsync()).then(() => {
+        dispatch(clearLoginUserInfo());
+
+        navigate('/');
+      });
+    }
+  };
+
   return (
     <>
       <UserBoxButton color="secondary" ref={ref} onClick={handleOpen}>
-        <Avatar variant="rounded" alt={user.name} src={user.avatar} />
+        <Avatar variant="rounded" alt={userInfo.name} src={user.avatar} />
         <Hidden mdDown>
           <UserBoxText>
-            <UserBoxLabel variant="body1">{user.name}</UserBoxLabel>
+            <UserBoxLabel variant="body1">{userInfo.name}</UserBoxLabel>
             <UserBoxDescription variant="body2">
               {user.jobtitle}
             </UserBoxDescription>
@@ -103,12 +141,11 @@ function HeaderUserbox() {
         transformOrigin={{
           vertical: 'top',
           horizontal: 'right'
-        }}
-      >
+        }}>
         <MenuUserBox sx={{ minWidth: 210 }} display="flex">
-          <Avatar variant="rounded" alt={user.name} src={user.avatar} />
+          <Avatar variant="rounded" alt={userInfo.name} src={user.avatar} />
           <UserBoxText>
-            <UserBoxLabel variant="body1">{user.name}</UserBoxLabel>
+            <UserBoxLabel variant="body1">{userInfo.name}</UserBoxLabel>
             <UserBoxDescription variant="body2">
               {user.jobtitle}
             </UserBoxDescription>
@@ -127,17 +164,16 @@ function HeaderUserbox() {
           <ListItem
             button
             to="/management/profile/settings"
-            component={NavLink}
-          >
+            component={NavLink}>
             <AccountTreeTwoToneIcon fontSize="small" />
             <ListItemText primary="Account Settings" />
           </ListItem>
         </List>
         <Divider />
         <Box sx={{ m: 1 }}>
-          <Button color="primary" fullWidth>
+          <Button color="primary" fullWidth onClick={onClickSignOut}>
             <LockOpenTwoToneIcon sx={{ mr: 1 }} />
-            Sign out
+            Sign Out
           </Button>
         </Box>
       </Popover>

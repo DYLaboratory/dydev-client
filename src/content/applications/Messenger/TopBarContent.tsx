@@ -123,8 +123,7 @@ function TopBarContent() {
         <Box
           sx={{
             display: { xs: 'none', lg: 'flex' }
-          }}
-        >
+          }}>
           <Tooltip placement="bottom" title="Start a voice call">
             <IconButton color="primary">
               <CallTwoToneIcon />
@@ -150,19 +149,16 @@ function TopBarContent() {
         anchor={theme.direction === 'rtl' ? 'left' : 'right'}
         open={mobileOpen}
         onClose={handleDrawerToggle}
-        elevation={9}
-      >
+        elevation={9}>
         <Box
           sx={{
             minWidth: 360
           }}
-          p={2}
-        >
+          p={2}>
           <Box
             sx={{
               textAlign: 'center'
-            }}
-          >
+            }}>
             <Avatar
               sx={{
                 mx: 'auto',
@@ -190,16 +186,14 @@ function TopBarContent() {
 
           <Accordion
             expanded={expanded === 'section1'}
-            onChange={handleChange('section1')}
-          >
+            onChange={handleChange('section1')}>
             <AccordionSummaryWrapper expandIcon={<ExpandMoreIcon />}>
               <Typography variant="h5">Customize Chat</Typography>
             </AccordionSummaryWrapper>
             <AccordionDetails
               sx={{
                 p: 0
-              }}
-            >
+              }}>
               <List component="nav">
                 <ListItem button>
                   <ListItemIconWrapper>
@@ -233,16 +227,14 @@ function TopBarContent() {
           </Accordion>
           <Accordion
             expanded={expanded === 'section2'}
-            onChange={handleChange('section2')}
-          >
+            onChange={handleChange('section2')}>
             <AccordionSummaryWrapper expandIcon={<ExpandMoreIcon />}>
               <Typography variant="h5">Privacy & Support</Typography>
             </AccordionSummaryWrapper>
             <AccordionDetails
               sx={{
                 p: 0
-              }}
-            >
+              }}>
               <List component="nav">
                 <ListItem button>
                   <ListItemIconWrapper>
@@ -287,16 +279,14 @@ function TopBarContent() {
           </Accordion>
           <Accordion
             expanded={expanded === 'section3'}
-            onChange={handleChange('section3')}
-          >
+            onChange={handleChange('section3')}>
             <AccordionSummaryWrapper expandIcon={<ExpandMoreIcon />}>
               <Typography variant="h5">Shared Files</Typography>
             </AccordionSummaryWrapper>
             <AccordionDetails
               sx={{
                 p: 0
-              }}
-            >
+              }}>
               <List component="nav">
                 <ListItem button>
                   <ListItemIconWrapper>

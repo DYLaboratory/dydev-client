@@ -22,8 +22,7 @@ function SuspenseLoader() {
       }}
       display="flex"
       alignItems="center"
-      justifyContent="center"
-    >
+      justifyContent="center">
       <CircularProgress size={64} disableShrink thickness={3} />
     </Box>
   );

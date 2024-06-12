@@ -35,7 +35,7 @@ function SimpleDialog(props) {
     onClose(selectedValue);
   };
 
-  const handleListItemClick = (value) => {
+  const handleListItemClick = value => {
     onClose(value);
   };
 
@@ -43,12 +43,11 @@ function SimpleDialog(props) {
     <Dialog onClose={handleClose} open={open}>
       <DialogTitle>Set backup account</DialogTitle>
       <List sx={{ pt: 0 }}>
-        {emails.map((email) => (
+        {emails.map(email => (
           <ListItem
             button
             onClick={() => handleListItemClick(email)}
-            key={email}
-          >
+            key={email}>
             <ListItemAvatar>
               <Avatar sx={{ bgcolor: blue[100], color: blue[600] }}>
                 <PersonIcon />
@@ -58,11 +57,7 @@ function SimpleDialog(props) {
           </ListItem>
         ))}
 
-        <ListItem
-          autoFocus
-          button
-          onClick={() => handleListItemClick('addAccount')}
-        >
+        <ListItem button onClick={() => handleListItemClick('addAccount')}>
           <ListItemAvatar>
             <Avatar>
               <AddIcon />
@@ -89,7 +84,7 @@ function Modals() {
     setOpen(true);
   };
 
-  const handleClose = (value) => {
+  const handleClose = value => {
     setOpen(false);
     setSelectedValue(value);
   };
@@ -112,8 +107,7 @@ function Modals() {
           direction="row"
           justifyContent="center"
           alignItems="stretch"
-          spacing={3}
-        >
+          spacing={3}>
           <Grid item xs={12}>
             <Card>
               <CardHeader title="Basic Dialog" />

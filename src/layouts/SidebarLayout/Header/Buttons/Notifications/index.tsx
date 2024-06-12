@@ -41,7 +41,7 @@ const NotificationsBadge = styled(Badge)(
 );
 
 function HeaderNotifications() {
-  const ref = useRef<any>(null);
+  const ref = useRef(null);
   const [isOpen, setOpen] = useState<boolean>(false);
 
   const handleOpen = (): void => {
@@ -61,8 +61,7 @@ function HeaderNotifications() {
             anchorOrigin={{
               vertical: 'top',
               horizontal: 'right'
-            }}
-          >
+            }}>
             <NotificationsActiveTwoToneIcon />
           </NotificationsBadge>
         </IconButton>
@@ -78,21 +77,18 @@ function HeaderNotifications() {
         transformOrigin={{
           vertical: 'top',
           horizontal: 'right'
-        }}
-      >
+        }}>
         <Box
           sx={{ p: 2 }}
           display="flex"
           alignItems="center"
-          justifyContent="space-between"
-        >
+          justifyContent="space-between">
           <Typography variant="h5">Notifications</Typography>
         </Box>
         <Divider />
         <List sx={{ p: 0 }}>
           <ListItem
-            sx={{ p: 2, minWidth: 350, display: { xs: 'block', sm: 'flex' } }}
-          >
+            sx={{ p: 2, minWidth: 350, display: { xs: 'block', sm: 'flex' } }}>
             <Box flex="1">
               <Box display="flex" justifyContent="space-between">
                 <Typography sx={{ fontWeight: 'bold' }}>
@@ -107,8 +103,7 @@ function HeaderNotifications() {
               <Typography
                 component="span"
                 variant="body2"
-                color="text.secondary"
-              >
+                color="text.secondary">
                 {' '}
                 new messages in your inbox
               </Typography>

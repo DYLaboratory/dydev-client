@@ -77,8 +77,7 @@ function Hero() {
         spacing={{ xs: 6, md: 10 }}
         justifyContent="center"
         alignItems="center"
-        container
-      >
+        container>
         <Grid item md={10} lg={8} mx="auto">
           <LabelWrapper color="success">Version 2.0.0</LabelWrapper>
           <TypographyH1 sx={{ mb: 2 }} variant="h1">
@@ -88,8 +87,7 @@ function Hero() {
             sx={{ lineHeight: 1.5, pb: 4 }}
             variant="h4"
             color="text.secondary"
-            fontWeight="normal"
-          >
+            fontWeight="normal">
             High performance React template built with lots of powerful
             Material-UI components across multiple product niches for fast &
             perfect apps development processes
@@ -98,8 +96,7 @@ function Hero() {
             component={RouterLink}
             to="/dashboards/crypto"
             size="large"
-            variant="contained"
-          >
+            variant="contained">
             Browse Live Preview
           </Button>
           <Button
@@ -109,8 +106,7 @@ function Hero() {
             rel="noopener"
             href="https://bloomui.com/product/tokyo-free-white-react-typescript-material-ui-admin-dashboard"
             size="large"
-            variant="text"
-          >
+            variant="text">
             Key Features
           </Button>
           <Grid container spacing={3} mt={5}>

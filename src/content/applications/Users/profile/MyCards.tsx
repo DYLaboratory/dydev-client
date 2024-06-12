@@ -93,11 +93,11 @@ function MyCards() {
     setSelectedValue(event.target.value);
   };
 
-  const handleDelete = () => { };
+  const handleDelete = () => {};
 
   return (
     <Card>
-      <CardHeader subheader={data.savedCards + ' saved cards'} title="Cards" />
+      <CardHeader subheader={`${data.savedCards} saved cards`} title="Cards" />
       <Divider />
       <Box p={3}>
         <Grid container spacing={3}>
@@ -124,8 +124,7 @@ function MyCards() {
                 pt={3}
                 display="flex"
                 alignItems="center"
-                justifyContent="space-between"
-              >
+                justifyContent="space-between">
                 <FormControlLabel
                   value="a"
                   control={
@@ -170,8 +169,7 @@ function MyCards() {
                 pt={3}
                 display="flex"
                 alignItems="center"
-                justifyContent="space-between"
-              >
+                justifyContent="space-between">
                 <FormControlLabel
                   value="b"
                   control={

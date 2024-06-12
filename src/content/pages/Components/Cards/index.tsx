@@ -46,8 +46,7 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 const bull = (
   <Box
     component="span"
-    sx={{ display: 'inline-block', mx: '2px', transform: 'scale(0.8)' }}
-  >
+    sx={{ display: 'inline-block', mx: '2px', transform: 'scale(0.8)' }}>
     •
   </Box>
 );
@@ -77,8 +76,7 @@ function Cards() {
           direction="row"
           justifyContent="center"
           alignItems="stretch"
-          spacing={3}
-        >
+          spacing={3}>
           <Grid item xs={12}>
             <Card>
               <CardHeader title="Basic" />
@@ -89,8 +87,7 @@ function Cards() {
                     <Typography
                       sx={{ fontSize: 14 }}
                       color="text.secondary"
-                      gutterBottom
-                    >
+                      gutterBottom>
                       Word of the Day
                     </Typography>
                     <Typography variant="h5" component="div">
@@ -158,8 +155,7 @@ function Cards() {
                       expand={expanded}
                       onClick={handleExpandClick}
                       aria-expanded={expanded}
-                      aria-label="show more"
-                    >
+                      aria-label="show more">
                       <ExpandMoreIcon />
                     </ExpandMore>
                   </CardActions>

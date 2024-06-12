@@ -1,25 +1,25 @@
-import { forwardRef, Ref, useState, ReactElement, ChangeEvent } from 'react';
+import { ChangeEvent, forwardRef, ReactElement, Ref, useState } from 'react';
 import {
   Avatar,
-  Link,
   Box,
   Button,
-  Divider,
-  IconButton,
-  InputAdornment,
-  lighten,
-  List,
-  ListItem,
-  ListItemAvatar,
-  TextField,
-  Theme,
-  Tooltip,
-  Typography,
   Dialog,
   DialogContent,
   DialogTitle,
+  Divider,
+  Hidden,
+  IconButton,
+  InputAdornment,
+  lighten,
+  Link,
+  List,
+  ListItem,
+  ListItemAvatar,
   Slide,
-  Hidden
+  TextField,
+  Theme,
+  Tooltip,
+  Typography
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { TransitionProps } from '@mui/material/transitions';
@@ -29,7 +29,7 @@ import FindInPageTwoToneIcon from '@mui/icons-material/FindInPageTwoTone';
 import ChevronRightTwoToneIcon from '@mui/icons-material/ChevronRightTwoTone';
 
 const Transition = forwardRef(function Transition(
-  props: TransitionProps & { children: ReactElement<any, any> },
+  props: TransitionProps & { children: ReactElement },
   ref: Ref<unknown>
 ) {
   return <Slide direction="down" ref={ref} {...props} />;
@@ -105,12 +105,10 @@ function HeaderSearch() {
         maxWidth="md"
         fullWidth
         scroll="paper"
-        onClose={handleClose}
-      >
+        onClose={handleClose}>
         <DialogTitleWrapper>
           <SearchInputWrapper
             value={searchValue}
-            autoFocus={true}
             onChange={handleSearchChange}
             InputProps={{
               startAdornment: (
@@ -131,15 +129,13 @@ function HeaderSearch() {
             <Box
               sx={{ pt: 0, pb: 1 }}
               display="flex"
-              justifyContent="space-between"
-            >
+              justifyContent="space-between">
               <Typography variant="body2" component="span">
                 Search results for{' '}
                 <Typography
                   sx={{ fontWeight: 'bold' }}
                   variant="body1"
-                  component="span"
-                >
+                  component="span">
                   {searchValue}
                 </Typography>
               </Typography>
@@ -156,8 +152,7 @@ function HeaderSearch() {
                       sx={{
                         background: (theme: Theme) =>
                           theme.palette.secondary.main
-                      }}
-                    >
+                      }}>
                       <FindInPageTwoToneIcon />
                     </Avatar>
                   </ListItemAvatar>
@@ -168,8 +163,7 @@ function HeaderSearch() {
                       href="#"
                       underline="hover"
                       sx={{ fontWeight: 'bold' }}
-                      variant="body2"
-                    >
+                      variant="body2">
                       Dashboard for Healthcare Platform
                     </Link>
                   </Box>
@@ -179,8 +173,7 @@ function HeaderSearch() {
                     sx={{
                       color: (theme: Theme) =>
                         lighten(theme.palette.secondary.main, 0.5)
-                    }}
-                  >
+                    }}>
                     This page contains all the necessary information for
                     managing all hospital staff.
                   </Typography>
@@ -195,8 +188,7 @@ function HeaderSearch() {
                       sx={{
                         background: (theme: Theme) =>
                           theme.palette.secondary.main
-                      }}
-                    >
+                      }}>
                       <FindInPageTwoToneIcon />
                     </Avatar>
                   </ListItemAvatar>
@@ -207,8 +199,7 @@ function HeaderSearch() {
                       href="#"
                       underline="hover"
                       sx={{ fontWeight: 'bold' }}
-                      variant="body2"
-                    >
+                      variant="body2">
                       Example Projects Application
                     </Link>
                   </Box>
@@ -218,8 +209,7 @@ function HeaderSearch() {
                     sx={{
                       color: (theme: Theme) =>
                         lighten(theme.palette.secondary.main, 0.5)
-                    }}
-                  >
+                    }}>
                     This is yet another search result pointing to a app page.
                   </Typography>
                 </Box>
@@ -233,8 +223,7 @@ function HeaderSearch() {
                       sx={{
                         background: (theme: Theme) =>
                           theme.palette.secondary.main
-                      }}
-                    >
+                      }}>
                       <FindInPageTwoToneIcon />
                     </Avatar>
                   </ListItemAvatar>
@@ -245,8 +234,7 @@ function HeaderSearch() {
                       href="#"
                       underline="hover"
                       sx={{ fontWeight: 'bold' }}
-                      variant="body2"
-                    >
+                      variant="body2">
                       Search Results Page
                     </Link>
                   </Box>
@@ -256,8 +244,7 @@ function HeaderSearch() {
                     sx={{
                       color: (theme: Theme) =>
                         lighten(theme.palette.secondary.main, 0.5)
-                    }}
-                  >
+                    }}>
                     Choose if you would like to show or not this typography
                     section here...
                   </Typography>

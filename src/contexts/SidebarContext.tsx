@@ -1,7 +1,7 @@
-import { createContext, ReactElement, useState } from 'react';
+import { createContext, ReactElement, useMemo, useState } from 'react';
 
 type SidebarContext = {
-  sidebarToggle: any;
+  sidebarToggle: boolean;
   toggleSidebar: () => void;
   closeSidebar: () => void;
 };
@@ -11,7 +11,7 @@ export const SidebarContext = createContext<SidebarContext>(
   {} as SidebarContext
 );
 
-export const SidebarProvider = (props: { children: ReactElement }) => {
+export function SidebarProvider(props: { children: ReactElement }) {
   const { children } = props;
   const [sidebarToggle, setSidebarToggle] = useState(false);
   const toggleSidebar = () => {
@@ -21,9 +21,12 @@ export const SidebarProvider = (props: { children: ReactElement }) => {
     setSidebarToggle(false);
   };
 
-  return (
-    <SidebarContext.Provider value={{ sidebarToggle, toggleSidebar, closeSidebar }}>
-      {children}
-    </SidebarContext.Provider>
+  const value = useMemo(
+    () => ({ sidebarToggle, toggleSidebar, closeSidebar }),
+    [sidebarToggle]
   );
-};
+
+  return (
+    <SidebarContext.Provider value={value}>{children}</SidebarContext.Provider>
+  );
+}

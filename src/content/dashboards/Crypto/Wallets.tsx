@@ -83,14 +83,12 @@ function Wallets() {
         justifyContent="space-between"
         sx={{
           pb: 3
-        }}
-      >
+        }}>
         <Typography variant="h3">Wallets</Typography>
         <Button
           size="small"
           variant="outlined"
-          startIcon={<AddTwoToneIcon fontSize="small" />}
-        >
+          startIcon={<AddTwoToneIcon fontSize="small" />}>
           Add new wallet
         </Button>
       </Box>
@@ -99,8 +97,7 @@ function Wallets() {
           <Card
             sx={{
               px: 1
-            }}
-          >
+            }}>
             <CardContent>
               <AvatarWrapper>
                 <img
@@ -117,8 +114,7 @@ function Wallets() {
               <Box
                 sx={{
                   pt: 3
-                }}
-              >
+                }}>
                 <Typography variant="h3" gutterBottom noWrap>
                   $3,586.22
                 </Typography>
@@ -133,8 +129,7 @@ function Wallets() {
           <Card
             sx={{
               px: 1
-            }}
-          >
+            }}>
             <CardContent>
               <AvatarWrapper>
                 <img
@@ -151,8 +146,7 @@ function Wallets() {
               <Box
                 sx={{
                   pt: 3
-                }}
-              >
+                }}>
                 <Typography variant="h3" gutterBottom noWrap>
                   $586.83
                 </Typography>
@@ -167,8 +161,7 @@ function Wallets() {
           <Card
             sx={{
               px: 1
-            }}
-          >
+            }}>
             <CardContent>
               <AvatarWrapper>
                 <img
@@ -185,8 +178,7 @@ function Wallets() {
               <Box
                 sx={{
                   pt: 3
-                }}
-              >
+                }}>
                 <Typography variant="h3" gutterBottom noWrap>
                   $54,985.00
                 </Typography>
@@ -203,8 +195,7 @@ function Wallets() {
               <CardActionArea
                 sx={{
                   px: 1
-                }}
-              >
+                }}>
                 <CardContent>
                   <AvatarAddWrapper>
                     <AddTwoToneIcon fontSize="large" />

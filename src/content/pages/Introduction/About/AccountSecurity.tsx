@@ -61,8 +61,7 @@ function AccountSecurity() {
         <ListItem
           sx={{
             py: 2
-          }}
-        >
+          }}>
           <ListItemAvatar>
             <AvatarWrapperError>
               <LockTwoToneIcon />
@@ -91,8 +90,7 @@ function AccountSecurity() {
         <ListItem
           sx={{
             py: 2
-          }}
-        >
+          }}>
           <ListItemAvatar>
             <AvatarWrapperSuccess>
               <PhoneLockedTwoToneIcon />
@@ -121,8 +119,7 @@ function AccountSecurity() {
         <ListItem
           sx={{
             py: 2
-          }}
-        >
+          }}>
           <ListItemAvatar>
             <AvatarWrapperWarning>
               <EmailTwoToneIcon />

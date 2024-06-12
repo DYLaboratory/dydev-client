@@ -113,7 +113,7 @@ function WatchListColumn() {
       },
       y: {
         title: {
-          formatter: function () {
+          formatter() {
             return 'Price: $';
           }
         }
@@ -148,19 +148,16 @@ function WatchListColumn() {
       direction="row"
       justifyContent="center"
       alignItems="stretch"
-      spacing={3}
-    >
+      spacing={3}>
       <Grid item md={4} xs={12}>
         <Card
           sx={{
             overflow: 'visible'
-          }}
-        >
+          }}>
           <Box
             sx={{
               p: 3
-            }}
-          >
+            }}>
             <Box display="flex" alignItems="center">
               <AvatarWrapper>
                 <img
@@ -183,15 +180,13 @@ function WatchListColumn() {
                 alignItems: 'center',
                 justifyContent: 'flex-start',
                 pt: 3
-              }}
-            >
+              }}>
               <Typography
                 variant="h2"
                 sx={{
                   pr: 1,
                   mb: 1
-                }}
-              >
+                }}>
                 $56,475.99
               </Typography>
               <Text color="success">
@@ -203,16 +198,14 @@ function WatchListColumn() {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'flex-start'
-              }}
-            >
+              }}>
               <Label color="success">+$500</Label>
               <Typography
                 variant="body2"
                 color="text.secondary"
                 sx={{
                   pl: 1
-                }}
-              >
+                }}>
                 last 24h
               </Typography>
             </Box>
@@ -229,13 +222,11 @@ function WatchListColumn() {
         <Card
           sx={{
             overflow: 'visible'
-          }}
-        >
+          }}>
           <Box
             sx={{
               p: 3
-            }}
-          >
+            }}>
             <Box display="flex" alignItems="center">
               <AvatarWrapper>
                 <img
@@ -258,15 +249,13 @@ function WatchListColumn() {
                 alignItems: 'center',
                 justifyContent: 'flex-start',
                 pt: 3
-              }}
-            >
+              }}>
               <Typography
                 variant="h2"
                 sx={{
                   pr: 1,
                   mb: 1
-                }}
-              >
+                }}>
                 $1,968.00
               </Typography>
               <Text color="error">
@@ -278,16 +267,14 @@ function WatchListColumn() {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'flex-start'
-              }}
-            >
+              }}>
               <Label color="error">-$90</Label>
               <Typography
                 variant="body2"
                 color="text.secondary"
                 sx={{
                   pl: 1
-                }}
-              >
+                }}>
                 last 24h
               </Typography>
             </Box>
@@ -304,13 +291,11 @@ function WatchListColumn() {
         <Card
           sx={{
             overflow: 'visible'
-          }}
-        >
+          }}>
           <Box
             sx={{
               p: 3
-            }}
-          >
+            }}>
             <Box display="flex" alignItems="center">
               <AvatarWrapper>
                 <img
@@ -333,15 +318,13 @@ function WatchListColumn() {
                 alignItems: 'center',
                 justifyContent: 'flex-start',
                 pt: 3
-              }}
-            >
+              }}>
               <Typography
                 variant="h2"
                 sx={{
                   pr: 1,
                   mb: 1
-                }}
-              >
+                }}>
                 $23.00
               </Typography>
               <Text color="error">
@@ -353,16 +336,14 @@ function WatchListColumn() {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'flex-start'
-              }}
-            >
+              }}>
               <Label color="error">-$5</Label>
               <Typography
                 variant="body2"
                 color="text.secondary"
                 sx={{
                   pl: 1
-                }}
-              >
+                }}>
                 last 24h
               </Typography>
             </Box>

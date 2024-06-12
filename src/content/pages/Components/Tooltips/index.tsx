@@ -33,8 +33,7 @@ function Tooltips() {
           direction="row"
           justifyContent="center"
           alignItems="stretch"
-          spacing={3}
-        >
+          spacing={3}>
           <Grid item xs={12}>
             <Card>
               <CardHeader title="Positioning" />
@@ -73,8 +72,7 @@ function Tooltips() {
                       container
                       xs={6}
                       alignItems="flex-end"
-                      direction="column"
-                    >
+                      direction="column">
                       <Grid item>
                         <Tooltip arrow title="Add" placement="right-start">
                           <Button>right-start</Button>

@@ -38,8 +38,7 @@ function BottomBarContent() {
         display: 'flex',
         alignItems: 'center',
         p: 2
-      }}
-    >
+      }}>
       <Box flexGrow={1} display="flex" alignItems="center">
         <Avatar
           sx={{ display: { xs: 'none', sm: 'flex' }, mr: 1 }}
@@ -47,7 +46,6 @@ function BottomBarContent() {
           src={user.avatar}
         />
         <MessageInputWrapper
-          autoFocus
           placeholder="Write your message here..."
           fullWidth
         />
@@ -56,13 +54,13 @@ function BottomBarContent() {
         <Tooltip arrow placement="top" title="Choose an emoji">
           <IconButton
             sx={{ fontSize: theme.typography.pxToRem(16) }}
-            color="primary"
-          >
+            color="primary">
             😀
           </IconButton>
         </Tooltip>
         <Input accept="image/*" id="messenger-upload-file" type="file" />
         <Tooltip arrow placement="top" title="Attach a file">
+          {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
           <label htmlFor="messenger-upload-file">
             <IconButton sx={{ mx: 1 }} color="primary" component="span">
               <AttachFileTwoToneIcon fontSize="small" />

@@ -2,14 +2,8 @@ import { useState } from 'react';
 
 import { Helmet } from 'react-helmet-async';
 
-import TopBarContent from './TopBarContent';
-import BottomBarContent from './BottomBarContent';
-import SidebarContent from './SidebarContent';
-import ChatContent from './ChatContent';
 import MenuTwoToneIcon from '@mui/icons-material/MenuTwoTone';
-
 import Scrollbar from 'src/components/Scrollbar';
-
 import {
   Box,
   styled,
@@ -18,6 +12,10 @@ import {
   IconButton,
   useTheme
 } from '@mui/material';
+import TopBarContent from './TopBarContent';
+import BottomBarContent from './BottomBarContent';
+import SidebarContent from './SidebarContent';
+import ChatContent from './ChatContent';
 
 const RootWrapper = styled(Box)(
   ({ theme }) => `
@@ -94,8 +92,7 @@ function ApplicationsMessenger() {
           variant="temporary"
           anchor={theme.direction === 'rtl' ? 'right' : 'left'}
           open={mobileOpen}
-          onClose={handleDrawerToggle}
-        >
+          onClose={handleDrawerToggle}>
           <Scrollbar>
             <SidebarContent />
           </Scrollbar>
@@ -103,8 +100,7 @@ function ApplicationsMessenger() {
         <Sidebar
           sx={{
             display: { xs: 'none', lg: 'inline-block' }
-          }}
-        >
+          }}>
           <Scrollbar>
             <SidebarContent />
           </Scrollbar>
@@ -113,8 +109,7 @@ function ApplicationsMessenger() {
           <ChatTopBar
             sx={{
               display: { xs: 'flex', lg: 'inline-block' }
-            }}
-          >
+            }}>
             <IconButtonToggle
               sx={{
                 display: { lg: 'none', xs: 'flex' },
@@ -122,8 +117,7 @@ function ApplicationsMessenger() {
               }}
               color="primary"
               onClick={handleDrawerToggle}
-              size="small"
-            >
+              size="small">
               <MenuTwoToneIcon />
             </IconButtonToggle>
             <TopBarContent />

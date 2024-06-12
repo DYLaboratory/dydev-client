@@ -36,8 +36,7 @@ function Accordions() {
           direction="row"
           justifyContent="center"
           alignItems="stretch"
-          spacing={3}
-        >
+          spacing={3}>
           <Grid item xs={12}>
             <Card>
               <CardHeader title="Basic Example" />
@@ -47,8 +46,7 @@ function Accordions() {
                   <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel1a-content"
-                    id="panel1a-header"
-                  >
+                    id="panel1a-header">
                     <Typography>Accordion 1</Typography>
                   </AccordionSummary>
                   <AccordionDetails>
@@ -63,8 +61,7 @@ function Accordions() {
                   <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel2a-content"
-                    id="panel2a-header"
-                  >
+                    id="panel2a-header">
                     <Typography>Accordion 2</Typography>
                   </AccordionSummary>
                   <AccordionDetails>
@@ -79,8 +76,7 @@ function Accordions() {
                   <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel3a-content"
-                    id="panel3a-header"
-                  >
+                    id="panel3a-header">
                     <Typography>Disabled Accordion</Typography>
                   </AccordionSummary>
                 </Accordion>

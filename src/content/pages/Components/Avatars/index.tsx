@@ -1,7 +1,14 @@
 import { Helmet } from 'react-helmet-async';
 import PageTitle from 'src/components/PageTitle';
 import PageTitleWrapper from 'src/components/PageTitleWrapper';
-import { Card, CardContent, CardHeader, Container, Divider, Grid } from '@mui/material';
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  Container,
+  Divider,
+  Grid
+} from '@mui/material';
 import Footer from 'src/components/Footer';
 import Avatar from '@mui/material/Avatar';
 import Stack from '@mui/material/Stack';
@@ -58,8 +65,7 @@ function Avatars() {
           direction="row"
           justifyContent="center"
           alignItems="stretch"
-          spacing={3}
-        >
+          spacing={3}>
           <Grid item xs={12}>
             <Card>
               <CardHeader title="Images" />

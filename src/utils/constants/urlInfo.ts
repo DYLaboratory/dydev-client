@@ -3,7 +3,9 @@ const URL_INFO = {
 
   // API URL 정의
   API_V1: {
-
+    // auth
+    LOGIN_URL: '/auth/sign-in',
+    LOGOUT_URL: '/auth/sign-out'
   }
 };
 

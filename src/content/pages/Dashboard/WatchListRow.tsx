@@ -104,7 +104,7 @@ function WatchListRow() {
       },
       y: {
         title: {
-          formatter: function () {
+          formatter() {
             return 'Price: $';
           }
         }
@@ -143,19 +143,16 @@ function WatchListRow() {
         justifyContent="space-evenly"
         alignItems="stretch"
         divider={<Divider orientation="vertical" flexItem />}
-        spacing={0}
-      >
+        spacing={0}>
         <Box
           sx={{
             width: '100%',
             p: 3
-          }}
-        >
+          }}>
           <Box
             display="flex"
             alignItems="flex-start"
-            justifyContent="space-between"
-          >
+            justifyContent="space-between">
             <Box display="flex" alignItems="center">
               <AvatarWrapper>
                 <img
@@ -178,21 +175,18 @@ function WatchListRow() {
             mt={3}
             display="flex"
             alignItems="center"
-            justifyContent="space-between"
-          >
+            justifyContent="space-between">
             <Box
               sx={{
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'flex-start'
-              }}
-            >
+              }}>
               <Typography
                 variant="h2"
                 sx={{
                   pr: 1
-                }}
-              >
+                }}>
                 $56,475.99
               </Typography>
               <Text color="success">
@@ -218,13 +212,11 @@ function WatchListRow() {
           sx={{
             width: '100%',
             p: 3
-          }}
-        >
+          }}>
           <Box
             display="flex"
             alignItems="flex-start"
-            justifyContent="space-between"
-          >
+            justifyContent="space-between">
             <Box display="flex" alignItems="center">
               <AvatarWrapper>
                 <img
@@ -247,21 +239,18 @@ function WatchListRow() {
             mt={3}
             display="flex"
             alignItems="center"
-            justifyContent="space-between"
-          >
+            justifyContent="space-between">
             <Box
               sx={{
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'flex-start'
-              }}
-            >
+              }}>
               <Typography
                 variant="h2"
                 sx={{
                   pr: 1
-                }}
-              >
+                }}>
                 $1,968.00
               </Typography>
               <Text color="error">
@@ -287,13 +276,11 @@ function WatchListRow() {
           sx={{
             width: '100%',
             p: 3
-          }}
-        >
+          }}>
           <Box
             display="flex"
             alignItems="flex-start"
-            justifyContent="space-between"
-          >
+            justifyContent="space-between">
             <Box display="flex" alignItems="center">
               <AvatarWrapper>
                 <img
@@ -316,21 +303,18 @@ function WatchListRow() {
             mt={3}
             display="flex"
             alignItems="center"
-            justifyContent="space-between"
-          >
+            justifyContent="space-between">
             <Box
               sx={{
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'flex-start'
-              }}
-            >
+              }}>
               <Typography
                 variant="h2"
                 sx={{
                   pr: 1
-                }}
-              >
+                }}>
                 $23.00
               </Typography>
               <Text color="error">
@@ -360,8 +344,7 @@ function WatchListRow() {
           p: 3,
           display: 'flex',
           justifyContent: 'center'
-        }}
-      >
+        }}>
         <Button variant="outlined">View more assets</Button>
       </CardActions>
     </Card>

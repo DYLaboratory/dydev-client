@@ -108,8 +108,7 @@ function Logo() {
         component="span"
         sx={{
           display: { xs: 'none', sm: 'inline-block' }
-        }}
-      >
+        }}>
         <LogoTextWrapper>
           <Tooltip title="Version 2.0" arrow placement="right">
             <VersionBadge>3.1</VersionBadge>

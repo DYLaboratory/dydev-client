@@ -39,14 +39,12 @@ function WatchList() {
         justifyContent="space-between"
         sx={{
           pb: 3
-        }}
-      >
+        }}>
         <Typography variant="h3">Watch List</Typography>
         <ToggleButtonGroup
           value={tabs}
           exclusive
-          onChange={handleViewOrientation}
-        >
+          onChange={handleViewOrientation}>
           <ToggleButton disableRipple value="watch_list_columns">
             <ViewWeekTwoToneIcon />
           </ToggleButton>
@@ -65,8 +63,7 @@ function WatchList() {
           sx={{
             textAlign: 'center',
             p: 3
-          }}
-        >
+          }}>
           <EmptyResultsWrapper src="/static/images/placeholders/illustrations/1.svg" />
 
           <Typography
@@ -77,8 +74,7 @@ function WatchList() {
             sx={{
               mt: 3
             }}
-            gutterBottom
-          >
+            gutterBottom>
             Click something, anything!
           </Typography>
           <Button
@@ -86,8 +82,7 @@ function WatchList() {
             size="large"
             sx={{
               mt: 4
-            }}
-          >
+            }}>
             Maybe, a button?
           </Button>
         </Card>

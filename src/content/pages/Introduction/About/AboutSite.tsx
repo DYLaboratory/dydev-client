@@ -1,4 +1,13 @@
-import { Avatar, Box, Button, Card, CardHeader, Divider, Grid, Typography } from '@mui/material';
+import {
+  Avatar,
+  Box,
+  Button,
+  Card,
+  CardHeader,
+  Divider,
+  Grid,
+  Typography
+} from '@mui/material';
 
 function AboutSite() {
   const site = [
@@ -52,7 +61,7 @@ function AboutSite() {
       <Divider />
       <Box p={2}>
         <Grid container spacing={0}>
-          {site.map((_site) => (
+          {site.map(_site => (
             <Grid key={_site.name} item xs={12} sm={6} lg={4}>
               <Box p={3} display="flex" alignItems="flex-start">
                 <Avatar src={_site.avatar} />

@@ -10,7 +10,7 @@ import {
   ListItemText,
   Avatar,
   useTheme,
-  styled,
+  styled
 } from '@mui/material';
 
 const ListWrapper = styled(List)(
@@ -35,8 +35,7 @@ function PopularTags() {
             color: `${theme.colors.primary.main}`,
             '&:hover': { color: `${theme.colors.primary.dark}` }
           }}
-          button
-        >
+          button>
           <ListItemText primary="#HTML" />
         </ListItem>
         <Divider />
@@ -45,8 +44,7 @@ function PopularTags() {
             color: `${theme.colors.primary.main}`,
             '&:hover': { color: `${theme.colors.primary.dark}` }
           }}
-          button
-        >
+          button>
           <ListItemText primary="#software_development" />
         </ListItem>
         <Divider />
@@ -55,8 +53,7 @@ function PopularTags() {
             color: `${theme.colors.primary.main}`,
             '&:hover': { color: `${theme.colors.primary.dark}` }
           }}
-          button
-        >
+          button>
           <ListItemText primary="#TrendingInfuencers" />
         </ListItem>
         <Divider />
@@ -65,8 +62,7 @@ function PopularTags() {
             color: `${theme.colors.primary.main}`,
             '&:hover': { color: `${theme.colors.primary.dark}` }
           }}
-          button
-        >
+          button>
           <ListItemText primary="#investorsWatch2022" />
         </ListItem>
         <Divider />
@@ -84,8 +80,7 @@ function PopularTags() {
                 height: 38,
                 background: `${theme.colors.info.main}`,
                 color: `${theme.palette.info.contrastText}`
-              }}
-            >
+              }}>
               WD
             </Avatar>
           </ListItemAvatar>
@@ -106,8 +101,7 @@ function PopularTags() {
                 height: 38,
                 background: `${theme.colors.alpha.black[100]}`,
                 color: `${theme.colors.alpha.white[100]}`
-              }}
-            >
+              }}>
               D
             </Avatar>
           </ListItemAvatar>

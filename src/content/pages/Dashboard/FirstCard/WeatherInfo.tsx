@@ -53,7 +53,9 @@ interface Weather {
 }
 
 function WeatherInfo() {
-  const [currentWeather, setCurrentWeather] = useState<CurrentWeather | null>(null);
+  const [currentWeather, setCurrentWeather] = useState<CurrentWeather | null>(
+    null
+  );
   const [weeklyWeather, setWeeklyWeather] = useState<Weather | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -63,7 +65,10 @@ function WeatherInfo() {
   useEffect(() => {
     const fetchCurrentWeather = async () => {
       try {
-        const response = await apiClient.get<CurrentWeather>("/external/weather", { params: { city: 'Seoul' } });
+        const response = await apiClient.get<CurrentWeather>(
+          '/external/weather',
+          { params: { city: 'Seoul' } }
+        );
 
         setCurrentWeather(response.data);
         setLoading(false);
@@ -102,19 +107,14 @@ function WeatherInfo() {
         sx={{
           pb: 3
         }}
-        variant="h4"
-      >
+        variant="h4">
         Weather
       </Typography>
       <WeatherBox bg={getBackgroundColor(currentWeatherMain)}>
         <Typography variant="h1" gutterBottom>
           {currentWeather?.name}
         </Typography>
-        <Typography
-          variant="h4"
-          fontWeight="normal"
-          color="text.secondary"
-        >
+        <Typography variant="h4" fontWeight="normal" color="text.secondary">
           {currentWeather?.main.temp}°C
         </Typography>
         <Box
@@ -122,14 +122,12 @@ function WeatherInfo() {
           sx={{
             py: 4
           }}
-          alignItems="center"
-        >
+          alignItems="center">
           <AvatarSuccess
             sx={{
               mr: 2
             }}
-            variant="rounded"
-          >
+            variant="rounded">
             <TrendingUp fontSize="large" />
           </AvatarSuccess>
           <Box>
@@ -153,11 +151,11 @@ function WeatherInfo() {
         </Grid>
       </Grid>
     </Box>
-  )
+  );
 }
 
 export default WeatherInfo;
 
 const WeatherBox = styled(Box)<{ bg: string }>`
-  background: ${(props) => props.bg};
-`
+  background: ${props => props.bg};
+`;

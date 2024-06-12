@@ -57,8 +57,7 @@ function Badges() {
           direction="row"
           justifyContent="center"
           alignItems="stretch"
-          spacing={3}
-        >
+          spacing={3}>
           <Grid item xs={12}>
             <Card>
               <CardHeader title="Shapes" />
@@ -78,8 +77,7 @@ function Badges() {
                     color="secondary"
                     overlap="circular"
                     badgeContent=" "
-                    variant="dot"
-                  >
+                    variant="dot">
                     {circle}
                   </Badge>
                 </Stack>
@@ -102,8 +100,7 @@ function Badges() {
                     '& .MuiBadge-root': {
                       marginRight: 4
                     }
-                  }}
-                >
+                  }}>
                   <div>
                     <Badge color="secondary" badgeContent={count}>
                       <MailIcon />
@@ -113,16 +110,14 @@ function Badges() {
                         aria-label="reduce"
                         onClick={() => {
                           setCount(Math.max(count - 1, 0));
-                        }}
-                      >
+                        }}>
                         <RemoveIcon fontSize="small" />
                       </Button>
                       <Button
                         aria-label="increase"
                         onClick={() => {
                           setCount(count + 1);
-                        }}
-                      >
+                        }}>
                         <AddIcon fontSize="small" />
                       </Button>
                     </ButtonGroup>
@@ -131,8 +126,7 @@ function Badges() {
                     <Badge
                       color="secondary"
                       variant="dot"
-                      invisible={invisible}
-                    >
+                      invisible={invisible}>
                       <MailIcon />
                     </Badge>
                     <FormControlLabel

@@ -34,8 +34,7 @@ function ManagementUserProfile() {
           direction="row"
           justifyContent="center"
           alignItems="stretch"
-          spacing={3}
-        >
+          spacing={3}>
           <Grid item xs={12} md={8}>
             <ProfileCover user={user} />
           </Grid>

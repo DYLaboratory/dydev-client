@@ -64,8 +64,8 @@ function FirstCard() {
     colors: ['#ff9900', '#1c81c2', '#333', '#5c6ac0'],
     dataLabels: {
       enabled: true,
-      formatter: function (val) {
-        return val + '%';
+      formatter(val) {
+        return `${val}%`;
       },
       style: {
         colors: [theme.colors.alpha.trueWhite[100]]
@@ -129,14 +129,12 @@ function FirstCard() {
           alignItems="center"
           item
           xs={12}
-          md={6}
-        >
+          md={6}>
           <Box
             component="span"
             sx={{
               display: { xs: 'none', md: 'inline-block' }
-            }}
-          >
+            }}>
             <Divider absolute orientation="vertical" />
           </Box>
           <Box py={4} pr={4} flex={1}>
@@ -147,8 +145,7 @@ function FirstCard() {
                 item
                 display="flex"
                 justifyContent="center"
-                alignItems="center"
-              >
+                alignItems="center">
                 <Chart
                   height={250}
                   options={chartOptions}
@@ -161,8 +158,7 @@ function FirstCard() {
                   disablePadding
                   sx={{
                     width: '100%'
-                  }}
-                >
+                  }}>
                   <ListItem disableGutters>
                     <ListItemAvatarWrapper>
                       <img

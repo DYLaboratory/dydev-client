@@ -98,10 +98,7 @@ function Logo() {
   const theme = useTheme();
 
   return (
-    <TooltipWrapper
-      title="DY Laboratory"
-      arrow
-    >
+    <TooltipWrapper title="DY Laboratory" arrow>
       <LogoWrapper to="/">
         <Badge
           sx={{
@@ -113,16 +110,25 @@ function Logo() {
           }}
           overlap="circular"
           color="success"
-          badgeContent="1.0"
-        >
+          badgeContent="1.0">
           <LogoSignWrapper>
-            <img src="/static/images/overview/main-logo.png" alt="" height="50px" width="50px" />
-            {/*<LogoSign>
+            <img
+              src="/static/images/overview/main-logo.png"
+              alt=""
+              height="50px"
+              width="50px"
+            />
+            {/* <LogoSign>
               <LogoSignInner />
-            </LogoSign>*/}
+            </LogoSign> */}
           </LogoSignWrapper>
         </Badge>
-        <img src="/static/images/overview/main-text.png" alt="" height="45px" width="180px" />
+        <img
+          src="/static/images/overview/main-text.png"
+          alt=""
+          height="45px"
+          width="180px"
+        />
       </LogoWrapper>
     </TooltipWrapper>
   );

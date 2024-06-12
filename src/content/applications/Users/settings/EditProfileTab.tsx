@@ -22,8 +22,7 @@ function EditProfileTab() {
             p={3}
             display="flex"
             alignItems="center"
-            justifyContent="space-between"
-          >
+            justifyContent="space-between">
             <Box>
               <Typography variant="h4" gutterBottom>
                 Personal Details
@@ -84,8 +83,7 @@ function EditProfileTab() {
             p={3}
             display="flex"
             alignItems="center"
-            justifyContent="space-between"
-          >
+            justifyContent="space-between">
             <Box>
               <Typography variant="h4" gutterBottom>
                 Account Settings
@@ -144,8 +142,7 @@ function EditProfileTab() {
             p={3}
             display="flex"
             alignItems="center"
-            justifyContent="space-between"
-          >
+            justifyContent="space-between">
             <Box>
               <Typography variant="h4" gutterBottom>
                 Email Addresses

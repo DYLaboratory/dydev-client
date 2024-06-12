@@ -1,13 +1,13 @@
 import PropTypes from 'prop-types';
 import {
-  Box,
-  Typography,
-  Card,
-  Tooltip,
   Avatar,
-  CardMedia,
+  Box,
   Button,
-  IconButton
+  Card,
+  CardMedia,
+  IconButton,
+  Tooltip,
+  Typography
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
@@ -78,7 +78,7 @@ const CardCoverAction = styled(Box)(
 `
 );
 
-const ProfileCover = ({ user }) => {
+function ProfileCover({ user }) {
   return (
     <>
       <Box display="flex" mb={3}>
@@ -100,12 +100,12 @@ const ProfileCover = ({ user }) => {
         <CardMedia image={user.coverImg} />
         <CardCoverAction>
           <Input accept="image/*" id="change-cover" multiple type="file" />
+          {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
           <label htmlFor="change-cover">
             <Button
               startIcon={<UploadTwoToneIcon />}
               variant="contained"
-              component="span"
-            >
+              component="span">
               Change cover
             </Button>
           </label>
@@ -120,6 +120,7 @@ const ProfileCover = ({ user }) => {
             name="icon-button-file"
             type="file"
           />
+          {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
           <label htmlFor="icon-button-file">
             <IconButton component="span" color="primary">
               <UploadTwoToneIcon />
@@ -138,8 +139,7 @@ const ProfileCover = ({ user }) => {
         <Box
           display={{ xs: 'block', md: 'flex' }}
           alignItems="center"
-          justifyContent="space-between"
-        >
+          justifyContent="space-between">
           <Box>
             <Button size="small" variant="contained">
               Follow
@@ -155,18 +155,16 @@ const ProfileCover = ({ user }) => {
             sx={{ mt: { xs: 2, md: 0 } }}
             size="small"
             variant="text"
-            endIcon={<ArrowForwardTwoToneIcon />}
-          >
+            endIcon={<ArrowForwardTwoToneIcon />}>
             See all {user.followers} connections
           </Button>
         </Box>
       </Box>
     </>
   );
-};
+}
 
 ProfileCover.propTypes = {
-  // @ts-ignore
   user: PropTypes.object.isRequired
 };
 

@@ -57,7 +57,7 @@ function Feed() {
       <Divider />
       <Box p={2}>
         <Grid container spacing={0}>
-          {feed.map((_feed) => (
+          {feed.map(_feed => (
             <Grid key={_feed.name} item xs={12} sm={6} lg={4}>
               <Box p={3} display="flex" alignItems="flex-start">
                 <Avatar src={_feed.avatar} />
@@ -74,8 +74,7 @@ function Feed() {
                   <Button
                     variant="outlined"
                     size="small"
-                    startIcon={<AddTwoToneIcon />}
-                  >
+                    startIcon={<AddTwoToneIcon />}>
                     Follow
                   </Button>
                 </Box>

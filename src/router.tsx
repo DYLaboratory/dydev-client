@@ -7,19 +7,23 @@ import BaseLayout from 'src/layouts/BaseLayout';
 
 import SuspenseLoader from 'src/components/SuspenseLoader';
 
-const Loader = (Component) => (props) =>
-  (
-    <Suspense fallback={<SuspenseLoader />}>
-      <Component {...props} />
-    </Suspense>
-  );
+const Loader = Component =>
+  function loader(props) {
+    return (
+      <Suspense fallback={<SuspenseLoader />}>
+        <Component {...props} />
+      </Suspense>
+    );
+  };
 
 /** Pages */
 /* Dashboard */
 const Dashboard = Loader(lazy(() => import('src/content/pages/Dashboard')));
 
 /* Introduction */
-const About = Loader(lazy(() => import('src/content/pages/Introduction/About')));
+const About = Loader(
+  lazy(() => import('src/content/pages/Introduction/About'))
+);
 
 /* Blog */
 
@@ -161,19 +165,22 @@ const routes: RouteObject[] = [
     children: [
       {
         path: '',
-        element: <Navigate to='about' replace />
+        element: <Navigate to="about" replace />
       },
       {
         path: 'about',
-        element: <About />
+        // element: <About />
+        element: <StatusComingSoon isMain />
       },
       {
         path: 'intro',
-        element: <UserProfile />
+        // element: <UserProfile />
+        element: <StatusComingSoon isMain />
       },
       {
         path: 'notice',
-        element: <Transactions />
+        // element: <Transactions />
+        element: <StatusComingSoon isMain />
       }
     ]
   },
@@ -185,15 +192,17 @@ const routes: RouteObject[] = [
     children: [
       {
         path: '',
-        element: <Navigate to='blog' replace />
+        element: <Navigate to="blog" replace />
       },
       {
         path: 'blog',
-        element: <UserSettings />
+        // element: <UserSettings />
+        element: <StatusComingSoon isMain />
       },
       {
         path: 'feed',
-        element: <UserSettings />
+        // element: <UserSettings />
+        element: <StatusComingSoon isMain />
       }
     ]
   },

@@ -48,8 +48,7 @@ function BulkActions() {
           <ButtonError
             sx={{ ml: 1 }}
             startIcon={<DeleteTwoToneIcon />}
-            variant="contained"
-          >
+            variant="contained">
             Delete
           </ButtonError>
         </Box>
@@ -57,8 +56,7 @@ function BulkActions() {
           color="primary"
           onClick={openMenu}
           ref={moreRef}
-          sx={{ ml: 2, p: 1 }}
-        >
+          sx={{ ml: 2, p: 1 }}>
           <MoreVertTwoToneIcon />
         </IconButton>
       </Box>
@@ -75,8 +73,7 @@ function BulkActions() {
         transformOrigin={{
           vertical: 'center',
           horizontal: 'center'
-        }}
-      >
+        }}>
         <List sx={{ p: 1 }} component="nav">
           <ListItem button>
             <ListItemText primary="Bulk delete selected" />

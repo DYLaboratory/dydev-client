@@ -56,7 +56,7 @@ const currencies = [
 function Forms() {
   const [currency, setCurrency] = useState('EUR');
 
-  const handleChange = (event) => {
+  const handleChange = event => {
     setCurrency(event.target.value);
   };
 
@@ -84,8 +84,7 @@ function Forms() {
           direction="row"
           justifyContent="center"
           alignItems="stretch"
-          spacing={3}
-        >
+          spacing={3}>
           <Grid item xs={12}>
             <Card>
               <CardHeader title="Input Fields" />
@@ -97,8 +96,7 @@ function Forms() {
                     '& .MuiTextField-root': { m: 1, width: '25ch' }
                   }}
                   noValidate
-                  autoComplete="off"
-                >
+                  autoComplete="off">
                   <div>
                     <TextField
                       required
@@ -269,8 +267,7 @@ function Forms() {
                     '& .MuiTextField-root': { m: 1, width: '25ch' }
                   }}
                   noValidate
-                  autoComplete="off"
-                >
+                  autoComplete="off">
                   <div>
                     <TextField
                       id="outlined-select-currency"
@@ -278,9 +275,8 @@ function Forms() {
                       label="Select"
                       value={currency}
                       onChange={handleChange}
-                      helperText="Please select your currency"
-                    >
-                      {currencies.map((option) => (
+                      helperText="Please select your currency">
+                      {currencies.map(option => (
                         <MenuItem key={option.value} value={option.value}>
                           {option.label}
                         </MenuItem>
@@ -295,9 +291,8 @@ function Forms() {
                       SelectProps={{
                         native: true
                       }}
-                      helperText="Please select your currency"
-                    >
-                      {currencies.map((option) => (
+                      helperText="Please select your currency">
+                      {currencies.map(option => (
                         <option key={option.value} value={option.value}>
                           {option.label}
                         </option>
@@ -312,9 +307,8 @@ function Forms() {
                       value={currency}
                       onChange={handleChange}
                       helperText="Please select your currency"
-                      variant="filled"
-                    >
-                      {currencies.map((option) => (
+                      variant="filled">
+                      {currencies.map(option => (
                         <MenuItem key={option.value} value={option.value}>
                           {option.label}
                         </MenuItem>
@@ -330,9 +324,8 @@ function Forms() {
                         native: true
                       }}
                       helperText="Please select your currency"
-                      variant="filled"
-                    >
-                      {currencies.map((option) => (
+                      variant="filled">
+                      {currencies.map(option => (
                         <option key={option.value} value={option.value}>
                           {option.label}
                         </option>
@@ -347,9 +340,8 @@ function Forms() {
                       value={currency}
                       onChange={handleChange}
                       helperText="Please select your currency"
-                      variant="standard"
-                    >
-                      {currencies.map((option) => (
+                      variant="standard">
+                      {currencies.map(option => (
                         <MenuItem key={option.value} value={option.value}>
                           {option.label}
                         </MenuItem>
@@ -365,9 +357,8 @@ function Forms() {
                         native: true
                       }}
                       helperText="Please select your currency"
-                      variant="standard"
-                    >
-                      {currencies.map((option) => (
+                      variant="standard">
+                      {currencies.map(option => (
                         <option key={option.value} value={option.value}>
                           {option.label}
                         </option>
@@ -415,8 +406,7 @@ function Forms() {
                   <RadioGroup
                     row
                     aria-label="gender"
-                    name="row-radio-buttons-group"
-                  >
+                    name="row-radio-buttons-group">
                     <FormControlLabel
                       value="female"
                       control={<Radio />}
@@ -453,8 +443,7 @@ function Forms() {
                     spacing={2}
                     direction="row"
                     sx={{ mb: 1 }}
-                    alignItems="center"
-                  >
+                    alignItems="center">
                     <VolumeDown />
                     <Slider
                       aria-label="Volume"

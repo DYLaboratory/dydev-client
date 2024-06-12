@@ -76,8 +76,8 @@ function AccountBalance() {
     colors: ['#ff9900', '#1c81c2', '#333', '#5c6ac0'],
     dataLabels: {
       enabled: true,
-      formatter: function (val) {
-        return val + '%';
+      formatter(val) {
+        return `${val}%`;
       },
       style: {
         colors: [theme.colors.alpha.trueWhite[100]]
@@ -136,8 +136,7 @@ function AccountBalance() {
               sx={{
                 pb: 3
               }}
-              variant="h4"
-            >
+              variant="h4">
               Account Balance
             </Typography>
             <Box>
@@ -147,8 +146,7 @@ function AccountBalance() {
               <Typography
                 variant="h4"
                 fontWeight="normal"
-                color="text.secondary"
-              >
+                color="text.secondary">
                 1.0045983485234 BTC
               </Typography>
               <Box
@@ -156,14 +154,12 @@ function AccountBalance() {
                 sx={{
                   py: 4
                 }}
-                alignItems="center"
-              >
+                alignItems="center">
                 <AvatarSuccess
                   sx={{
                     mr: 2
                   }}
-                  variant="rounded"
-                >
+                  variant="rounded">
                   <TrendingUp fontSize="large" />
                 </AvatarSuccess>
                 <Box>
@@ -196,14 +192,12 @@ function AccountBalance() {
           alignItems="center"
           item
           xs={12}
-          md={6}
-        >
+          md={6}>
           <Box
             component="span"
             sx={{
               display: { xs: 'none', md: 'inline-block' }
-            }}
-          >
+            }}>
             <Divider absolute orientation="vertical" />
           </Box>
           <Box py={4} pr={4} flex={1}>
@@ -214,8 +208,7 @@ function AccountBalance() {
                 item
                 display="flex"
                 justifyContent="center"
-                alignItems="center"
-              >
+                alignItems="center">
                 <Chart
                   height={250}
                   options={chartOptions}
@@ -228,8 +221,7 @@ function AccountBalance() {
                   disablePadding
                   sx={{
                     width: '100%'
-                  }}
-                >
+                  }}>
                   <ListItem disableGutters>
                     <ListItemAvatarWrapper>
                       <img
