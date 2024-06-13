@@ -1,4 +1,4 @@
-import { Button, Grid, OutlinedInput, Typography } from "@mui/material";
+import {Button, FormControl, Grid, InputLabel, MenuItem, OutlinedInput, Select, Typography} from "@mui/material";
 
 import AddTwoToneIcon from "@mui/icons-material/AddTwoTone";
 import { useAppSelector } from "src/app/hooks";
@@ -9,10 +9,20 @@ import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 import ListItemText from "@mui/material/ListItemText";
 import AddIcon from "@mui/icons-material/Add";
+import SaveIcon from "@mui/icons-material/Save";
 import Dialog from "@mui/material/Dialog";
 import { useState } from "react";
 import { styled } from "@mui/material/styles";
-import { SiteData } from "src/models/data/dataModels";
+import {SiteData, SiteTypes} from "src/models/data/dataModels";
+
+const ListItemWrapper = styled(ListItem)(`
+  display: flex;
+  justify-content: space-between;
+`);
+
+const FormControlWrapper = styled(FormControl)(
+  `margin-left: 20px;`
+);
 
 const OutlinedInputWrapper = styled(OutlinedInput)(
     ({ theme }) => `
@@ -20,6 +30,29 @@ const OutlinedInputWrapper = styled(OutlinedInput)(
     background-color: ${theme.colors.alpha.white[100]};
 `
 );
+
+const typeOptions: { id: SiteTypes; name: string; }[] = [
+  {
+    id: 'develop',
+    name: 'Develop'
+  },
+  {
+    id: 'reference',
+    name: 'Reference'
+  },
+  {
+    id: 'useful',
+    name: 'Useful'
+  },
+  {
+    id: 'entertain',
+    name: 'Entertain'
+  },
+  {
+    id: 'etc',
+    name: 'etc'
+  }
+];
 
 function PageHeader() {
   const title = {
@@ -31,7 +64,16 @@ function PageHeader() {
 
   const [openModal, setOpenModal] = useState<boolean>(false);
 
-  const [webSite, setWebSite] = useState<SiteData>();
+  const [webSite, setWebSite] = useState<SiteData>({
+    type: "develop",
+    name: null,
+    description: null,
+    url: null
+  });
+
+  const handleTypeChange = e => {
+    setWebSite({ ...webSite, type: e.target.value });
+  }
 
   return (
     <>
@@ -72,17 +114,27 @@ function PageHeader() {
           </Typography>
         </DialogTitle>
         <List sx={{ pt: 0 }}>
-          <ListItem>
+          <ListItemWrapper>
             <Typography variant="h4" component="h3" gutterBottom>
               type
             </Typography>
-            <OutlinedInputWrapper
-                type="text"
-                placeholder="Web Site Name"
-            />
-          </ListItem>
+            <FormControlWrapper fullWidth variant="outlined">
+              <InputLabel>Type</InputLabel>
+              <Select
+                  value={webSite.type}
+                  onChange={handleTypeChange}
+                  label="Status"
+                  autoWidth>
+                {typeOptions.map(typeOption => (
+                    <MenuItem key={typeOption.id} value={typeOption.id}>
+                      {typeOption.name}
+                    </MenuItem>
+                ))}
+              </Select>
+            </FormControlWrapper>
+          </ListItemWrapper>
 
-          <ListItem>
+          <ListItemWrapper>
             <Typography variant="h4" component="h3" gutterBottom>
               name
             </Typography>
@@ -90,35 +142,37 @@ function PageHeader() {
                 type="text"
                 placeholder="Web Site Name"
             />
-          </ListItem>
+          </ListItemWrapper>
 
-          <ListItem>
+          <ListItemWrapper>
             <Typography variant="h4" component="h3" gutterBottom>
               description
             </Typography>
             <OutlinedInputWrapper
                 type="text"
-                placeholder="Web Site Name"
+                placeholder="Web Site Description"
             />
-          </ListItem>
+          </ListItemWrapper>
 
-          <ListItem>
+          <ListItemWrapper>
             <Typography variant="h4" component="h3" gutterBottom>
               url
             </Typography>
             <OutlinedInputWrapper
                 type="text"
-                placeholder="Web Site Name"
+                placeholder="Web Site URL"
             />
-          </ListItem>
+          </ListItemWrapper>
 
           <ListItem button>
             <ListItemAvatar>
               <Avatar>
-                <AddIcon />
+                <SaveIcon />
               </Avatar>
             </ListItemAvatar>
-            <ListItemText primary="Add account" />
+            <Typography variant="h4">
+              SAVE
+            </Typography>
           </ListItem>
         </List>
       </Dialog>

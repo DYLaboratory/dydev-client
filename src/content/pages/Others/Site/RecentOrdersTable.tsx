@@ -201,7 +201,9 @@ function RecentOrdersTable({ sites }: RecentOrdersTableProps) {
               <TableCell>Name</TableCell>
               <TableCell>Description</TableCell>
               <TableCell>URL</TableCell>
-              <TableCell align="right">Actions</TableCell>
+              {isLogin &&
+                <TableCell align="right">Actions</TableCell>
+              }
             </TableRow>
           </TableHead>
           <TableBody>
