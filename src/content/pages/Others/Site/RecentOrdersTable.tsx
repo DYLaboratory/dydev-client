@@ -231,6 +231,11 @@ function RecentOrdersTable() {
   }
   const [modalState, setModalState] = useState<{ isNew: boolean, isOpen: boolean }>(initialModalState);
 
+  const handleCloseModal = () => {
+    setModalState(initialModalState);
+    setWebSite(initialWebSite);
+  }
+
   // insert (s)
   const initialWebSite: SiteData = {
     webSiteType: "DEVELOP",
@@ -251,7 +256,7 @@ function RecentOrdersTable() {
         .then(
           () => {
             alert('등록을 완료하였습니다.');
-            setModalState(initialModalState);
+            handleCloseModal();
             getSiteList();
           },
           () => {
@@ -263,7 +268,7 @@ function RecentOrdersTable() {
         .then(
           () => {
             alert('수정을 완료하였습니다.');
-            setModalState(initialModalState);
+            handleCloseModal();
             getSiteList();
           },
           () => {
@@ -495,7 +500,7 @@ function RecentOrdersTable() {
       </TableBottomBox>
 
       {/* modal */}
-      <Dialog onClose={() => setModalState({ ...modalState, isOpen: false })} open={modalState.isOpen}>
+      <Dialog onClose={handleCloseModal} open={modalState.isOpen}>
         <DialogTitle gutterBottom>
           {modalState.isNew ? "Add New Web Site" : "Edit Web Site"}
         </DialogTitle>

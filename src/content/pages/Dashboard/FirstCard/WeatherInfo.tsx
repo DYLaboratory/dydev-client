@@ -66,11 +66,8 @@ function WeatherInfo() {
     const fetchCurrentWeather = async () => {
       try {
         await apiClient.get<CurrentWeather>('/external/weather', { params: { city: 'Seoul' } })
-            .then(res => console.log(res));
+            .then(res => setCurrentWeather(res.data));
 
-        // console.log(response);
-
-        // setCurrentWeather(response.data);
         setLoading(false);
       } catch (error) {
         setError("An error has occurred.");
