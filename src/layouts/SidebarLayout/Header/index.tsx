@@ -43,7 +43,7 @@ function Header() {
 
   useEffect(() => {
     dispatch(getUserAsync()).then(res => {
-      if (res.payload['data'].userId) {
+      if (res.payload && res.payload['data'].userId) {
         setLogin(selector.isLogin);
       }
     });

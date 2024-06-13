@@ -13,7 +13,7 @@ export type SiteTypes =
   | 'etc';
 
 export interface SiteData {
-  id: number;
+  id?: number;
   type: SiteTypes;
   name: string;
   description: string;

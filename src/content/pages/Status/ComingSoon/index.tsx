@@ -85,7 +85,22 @@ function StatusComingSoon({ isMain }: StatusProps) {
   const timerComponents = [];
 
   Object.keys(timeLeft).forEach(interval => {
-    if (!timeLeft[interval]) {
+    if (!timeLeft[interval<OutlinedInputWrapper
+                  type="text"
+                  placeholder="Enter your email address here..."
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <ButtonNotify variant="contained" size="small">
+                        Notify Me
+                      </ButtonNotify>
+                    </InputAdornment>
+                  }
+                  startAdornment={
+                    <InputAdornment position="start">
+                      <MailTwoToneIcon />
+                    </InputAdornment>
+                  }
+                />]) {
       return;
     }
 

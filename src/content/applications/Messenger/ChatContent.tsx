@@ -112,8 +112,7 @@ function ChatContent() {
           justifyContent="flex-end"
           mr={2}>
           <CardWrapperPrimary>
-            Yes, I'll email them right now. I'll let you know once the remaining
-            invoices are done.
+            {"Yes, I'll email them right now. I'll let you know once the remaining invoices are done."}
           </CardWrapperPrimary>
           <Typography
             variant="subtitle1"

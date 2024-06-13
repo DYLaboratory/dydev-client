@@ -12,5 +12,5 @@ export const signOut = () => {
 };
 
 export const getLoginUser = (): AxiosPromise => {
-  return apiClient.get('/session/user');
+  return apiClient.get(URL_INFO.API_V1.SESSION_URL.concat("/user"));
 };

@@ -65,15 +65,15 @@ function WeatherInfo() {
   useEffect(() => {
     const fetchCurrentWeather = async () => {
       try {
-        const response = await apiClient.get<CurrentWeather>(
-          '/external/weather',
-          { params: { city: 'Seoul' } }
-        );
+        await apiClient.get<CurrentWeather>('/external/weather', { params: { city: 'Seoul' } })
+            .then(res => console.log(res));
 
-        setCurrentWeather(response.data);
+        // console.log(response);
+
+        // setCurrentWeather(response.data);
         setLoading(false);
       } catch (error) {
-        setError(error.message);
+        setError("An error has occurred.");
         setLoading(false);
       }
     };

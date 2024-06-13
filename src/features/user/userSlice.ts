@@ -32,7 +32,7 @@ export const userSlice = createSlice({
       })
       .addCase(getUserAsync.fulfilled, (state, action) => {
         state.status = 'idle';
-        const data = action.payload.data;
+        const data = action.payload?.data;
 
         if (data) {
           state.isLogin = true;
