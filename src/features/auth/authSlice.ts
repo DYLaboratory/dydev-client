@@ -3,6 +3,7 @@ import { LoginData } from "src/models/data/dataModels";
 import { signIn, signOut } from "src/services/auth/authApi";
 import { AuthState } from "src/models/state/stateModels";
 import { AxiosResponse } from "axios";
+import { clearLoginUserInfo } from "src/features/user/userSlice";
 
 const initialState: AuthState = {
   status: 'idle'
@@ -53,6 +54,7 @@ export const authSlice = createSlice({
       })
       .addCase(logOutAsync.fulfilled, state => {
         state.status = 'idle';
+        clearLoginUserInfo();
       })
       .addCase(logOutAsync.rejected, state => {
         state.status = 'failed';

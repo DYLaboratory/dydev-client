@@ -1,9 +1,11 @@
-import { ReactNode } from 'react';
-import { alpha, Box, lighten, useTheme } from '@mui/material';
-import { Outlet } from 'react-router-dom';
+import { ReactNode, useEffect } from "react";
+import { alpha, Box, lighten, useTheme } from "@mui/material";
+import { Outlet } from "react-router-dom";
 
-import Sidebar from './Sidebar';
-import Header from './Header';
+import Sidebar from "./Sidebar";
+import Header from "./Header";
+import { useAppDispatch } from "src/app/hooks";
+import { getUserAsync } from "src/features/user/userSlice";
 
 interface SidebarLayoutProps {
   children?: ReactNode;
@@ -11,6 +13,12 @@ interface SidebarLayoutProps {
 
 function SidebarLayout({ children }: SidebarLayoutProps) {
   const theme = useTheme();
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(getUserAsync());
+  }, []);
 
   return (
     <Box

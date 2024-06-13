@@ -22,7 +22,11 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     clearLoginUserInfo: (state: UserState) => {
-      state = initialState;
+      state.isLogin = false;
+      state.userId = null;
+      state.name = null;
+      state.email = null;
+      state.lastLoginDateTime = null;
     }
   },
   extraReducers: builder => {
@@ -41,7 +45,11 @@ export const userSlice = createSlice({
           state.email = data.email;
           state.lastLoginDateTime = data.lastLoginDateTime;
         } else {
-          state = initialState;
+          state.isLogin = false;
+          state.userId = null;
+          state.name = null;
+          state.email = null;
+          state.lastLoginDateTime = null;
         }
       })
       .addCase(getUserAsync.rejected, state => {

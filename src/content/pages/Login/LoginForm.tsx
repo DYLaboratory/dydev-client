@@ -80,12 +80,16 @@ function LoginForm() {
       const { payload } = res;
       const response = payload['response'];
 
-      if (response) {
-        if (response.status === 400) {
-          alert(response.data.message);
-        }
-      } else if (payload['status'] === 200) {
+      if (payload['status'] === 200) {
         navigate('/');
+      } else {
+        if (response) {
+          if (response.status === 400) {
+            alert(response.data.message);
+          } else {
+            alert('An error has occurred.');
+          }
+        }
       }
     });
   };

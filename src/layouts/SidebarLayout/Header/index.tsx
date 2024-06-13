@@ -1,13 +1,12 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 
 import { alpha, Box, Button, Divider, IconButton, lighten, Stack, styled, Tooltip, useTheme } from "@mui/material";
 import MenuTwoToneIcon from "@mui/icons-material/MenuTwoTone";
 import { SidebarContext } from "src/contexts/SidebarContext";
 import CloseTwoToneIcon from "@mui/icons-material/CloseTwoTone";
-import { useAppDispatch, useAppSelector } from "src/app/hooks";
+import { useAppSelector } from "src/app/hooks";
 import HeaderUserbox from "./Userbox";
 import HeaderButtons from "./Buttons";
-import { getUserAsync } from "src/features/user/userSlice";
 import LockTwoToneIcon from "@mui/icons-material/LockTwoTone";
 import { useNavigate } from "react-router";
 
@@ -31,23 +30,12 @@ const HeaderWrapper = styled(Box)(
 );
 
 function Header() {
-  const dispatch = useAppDispatch();
-  const selector = useAppSelector(state => state.user);
+  const isLogin = useAppSelector(state => state.user).isLogin;
 
   const navigate = useNavigate();
 
-  const [isLogin, setLogin] = useState<boolean>(false);
-
   const { sidebarToggle, toggleSidebar } = useContext(SidebarContext);
   const theme = useTheme();
-
-  useEffect(() => {
-    dispatch(getUserAsync()).then(res => {
-      if (res.payload && res.payload['data'].userId) {
-        setLogin(selector.isLogin);
-      }
-    });
-  }, [dispatch, selector.isLogin]);
 
   const handleClickSignIn = () => {
     navigate('/login');

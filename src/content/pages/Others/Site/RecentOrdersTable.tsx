@@ -1,6 +1,7 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import {
   Box,
+  Button,
   Card,
   CardHeader,
   Checkbox,
@@ -9,6 +10,7 @@ import {
   IconButton,
   InputLabel,
   MenuItem,
+  OutlinedInput,
   Select,
   Table,
   TableBody,
@@ -23,25 +25,80 @@ import {
 } from "@mui/material";
 import EditTwoToneIcon from "@mui/icons-material/EditTwoTone";
 import DeleteTwoToneIcon from "@mui/icons-material/DeleteTwoTone";
-import PropTypes from "prop-types";
 import BulkActions from "./BulkActions";
 import { useAppSelector } from "src/app/hooks";
 import { SiteData, SiteTypes } from "src/models/data/dataModels";
-
-interface RecentOrdersTableProps {
-  // className?: string;
-  sites: SiteData[];
-}
+import DialogTitle from "@mui/material/DialogTitle";
+import List from "@mui/material/List";
+import ListItemAvatar from "@mui/material/ListItemAvatar";
+import Avatar from "@mui/material/Avatar";
+import SaveIcon from "@mui/icons-material/Save";
+import Dialog from "@mui/material/Dialog";
+import { getWebSiteList, setDeleteWebSite, setInsertWebSite, setUpdateWebSite } from "src/services/others/webSiteApi";
+import { styled } from "@mui/material/styles";
+import ListItem from "@mui/material/ListItem";
+import AddTwoToneIcon from "@mui/icons-material/AddTwoTone";
 
 interface Filters {
   type?: SiteTypes;
 }
 
+const ListItemWrapper = styled(ListItem)(`
+  display: flex;
+  justify-content: space-between;
+`);
+
+const ListItemEndWrapper = styled(ListItem)(`
+  display: flex;
+  justify-content: flex-end;
+`);
+
+const FormControlWrapper = styled(FormControl)(
+  `margin-left: 20px;`
+);
+
+const OutlinedInputWrapper = styled(OutlinedInput)(
+  ({ theme }) => `
+    margin-left: 20px;
+    background-color: ${theme.colors.alpha.white[100]};
+`
+);
+
+const TableBottomBox = styled(Box)(
+  `
+    display: flex;
+    justify-content: space-between;
+  `
+)
+
+const saveTypeOptions: { id: SiteTypes; name: string; }[] = [
+  {
+    id: 'DEVELOP',
+    name: 'Develop'
+  },
+  {
+    id: 'REFERENCE',
+    name: 'Reference'
+  },
+  {
+    id: 'USEFUL',
+    name: 'Useful'
+  },
+  {
+    id: 'ENTERTAIN',
+    name: 'Entertain'
+  },
+  {
+    id: 'ETC',
+    name: 'etc'
+  }
+];
+
 const applyFilters = (sites: SiteData[], filters: Filters): SiteData[] => {
   return sites.filter(site => {
     let matches = true;
 
-    if (filters.type && site.type !== filters.type) {
+    if (filters.type && site.webSiteType !== filters.type) {
       matches = false;
     }
 
@@ -57,42 +114,58 @@ const applyPagination = (
   return sites.slice(page * limit, page * limit + limit);
 };
 
-function RecentOrdersTable({ sites }: RecentOrdersTableProps) {
+function RecentOrdersTable() {
   const isLogin = useAppSelector(state => state.user).isLogin;
 
   const [selectedCryptoOrders, setSelectedCryptoOrders] = useState<number[]>(
     []
   );
   const selectedBulkActions = selectedCryptoOrders.length > 0;
+
+  const [sites, setSites] = useState<SiteData[]>([]);
+
+  const getSiteList = () => {
+    getWebSiteList()
+      .then(
+        res => setSites(res.data)
+      );
+  }
+
+  useEffect(() => {
+    getSiteList();
+  }, []);
+
+  // paging
   const [page, setPage] = useState<number>(0);
   const [limit, setLimit] = useState<number>(5);
   const [filters, setFilters] = useState<Filters>({
     type: null
   });
 
-  const typeOptions: { id: SiteTypes | 'all'; name: string }[] = [
+  // filter
+  const typeOptions: { id: SiteTypes | 'ALL'; name: string }[] = [
     {
-      id: 'all',
+      id: 'ALL',
       name: 'All'
     },
     {
-      id: 'develop',
+      id: 'DEVELOP',
       name: 'Develop'
     },
     {
-      id: 'reference',
+      id: 'REFERENCE',
       name: 'Reference'
     },
     {
-      id: 'useful',
+      id: 'USEFUL',
       name: 'Useful'
     },
     {
-      id: 'entertain',
+      id: 'ENTERTAIN',
       name: 'Entertain'
     },
     {
-      id: 'etc',
+      id: 'ETC',
       name: 'etc'
     }
   ];
@@ -100,7 +173,7 @@ function RecentOrdersTable({ sites }: RecentOrdersTableProps) {
   const handleStatusChange = (e: ChangeEvent<HTMLInputElement>): void => {
     let value = null;
 
-    if (e.target.value !== 'all') {
+    if (e.target.value !== 'ALL') {
       value = e.target.value;
     }
 
@@ -151,6 +224,78 @@ function RecentOrdersTable({ sites }: RecentOrdersTableProps) {
   const selectedAllCryptoOrders = selectedCryptoOrders.length === sites.length;
   const theme = useTheme();
 
+  // modal
+  const initialModalState: { isNew: boolean, isOpen: boolean } = {
+    isNew: true,
+    isOpen: false
+  }
+  const [modalState, setModalState] = useState<{ isNew: boolean, isOpen: boolean }>(initialModalState);
+
+  // insert (s)
+  const initialWebSite: SiteData = {
+    webSiteType: "DEVELOP",
+    name: null,
+    description: null,
+    url: null
+  };
+
+  const [webSite, setWebSite] = useState<SiteData>(initialWebSite);
+
+  const handleTypeChange = e => {
+    setWebSite({ ...webSite, webSiteType: e.target.value });
+  }
+
+  const handleClickSaveButton = () => {
+    if (modalState.isNew) {
+      setInsertWebSite(webSite)
+        .then(
+          () => {
+            alert('등록을 완료하였습니다.');
+            setModalState(initialModalState);
+            getSiteList();
+          },
+          () => {
+            alert('등록 중 오류가 발생하였습니다.');
+          }
+        );
+    } else {
+      setUpdateWebSite(webSite)
+        .then(
+          () => {
+            alert('수정을 완료하였습니다.');
+            setModalState(initialModalState);
+            getSiteList();
+          },
+          () => {
+            alert('수정 중 오류가 발생하였습니다.')
+          }
+        );
+    }
+  }
+  // insert (e)
+
+  // update (s)
+  const handleOpenEditModal = site => {
+    setModalState({ isNew: false, isOpen: true });
+    setWebSite(site);
+  }
+  // update (e)
+
+  // delete (s)
+  const handleDeleteButton = id => {
+    if (confirm('해당 웹사이트를 삭제하시겠습니까?')) {
+      setDeleteWebSite(id)
+        .then(
+          () => {
+            alert('삭제를 완료 하였습니다.');
+            getSiteList();
+          },
+          () => alert('삭제 중 오류가 발생하였습니다.')
+        );
+    }
+  }
+  // delete (e)
+
   return (
     <Card>
       {isLogin && selectedBulkActions && (
@@ -165,7 +310,7 @@ function RecentOrdersTable({ sites }: RecentOrdersTableProps) {
               <FormControl fullWidth variant="outlined">
                 <InputLabel>Type</InputLabel>
                 <Select
-                  value={filters.type || 'all'}
+                  value={filters.type || 'ALL'}
                   onChange={handleStatusChange}
                   label="Status"
                   autoWidth>
@@ -209,7 +354,7 @@ function RecentOrdersTable({ sites }: RecentOrdersTableProps) {
           <TableBody>
             {paginatedCryptoOrders.length === 0 && (
               <TableRow>
-                <TableCell colSpan={6} align="center">
+                <TableCell colSpan={isLogin ? 7 : 6} align="center">
                   <Typography
                     variant="body1"
                     color="text.primary"
@@ -253,7 +398,7 @@ function RecentOrdersTable({ sites }: RecentOrdersTableProps) {
                       color="text.primary"
                       gutterBottom
                       noWrap>
-                      {site.type}
+                      {site.webSiteType}
                     </Typography>
                   </TableCell>
                   <TableCell>
@@ -301,6 +446,7 @@ function RecentOrdersTable({ sites }: RecentOrdersTableProps) {
                           }}
                           color="inherit"
                           size="small"
+                          onClick={() => handleOpenEditModal(site)}
                         >
                           <EditTwoToneIcon fontSize="small" />
                         </IconButton>
@@ -313,6 +459,7 @@ function RecentOrdersTable({ sites }: RecentOrdersTableProps) {
                           }}
                           color="inherit"
                           size="small"
+                          onClick={() => handleDeleteButton(site.id)}
                         >
                           <DeleteTwoToneIcon fontSize="small" />
                         </IconButton>
@@ -325,7 +472,17 @@ function RecentOrdersTable({ sites }: RecentOrdersTableProps) {
           </TableBody>
         </Table>
       </TableContainer>
-      <Box p={2}>
+      <TableBottomBox p={2}>
+        {isLogin &&
+          <Button
+            sx={{ mt: { xs: 2, md: 0 } }}
+            variant="contained"
+            startIcon={<AddTwoToneIcon fontSize="small" />}
+            onClick={() => setModalState({ ...modalState, isOpen: true })}
+          >
+            Add WebSite
+          </Button>
+        }
         <TablePagination
           component="div"
           count={filteredCryptoOrders.length}
@@ -335,13 +492,86 @@ function RecentOrdersTable({ sites }: RecentOrdersTableProps) {
           rowsPerPage={limit}
           rowsPerPageOptions={[5, 10, 25, 30]}
         />
-      </Box>
+      </TableBottomBox>
+
+      {/* modal */}
+      <Dialog onClose={() => setModalState({ ...modalState, isOpen: false })} open={modalState.isOpen}>
+        <DialogTitle gutterBottom>
+          {modalState.isNew ? "Add New Web Site" : "Edit Web Site"}
+        </DialogTitle>
+        <List sx={{ pt: 0 }}>
+          <ListItemWrapper>
+            <Typography variant="h4" component="h4">
+              type
+            </Typography>
+            <FormControlWrapper variant="outlined">
+              <InputLabel>Type</InputLabel>
+              <Select
+                value={webSite.webSiteType}
+                onChange={handleTypeChange}
+                label="Status"
+                autoWidth>
+                {saveTypeOptions.map(typeOption => (
+                  <MenuItem key={typeOption.id} value={typeOption.id}>
+                    {typeOption.name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControlWrapper>
+          </ListItemWrapper>
+
+          <ListItemWrapper>
+            <Typography variant="h4" component="h4">
+              name
+            </Typography>
+            <OutlinedInputWrapper
+              type="text"
+              placeholder="Web Site Name"
+              value={webSite.name}
+              onChange={e => setWebSite({ ...webSite, name: e.target.value })}
+            />
+          </ListItemWrapper>
+
+          <ListItemWrapper>
+            <Typography variant="h4" component="h4">
+              description
+            </Typography>
+            <OutlinedInputWrapper
+              type="text"
+              placeholder="Web Site Description"
+              value={webSite.description}
+              onChange={e => setWebSite({ ...webSite, description: e.target.value })}
+            />
+          </ListItemWrapper>
+
+          <ListItemWrapper>
+            <Typography variant="h4" component="h4">
+              url
+            </Typography>
+            <OutlinedInputWrapper
+              type="text"
+              placeholder="Web Site URL"
+              value={webSite.url}
+              onChange={e => setWebSite({ ...webSite, url: e.target.value })}
+            />
+          </ListItemWrapper>
+
+          <ListItemEndWrapper>
+            <Button color={"inherit"} onClick={handleClickSaveButton}>
+              <ListItemAvatar>
+                <Avatar>
+                  <SaveIcon />
+                </Avatar>
+              </ListItemAvatar>
+              <Typography variant="h4">
+                SAVE
+              </Typography>
+            </Button>
+          </ListItemEndWrapper>
+        </List>
+      </Dialog>
     </Card>
   );
 }
-
-RecentOrdersTable.propTypes = {
-  sites: PropTypes.array.isRequired
-};
 
 export default RecentOrdersTable;

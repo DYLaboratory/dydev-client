@@ -6,15 +6,15 @@ export interface LoginData {
 
 // site
 export type SiteTypes =
-  | 'develop'
-  | 'reference'
-  | 'useful'
-  | 'entertain'
-  | 'etc';
+  | 'DEVELOP'
+  | 'REFERENCE'
+  | 'USEFUL'
+  | 'ENTERTAIN'
+  | 'ETC';
 
 export interface SiteData {
   id?: number;
-  type: SiteTypes;
+  webSiteType: SiteTypes;
   name: string;
   description: string;
   url: string;
