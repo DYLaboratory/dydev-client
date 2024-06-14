@@ -1,7 +1,6 @@
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useState } from "react";
 import {
   Box,
-  Button,
   Card,
   CardHeader,
   Checkbox,
@@ -10,7 +9,6 @@ import {
   IconButton,
   InputLabel,
   MenuItem,
-  OutlinedInput,
   Select,
   Table,
   TableBody,
@@ -26,43 +24,12 @@ import {
 import EditTwoToneIcon from "@mui/icons-material/EditTwoTone";
 import DeleteTwoToneIcon from "@mui/icons-material/DeleteTwoTone";
 import BulkActions from "./BulkActions";
-import { useAppSelector } from "src/app/hooks";
 import { SiteData, SiteTypes } from "src/models/data/dataModels";
-import DialogTitle from "@mui/material/DialogTitle";
-import List from "@mui/material/List";
-import ListItemAvatar from "@mui/material/ListItemAvatar";
-import Avatar from "@mui/material/Avatar";
-import SaveIcon from "@mui/icons-material/Save";
-import Dialog from "@mui/material/Dialog";
-import { getWebSiteList, setDeleteWebSite, setInsertWebSite, setUpdateWebSite } from "src/services/others/webSiteApi";
 import { styled } from "@mui/material/styles";
-import ListItem from "@mui/material/ListItem";
-import AddTwoToneIcon from "@mui/icons-material/AddTwoTone";
 
 interface Filters {
   type?: SiteTypes;
 }
-
-const ListItemWrapper = styled(ListItem)(`
-  display: flex;
-  justify-content: space-between;
-`);
-
-const ListItemEndWrapper = styled(ListItem)(`
-  display: flex;
-  justify-content: flex-end;
-`);
-
-const FormControlWrapper = styled(FormControl)(
-  `margin-left: 20px;`
-);
-
-const OutlinedInputWrapper = styled(OutlinedInput)(
-  ({ theme }) => `
-    margin-left: 20px;
-    background-color: ${theme.colors.alpha.white[100]};
-`
-);
 
 const TableBottomBox = styled(Box)(
   `
@@ -70,29 +37,6 @@ const TableBottomBox = styled(Box)(
     justify-content: space-between;
   `
 )
-
-const saveTypeOptions: { id: SiteTypes; name: string; }[] = [
-  {
-    id: 'DEVELOP',
-    name: 'Develop'
-  },
-  {
-    id: 'REFERENCE',
-    name: 'Reference'
-  },
-  {
-    id: 'USEFUL',
-    name: 'Useful'
-  },
-  {
-    id: 'ENTERTAIN',
-    name: 'Entertain'
-  },
-  {
-    id: 'ETC',
-    name: 'etc'
-  }
-];
 
 const applyFilters = (sites: SiteData[], filters: Filters): SiteData[] => {
   return sites.filter(site => {
@@ -114,26 +58,21 @@ const applyPagination = (
   return sites.slice(page * limit, page * limit + limit);
 };
 
-function RecentOrdersTable() {
-  const isLogin = useAppSelector(state => state.user).isLogin;
+interface RecentOrdersTableProps {
+  isLogin: boolean;
+  onOpenModal: (modalState: { isNew: boolean, isOpen: boolean }) => void;
+  setWebSite: (webSite: SiteData) => void;
+  sites: SiteData[];
+  handleDeleteSite: (id: number) => void;
+}
+
+function RecentOrdersTable(props: RecentOrdersTableProps) {
+  const { isLogin, onOpenModal, setWebSite, sites, handleDeleteSite } = props;
 
   const [selectedCryptoOrders, setSelectedCryptoOrders] = useState<number[]>(
     []
   );
   const selectedBulkActions = selectedCryptoOrders.length > 0;
-
-  const [sites, setSites] = useState<SiteData[]>([]);
-
-  const getSiteList = () => {
-    getWebSiteList()
-      .then(
-        res => setSites(res.data)
-      );
-  }
-
-  useEffect(() => {
-    getSiteList();
-  }, []);
 
   // paging
   const [page, setPage] = useState<number>(0);
@@ -224,82 +163,12 @@ function RecentOrdersTable() {
   const selectedAllCryptoOrders = selectedCryptoOrders.length === sites.length;
   const theme = useTheme();
 
-  // modal
-  const initialModalState: { isNew: boolean, isOpen: boolean } = {
-    isNew: true,
-    isOpen: false
-  }
-  const [modalState, setModalState] = useState<{ isNew: boolean, isOpen: boolean }>(initialModalState);
-
-  const handleCloseModal = () => {
-    setModalState(initialModalState);
-    setWebSite(initialWebSite);
-  }
-
-  // insert (s)
-  const initialWebSite: SiteData = {
-    webSiteType: "DEVELOP",
-    name: null,
-    description: null,
-    url: null
-  };
-
-  const [webSite, setWebSite] = useState<SiteData>(initialWebSite);
-
-  const handleTypeChange = e => {
-    setWebSite({ ...webSite, webSiteType: e.target.value });
-  }
-
-  const handleClickSaveButton = () => {
-    if (modalState.isNew) {
-      setInsertWebSite(webSite)
-        .then(
-          () => {
-            alert('등록을 완료하였습니다.');
-            handleCloseModal();
-            getSiteList();
-          },
-          () => {
-            alert('등록 중 오류가 발생하였습니다.');
-          }
-        );
-    } else {
-      setUpdateWebSite(webSite)
-        .then(
-          () => {
-            alert('수정을 완료하였습니다.');
-            handleCloseModal();
-            getSiteList();
-          },
-          () => {
-            alert('수정 중 오류가 발생하였습니다.')
-          }
-        );
-    }
-  }
-  // insert (e)
-
   // update (s)
   const handleOpenEditModal = site => {
-    setModalState({ isNew: false, isOpen: true });
+    onOpenModal({ isNew: false, isOpen: true });
     setWebSite(site);
   }
   // update (e)
-
-  // delete (s)
-  const handleDeleteButton = id => {
-    if (confirm('해당 웹사이트를 삭제하시겠습니까?')) {
-      setDeleteWebSite(id)
-        .then(
-          () => {
-            alert('삭제를 완료 하였습니다.');
-            getSiteList();
-          },
-          () => alert('삭제 중 오류가 발생하였습니다.')
-        );
-    }
-  }
-  // delete (e)
 
   return (
     <Card>
@@ -464,7 +333,7 @@ function RecentOrdersTable() {
                           }}
                           color="inherit"
                           size="small"
-                          onClick={() => handleDeleteButton(site.id)}
+                          onClick={() => handleDeleteSite(site.id)}
                         >
                           <DeleteTwoToneIcon fontSize="small" />
                         </IconButton>
@@ -478,16 +347,6 @@ function RecentOrdersTable() {
         </Table>
       </TableContainer>
       <TableBottomBox p={2}>
-        {isLogin &&
-          <Button
-            sx={{ mt: { xs: 2, md: 0 } }}
-            variant="contained"
-            startIcon={<AddTwoToneIcon fontSize="small" />}
-            onClick={() => setModalState({ ...modalState, isOpen: true })}
-          >
-            Add WebSite
-          </Button>
-        }
         <TablePagination
           component="div"
           count={filteredCryptoOrders.length}
@@ -498,83 +357,6 @@ function RecentOrdersTable() {
           rowsPerPageOptions={[5, 10, 25, 30]}
         />
       </TableBottomBox>
-
-      {/* modal */}
-      <Dialog onClose={handleCloseModal} open={modalState.isOpen}>
-        <DialogTitle gutterBottom>
-          {modalState.isNew ? "Add New Web Site" : "Edit Web Site"}
-        </DialogTitle>
-        <List sx={{ pt: 0 }}>
-          <ListItemWrapper>
-            <Typography variant="h4" component="h4">
-              type
-            </Typography>
-            <FormControlWrapper variant="outlined">
-              <InputLabel>Type</InputLabel>
-              <Select
-                value={webSite.webSiteType}
-                onChange={handleTypeChange}
-                label="Status"
-                autoWidth>
-                {saveTypeOptions.map(typeOption => (
-                  <MenuItem key={typeOption.id} value={typeOption.id}>
-                    {typeOption.name}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControlWrapper>
-          </ListItemWrapper>
-
-          <ListItemWrapper>
-            <Typography variant="h4" component="h4">
-              name
-            </Typography>
-            <OutlinedInputWrapper
-              type="text"
-              placeholder="Web Site Name"
-              value={webSite.name}
-              onChange={e => setWebSite({ ...webSite, name: e.target.value })}
-            />
-          </ListItemWrapper>
-
-          <ListItemWrapper>
-            <Typography variant="h4" component="h4">
-              description
-            </Typography>
-            <OutlinedInputWrapper
-              type="text"
-              placeholder="Web Site Description"
-              value={webSite.description}
-              onChange={e => setWebSite({ ...webSite, description: e.target.value })}
-            />
-          </ListItemWrapper>
-
-          <ListItemWrapper>
-            <Typography variant="h4" component="h4">
-              url
-            </Typography>
-            <OutlinedInputWrapper
-              type="text"
-              placeholder="Web Site URL"
-              value={webSite.url}
-              onChange={e => setWebSite({ ...webSite, url: e.target.value })}
-            />
-          </ListItemWrapper>
-
-          <ListItemEndWrapper>
-            <Button color={"inherit"} onClick={handleClickSaveButton}>
-              <ListItemAvatar>
-                <Avatar>
-                  <SaveIcon />
-                </Avatar>
-              </ListItemAvatar>
-              <Typography variant="h4">
-                SAVE
-              </Typography>
-            </Button>
-          </ListItemEndWrapper>
-        </List>
-      </Dialog>
     </Card>
   );
 }

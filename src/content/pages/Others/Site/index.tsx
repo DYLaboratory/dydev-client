@@ -1,19 +1,184 @@
 import { Helmet } from 'react-helmet-async';
 import PageTitleWrapper from 'src/components/PageTitleWrapper';
-import { Grid, Container } from '@mui/material';
+import {
+  Button,
+  Container,
+  FormControl,
+  Grid,
+  InputLabel,
+  MenuItem,
+  OutlinedInput,
+  Select,
+  Typography
+} from '@mui/material';
 import Footer from 'src/components/Footer';
 import PageHeader from './PageHeader';
 
-import RecentOrders from './RecentOrders';
+import { useEffect, useState } from "react";
+import { SiteData, SiteTypes } from "src/models/data/dataModels";
+import RecentOrdersTable from "src/content/pages/Others/Site/RecentOrdersTable";
+import Dialog from "@mui/material/Dialog";
+import DialogTitle from "@mui/material/DialogTitle";
+import List from "@mui/material/List";
+import ListItemAvatar from "@mui/material/ListItemAvatar";
+import Avatar from "@mui/material/Avatar";
+import SaveIcon from "@mui/icons-material/Save";
+import { styled } from "@mui/material/styles";
+import ListItem from "@mui/material/ListItem";
+import { getWebSiteList, setDeleteWebSite, setInsertWebSite, setUpdateWebSite } from "src/services/others/webSiteApi";
+import { useAppSelector } from "src/app/hooks";
+
+const ListItemWrapper = styled(ListItem)(`
+  display: flex;
+  justify-content: space-between;
+`);
+
+const ListItemEndWrapper = styled(ListItem)(`
+  display: flex;
+  justify-content: flex-end;
+`);
+
+const FormControlWrapper = styled(FormControl)(
+  `margin-left: 20px;`
+);
+
+const OutlinedInputWrapper = styled(OutlinedInput)(
+  ({ theme }) => `
+    margin-left: 20px;
+    background-color: ${theme.colors.alpha.white[100]};
+`
+);
+
+const saveTypeOptions: { id: SiteTypes; name: string; }[] = [
+  {
+    id: 'DEVELOP',
+    name: 'Develop'
+  },
+  {
+    id: 'REFERENCE',
+    name: 'Reference'
+  },
+  {
+    id: 'USEFUL',
+    name: 'Useful'
+  },
+  {
+    id: 'ENTERTAIN',
+    name: 'Entertain'
+  },
+  {
+    id: 'ETC',
+    name: 'etc'
+  }
+];
+
+interface ModalType {
+  isNew: boolean;
+  isOpen: boolean;
+}
 
 function SiteList() {
+  const isLogin = useAppSelector(state => state.user).isLogin;
+
+  // modal
+  const initialModalState: ModalType = {
+    isNew: true,
+    isOpen: false
+  }
+
+  const [modalState, setModalState] = useState<ModalType>(initialModalState);
+
+  const [sites, setSites] = useState<SiteData[]>([]);
+
+  useEffect(() => {
+    getSiteList();
+  }, []);
+
+  const handleCloseModal = () => {
+    setModalState(initialModalState);
+    setWebSite(initialWebSite);
+  }
+
+  // get (s)
+  const getSiteList = () => {
+    getWebSiteList()
+      .then(
+        res => setSites(res.data)
+      );
+  }
+  // get (e)
+
+  // insert / update (s)
+  const initialWebSite: SiteData = {
+    webSiteType: "DEVELOP",
+    name: '',
+    description: '',
+    url: ''
+  };
+
+  const [webSite, setWebSite] = useState<SiteData>(initialWebSite);
+
+  const handleTypeChange = e => {
+    setWebSite({ ...webSite, webSiteType: e.target.value });
+  }
+
+  const handleInputChange = e => {
+    const changeValue = {};
+    changeValue[e.target.name] = e.target.value;
+    setWebSite({ ...webSite, ...changeValue });
+  }
+
+  const handleClickSaveButton = () => {
+    if (modalState.isNew) {
+      setInsertWebSite(webSite)
+        .then(
+          () => {
+            alert('등록을 완료하였습니다.');
+            handleCloseModal();
+            getSiteList();
+          },
+          () => {
+            alert('등록 중 오류가 발생하였습니다.');
+          }
+        );
+    } else {
+      setUpdateWebSite(webSite)
+        .then(
+          () => {
+            alert('수정을 완료하였습니다.');
+            handleCloseModal();
+            getSiteList();
+          },
+          () => {
+            alert('수정 중 오류가 발생하였습니다.')
+          }
+        );
+    }
+  }
+  // insert / update (e)
+
+  // delete (s)
+  const handleDeleteButton = id => {
+    if (confirm('해당 웹사이트를 삭제하시겠습니까?')) {
+      setDeleteWebSite(id)
+        .then(
+          () => {
+            alert('삭제를 완료 하였습니다.');
+            getSiteList();
+          },
+          () => alert('삭제 중 오류가 발생하였습니다.')
+        );
+    }
+  }
+  // delete (e)
+
   return (
     <>
       <Helmet>
         <title>Reference Site</title>
       </Helmet>
       <PageTitleWrapper>
-        <PageHeader />
+        <PageHeader isLogin={isLogin} onOpenModal={setModalState} />
       </PageTitleWrapper>
       <Container maxWidth="lg">
         <Grid
@@ -23,11 +188,97 @@ function SiteList() {
           alignItems="stretch"
           spacing={3}>
           <Grid item xs={12}>
-            <RecentOrders />
+            <RecentOrdersTable
+              isLogin={isLogin}
+              onOpenModal={setModalState}
+              setWebSite={setWebSite}
+              sites={sites}
+              handleDeleteSite={handleDeleteButton}
+            />
           </Grid>
         </Grid>
       </Container>
       <Footer />
+
+      {/* modal */}
+      <Dialog onClose={handleCloseModal} open={modalState.isOpen}>
+        <DialogTitle gutterBottom>
+          {modalState.isNew ? "Add New Web Site" : "Edit Web Site"}
+        </DialogTitle>
+        <List sx={{ pt: 0 }}>
+          <ListItemWrapper>
+            <Typography variant="h4" component="h4">
+              type
+            </Typography>
+            <FormControlWrapper variant="outlined">
+              <InputLabel>Type</InputLabel>
+              <Select
+                value={webSite.webSiteType}
+                onChange={handleTypeChange}
+                label="Status"
+                autoWidth>
+                {saveTypeOptions.map(typeOption => (
+                  <MenuItem key={typeOption.id} value={typeOption.id}>
+                    {typeOption.name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControlWrapper>
+          </ListItemWrapper>
+
+          <ListItemWrapper>
+            <Typography variant="h4" component="h4">
+              name
+            </Typography>
+            <OutlinedInputWrapper
+              name="name"
+              type="text"
+              placeholder="Web Site Name"
+              value={webSite.name}
+              onChange={handleInputChange}
+            />
+          </ListItemWrapper>
+
+          <ListItemWrapper>
+            <Typography variant="h4" component="h4">
+              description
+            </Typography>
+            <OutlinedInputWrapper
+              name="description"
+              type="text"
+              placeholder="Web Site Description"
+              value={webSite.description}
+              onChange={handleInputChange}
+            />
+          </ListItemWrapper>
+
+          <ListItemWrapper>
+            <Typography variant="h4" component="h4">
+              url
+            </Typography>
+            <OutlinedInputWrapper
+              name="url"
+              type="text"
+              placeholder="Web Site URL"
+              value={webSite.url}
+              onChange={handleInputChange}
+            />
+          </ListItemWrapper>
+
+          <ListItemEndWrapper>
+            <Button color={"inherit"} onClick={handleClickSaveButton}>
+              <ListItemAvatar>
+                <Avatar>
+                  <SaveIcon />
+                </Avatar>
+              </ListItemAvatar>
+              <Typography variant="h4">
+                SAVE
+              </Typography>
+            </Button>
+          </ListItemEndWrapper>
+        </List>
+      </Dialog>
     </>
   );
 }
