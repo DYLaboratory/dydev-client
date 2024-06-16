@@ -1,19 +1,7 @@
-import { useState, useRef } from 'react';
+import { Box, Button, Typography } from "@mui/material";
+import { styled } from "@mui/material/styles";
 
-import {
-  Box,
-  Menu,
-  IconButton,
-  Button,
-  ListItemText,
-  ListItem,
-  List,
-  Typography
-} from '@mui/material';
-import { styled } from '@mui/material/styles';
-
-import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
-import MoreVertTwoToneIcon from '@mui/icons-material/MoreVertTwoTone';
+import DeleteTwoToneIcon from "@mui/icons-material/DeleteTwoTone";
 
 const ButtonError = styled(Button)(
   ({ theme }) => `
@@ -26,17 +14,12 @@ const ButtonError = styled(Button)(
     `
 );
 
-function BulkActions() {
-  const [onMenuOpen, menuOpen] = useState<boolean>(false);
-  const moreRef = useRef<HTMLButtonElement | null>(null);
+interface BulkActionsProps {
+  onClickDeleteButton: () => void;
+}
 
-  const openMenu = (): void => {
-    menuOpen(true);
-  };
-
-  const closeMenu = (): void => {
-    menuOpen(false);
-  };
+function BulkActions(props: BulkActionsProps) {
+  const { onClickDeleteButton } = props;
 
   return (
     <>
@@ -48,41 +31,13 @@ function BulkActions() {
           <ButtonError
             sx={{ ml: 1 }}
             startIcon={<DeleteTwoToneIcon />}
-            variant="contained">
-            Delete
+            variant="contained"
+            onClick={onClickDeleteButton}
+          >
+            DELETE
           </ButtonError>
         </Box>
-        <IconButton
-          color="primary"
-          onClick={openMenu}
-          ref={moreRef}
-          sx={{ ml: 2, p: 1 }}>
-          <MoreVertTwoToneIcon />
-        </IconButton>
       </Box>
-
-      <Menu
-        keepMounted
-        anchorEl={moreRef.current}
-        open={onMenuOpen}
-        onClose={closeMenu}
-        anchorOrigin={{
-          vertical: 'center',
-          horizontal: 'center'
-        }}
-        transformOrigin={{
-          vertical: 'center',
-          horizontal: 'center'
-        }}>
-        <List sx={{ p: 1 }} component="nav">
-          <ListItem button>
-            <ListItemText primary="Bulk delete selected" />
-          </ListItem>
-          <ListItem button>
-            <ListItemText primary="Bulk edit selected" />
-          </ListItem>
-        </List>
-      </Menu>
     </>
   );
 }

@@ -6,7 +6,7 @@ import { AxiosResponse } from "axios";
 import { clearLoginUserInfo } from "src/features/user/userSlice";
 
 const initialState: AuthState = {
-  status: 'idle'
+  status: 'loading'
 };
 
 export const loginAsync = createAsyncThunk(

@@ -1,11 +1,13 @@
-import { lazy, Suspense } from 'react';
-import { Navigate } from 'react-router-dom';
-import { RouteObject } from 'react-router';
+import { lazy, Suspense } from "react";
+import { Navigate } from "react-router-dom";
+import { RouteObject } from "react-router";
 
-import SidebarLayout from 'src/layouts/SidebarLayout';
-import BaseLayout from 'src/layouts/BaseLayout';
+import SidebarLayout from "src/layouts/SidebarLayout";
+import BaseLayout from "src/layouts/BaseLayout";
 
-import SuspenseLoader from 'src/components/SuspenseLoader';
+import SuspenseLoader from "src/components/SuspenseLoader";
+import NoticeView from "src/content/pages/Introduction/Notice/NoticeDetail/NoticeView";
+import NoticeEdit from "src/content/pages/Introduction/Notice/NoticeDetail/NoticeEdit";
 
 const Loader = Component =>
   function loader(props) {
@@ -24,6 +26,10 @@ const Dashboard = Loader(lazy(() => import('src/content/pages/Dashboard')));
 const About = Loader(
   lazy(() => import('src/content/pages/Introduction/About'))
 );
+
+const Notice = Loader(
+  lazy(() => import('src/content/pages/Introduction/Notice'))
+)
 
 /* Blog */
 
@@ -136,7 +142,7 @@ const routes: RouteObject[] = [
 
   /* login */
   {
-    path: '/login',
+    path: 'login',
     element: <BaseLayout />,
     children: [
       {
@@ -148,7 +154,7 @@ const routes: RouteObject[] = [
 
   /* dashboard */
   {
-    path: '/dashboard',
+    path: 'dashboard',
     element: <SidebarLayout />,
     children: [
       {
@@ -179,8 +185,21 @@ const routes: RouteObject[] = [
       },
       {
         path: 'notice',
-        // element: <Transactions />
-        element: <StatusComingSoon isMain />
+        children: [
+          {
+            path: '',
+            element: <Notice />
+          },
+          {
+            path: ':id',
+            children: [
+              {
+                path: '',
+                element: <NoticeView />
+              }
+            ]
+          }
+        ]
       }
     ]
   },
@@ -219,6 +238,31 @@ const routes: RouteObject[] = [
       {
         path: 'site',
         element: <Site />
+      }
+    ]
+  },
+
+  {
+    path: '',
+    element: <SidebarLayout withAuth />,
+    children: [
+      {
+        path: 'introduction',
+        children: [
+          {
+            path: 'notice',
+            children: [
+              {
+                path: 'add',
+                element: <NoticeEdit />
+              },
+              {
+                path: '*/edit',
+                element: <NoticeEdit />
+              }
+            ]
+          }
+        ]
       }
     ]
   },

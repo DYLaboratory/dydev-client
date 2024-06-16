@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react';
 import { CONSTANTS } from 'src/utils/constants';
 import axios from 'axios';
 import apiClient from 'src/services/lib/dylaboAxios';
+import { getWeather } from "src/services/dashboard/externalApi";
+import { err400Alert } from "src/utils/errUtils";
 
 const AvatarSuccess = styled(Avatar)(
   ({ theme }) => `
@@ -65,8 +67,11 @@ function WeatherInfo() {
   useEffect(() => {
     const fetchCurrentWeather = async () => {
       try {
-        await apiClient.get<CurrentWeather>('/external/weather', { params: { city: 'Seoul' } })
-            .then(res => setCurrentWeather(res.data));
+        await getWeather(city)
+            .then(
+              res => setCurrentWeather(res.data),
+              err => err400Alert(err, "날씨 정보를 불러오지 못하였습니다.")
+            );
 
         setLoading(false);
       } catch (error) {

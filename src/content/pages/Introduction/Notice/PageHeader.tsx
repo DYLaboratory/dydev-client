@@ -1,17 +1,20 @@
 import { Button, Grid, Typography } from "@mui/material";
 import AddTwoToneIcon from "@mui/icons-material/AddTwoTone";
+import { useNavigate } from "react-router";
+import { URL_INFO } from "src/utils/constants";
 
 interface PageHeaderProps {
   isAdmin: boolean;
-  onOpenModal: (modalState: { isNew: boolean, isOpen: boolean }) => void;
 }
 
 function PageHeader(props: PageHeaderProps) {
-  const { isAdmin, onOpenModal } = props;
+  const { isAdmin } = props;
+
+  const navigate = useNavigate();
 
   const title = {
-    title: 'Web Site List',
-    subTitle: 'These are the useful websites'
+    title: 'Notice',
+    subTitle: 'This is the notice page'
   };
 
   return (
@@ -28,9 +31,9 @@ function PageHeader(props: PageHeaderProps) {
             sx={{ mt: { xs: 2, md: 0 } }}
             variant="contained"
             startIcon={<AddTwoToneIcon fontSize="small" />}
-            onClick={() => onOpenModal({ isNew: true, isOpen: true })}
+            onClick={() => navigate(URL_INFO.PAGE.NOTICE.concat("/add"))}
           >
-            ADD WEB SITE
+            ADD NOTICE
           </Button>
         </Grid>
       }

@@ -1,5 +1,5 @@
-import { Helmet } from 'react-helmet-async';
-import PageTitleWrapper from 'src/components/PageTitleWrapper';
+import { Helmet } from "react-helmet-async";
+import PageTitleWrapper from "src/components/PageTitleWrapper";
 import {
   Button,
   Container,
@@ -10,23 +10,31 @@ import {
   OutlinedInput,
   Select,
   Typography
-} from '@mui/material';
-import Footer from 'src/components/Footer';
-import PageHeader from './PageHeader';
+} from "@mui/material";
+import Footer from "src/components/Footer";
+import PageHeader from "./PageHeader";
 
 import { useEffect, useState } from "react";
 import { SiteData, SiteTypes } from "src/models/data/dataModels";
-import RecentOrdersTable from "src/content/pages/Others/Site/RecentOrdersTable";
+import WebSiteTable from "src/content/pages/Others/Site/WebSiteTable";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import List from "@mui/material/List";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 import SaveIcon from "@mui/icons-material/Save";
+import CancelIcon from "@mui/icons-material/Cancel";
 import { styled } from "@mui/material/styles";
 import ListItem from "@mui/material/ListItem";
-import { getWebSiteList, setDeleteWebSite, setInsertWebSite, setUpdateWebSite } from "src/services/others/webSiteApi";
+import {
+  getWebSiteList,
+  setDeleteWebSite,
+  setDeleteWebSiteList,
+  setInsertWebSite,
+  setUpdateWebSite
+} from "src/services/others/webSiteApi";
 import { useAppSelector } from "src/app/hooks";
+import { err400Alert } from "src/utils/errUtils";
 
 const ListItemWrapper = styled(ListItem)(`
   display: flex;
@@ -78,7 +86,7 @@ interface ModalType {
 }
 
 function SiteList() {
-  const isLogin = useAppSelector(state => state.user).isLogin;
+  const isAdmin = useAppSelector(state => state.user).isAdmin;
 
   // modal
   const initialModalState: ModalType = {
@@ -103,7 +111,8 @@ function SiteList() {
   const getSiteList = () => {
     getWebSiteList()
       .then(
-        res => setSites(res.data)
+        res => setSites(res.data),
+        err => err400Alert(err, "웹 사이트 목록을 불러오지 못하였습니다.")
       );
   }
   // get (e)
@@ -158,16 +167,29 @@ function SiteList() {
   // insert / update (e)
 
   // delete (s)
-  const handleDeleteButton = id => {
+  const handleDeleteButton = (id: number) => {
     if (confirm('해당 웹사이트를 삭제하시겠습니까?')) {
       setDeleteWebSite(id)
         .then(
           () => {
-            alert('삭제를 완료 하였습니다.');
+            alert('삭제를 완료하였습니다.');
             getSiteList();
           },
           () => alert('삭제 중 오류가 발생하였습니다.')
         );
+    }
+  }
+
+  const handleDeleteListButton = (idList: number[]) => {
+    if (confirm('선택한 리스트를 삭제하시겠습니까?')) {
+      setDeleteWebSiteList(idList)
+        .then(
+          () => {
+            alert('삭제를 완료하였습니다.');
+            getSiteList();
+          },
+          () => alert('삭제 중 오류가 발생하였습니다.')
+        )
     }
   }
   // delete (e)
@@ -175,10 +197,10 @@ function SiteList() {
   return (
     <>
       <Helmet>
-        <title>Reference Site</title>
+        <title>Web Site</title>
       </Helmet>
       <PageTitleWrapper>
-        <PageHeader isLogin={isLogin} onOpenModal={setModalState} />
+        <PageHeader isAdmin={isAdmin} onOpenModal={setModalState} />
       </PageTitleWrapper>
       <Container maxWidth="lg">
         <Grid
@@ -188,12 +210,13 @@ function SiteList() {
           alignItems="stretch"
           spacing={3}>
           <Grid item xs={12}>
-            <RecentOrdersTable
-              isLogin={isLogin}
+            <WebSiteTable
+              isAdmin={isAdmin}
               onOpenModal={setModalState}
               setWebSite={setWebSite}
               sites={sites}
               handleDeleteSite={handleDeleteButton}
+              handleDeleteSiteList={handleDeleteListButton}
             />
           </Grid>
         </Grid>
@@ -266,6 +289,16 @@ function SiteList() {
           </ListItemWrapper>
 
           <ListItemEndWrapper>
+            <Button color={"inherit"} onClick={handleClickSaveButton}>
+              <ListItemAvatar>
+                <Avatar>
+                  <CancelIcon />
+                </Avatar>
+              </ListItemAvatar>
+              <Typography variant="h4">
+                CANCEL
+              </Typography>
+            </Button>
             <Button color={"inherit"} onClick={handleClickSaveButton}>
               <ListItemAvatar>
                 <Avatar>

@@ -59,20 +59,21 @@ const applyPagination = (
 };
 
 interface RecentOrdersTableProps {
-  isLogin: boolean;
+  isAdmin: boolean;
   onOpenModal: (modalState: { isNew: boolean, isOpen: boolean }) => void;
   setWebSite: (webSite: SiteData) => void;
   sites: SiteData[];
   handleDeleteSite: (id: number) => void;
+  handleDeleteSiteList: (idList: number[]) => void;
 }
 
-function RecentOrdersTable(props: RecentOrdersTableProps) {
-  const { isLogin, onOpenModal, setWebSite, sites, handleDeleteSite } = props;
+function WebSiteTable(props: RecentOrdersTableProps) {
+  const { isAdmin, onOpenModal, setWebSite, sites, handleDeleteSite, handleDeleteSiteList } = props;
 
-  const [selectedCryptoOrders, setSelectedCryptoOrders] = useState<number[]>(
+  const [selectedWebSiteList, setSelectedWebSiteList] = useState<number[]>(
     []
   );
-  const selectedBulkActions = selectedCryptoOrders.length > 0;
+  const selectedBulkActions = selectedWebSiteList.length > 0;
 
   // paging
   const [page, setPage] = useState<number>(0);
@@ -122,22 +123,22 @@ function RecentOrdersTable(props: RecentOrdersTableProps) {
     }));
   };
 
-  const handleSelectAllCryptoOrders = (
+  const handleSelectAllWebSiteList = (
     event: ChangeEvent<HTMLInputElement>
   ): void => {
-    setSelectedCryptoOrders(
+    setSelectedWebSiteList(
       event.target.checked ? sites.map(site => site.id) : []
     );
   };
 
-  const handleSelectOneCryptoOrder = (
+  const handleSelectOneWebSite = (
     event: ChangeEvent<HTMLInputElement>,
     cryptoOrderId: number
   ): void => {
-    if (!selectedCryptoOrders.includes(cryptoOrderId)) {
-      setSelectedCryptoOrders(prevSelected => [...prevSelected, cryptoOrderId]);
+    if (!selectedWebSiteList.includes(cryptoOrderId)) {
+      setSelectedWebSiteList(prevSelected => [...prevSelected, cryptoOrderId]);
     } else {
-      setSelectedCryptoOrders(prevSelected =>
+      setSelectedWebSiteList(prevSelected =>
         prevSelected.filter(id => id !== cryptoOrderId)
       );
     }
@@ -151,16 +152,16 @@ function RecentOrdersTable(props: RecentOrdersTableProps) {
     setLimit(parseInt(event.target.value, 10));
   };
 
-  const filteredCryptoOrders = applyFilters(sites, filters);
-  const paginatedCryptoOrders = applyPagination(
-    filteredCryptoOrders,
+  const filteredWebSiteList = applyFilters(sites, filters);
+  const paginatedWebSiteList = applyPagination(
+    filteredWebSiteList,
     page,
     limit
   );
-  const selectedSomeCryptoOrders =
-    selectedCryptoOrders.length > 0 &&
-    selectedCryptoOrders.length < sites.length;
-  const selectedAllCryptoOrders = selectedCryptoOrders.length === sites.length;
+  const selectedSomeWebSiteList =
+    selectedWebSiteList.length > 0 &&
+    selectedWebSiteList.length < sites.length;
+  const selectedAllWebSiteList = selectedWebSiteList.length === sites.length;
   const theme = useTheme();
 
   // update (s)
@@ -170,11 +171,18 @@ function RecentOrdersTable(props: RecentOrdersTableProps) {
   }
   // update (e)
 
+  // delete (s)
+  const handleClickDeleteListButton = async () => {
+    await handleDeleteSiteList(selectedWebSiteList);
+    setSelectedWebSiteList([]);
+  }
+  // delete (e)
+
   return (
     <Card>
-      {isLogin && selectedBulkActions && (
+      {isAdmin && selectedBulkActions && (
         <Box flex={1} p={2}>
-          <BulkActions />
+          <BulkActions onClickDeleteButton={handleClickDeleteListButton} />
         </Box>
       )}
       {!selectedBulkActions && (
@@ -205,13 +213,13 @@ function RecentOrdersTable(props: RecentOrdersTableProps) {
         <Table>
           <TableHead>
             <TableRow>
-              {isLogin &&
+              {isAdmin &&
                 <TableCell padding="checkbox">
                   <Checkbox
                     color="primary"
-                    checked={selectedAllCryptoOrders}
-                    indeterminate={selectedSomeCryptoOrders}
-                    onChange={handleSelectAllCryptoOrders}
+                    checked={selectedAllWebSiteList}
+                    indeterminate={selectedSomeWebSiteList}
+                    onChange={handleSelectAllWebSiteList}
                   />
                 </TableCell>
               }
@@ -220,15 +228,15 @@ function RecentOrdersTable(props: RecentOrdersTableProps) {
               <TableCell>Name</TableCell>
               <TableCell>Description</TableCell>
               <TableCell>URL</TableCell>
-              {isLogin &&
+              {isAdmin &&
                 <TableCell align="right">Actions</TableCell>
               }
             </TableRow>
           </TableHead>
           <TableBody>
-            {paginatedCryptoOrders.length === 0 && (
+            {paginatedWebSiteList.length === 0 && (
               <TableRow>
-                <TableCell colSpan={isLogin ? 7 : 6} align="center">
+                <TableCell colSpan={isAdmin ? 7 : 6} align="center">
                   <Typography
                     variant="body1"
                     color="text.primary"
@@ -239,19 +247,19 @@ function RecentOrdersTable(props: RecentOrdersTableProps) {
                 </TableCell>
               </TableRow>
             )}
-            {paginatedCryptoOrders.map((site, idx) => {
-              const isCryptoOrderSelected = selectedCryptoOrders.includes(
+            {paginatedWebSiteList.map((site, idx) => {
+              const isCryptoOrderSelected = selectedWebSiteList.includes(
                 site.id
               );
               return (
                 <TableRow hover key={site.id} selected={isCryptoOrderSelected}>
-                  {isLogin &&
+                  {isAdmin &&
                     <TableCell padding="checkbox">
                       <Checkbox
                         color="primary"
                         checked={isCryptoOrderSelected}
                         onChange={(event: ChangeEvent<HTMLInputElement>) =>
-                          handleSelectOneCryptoOrder(event, site.id)
+                          handleSelectOneWebSite(event, site.id)
                         }
                         value={isCryptoOrderSelected}
                       />
@@ -308,7 +316,7 @@ function RecentOrdersTable(props: RecentOrdersTableProps) {
                       </a>
                     </Typography>
                   </TableCell>
-                  {isLogin &&
+                  {isAdmin &&
                     <TableCell align="right">
                       <Tooltip title="Edit Order" arrow>
                         <IconButton
@@ -349,7 +357,7 @@ function RecentOrdersTable(props: RecentOrdersTableProps) {
       <TableBottomBox p={2}>
         <TablePagination
           component="div"
-          count={filteredCryptoOrders.length}
+          count={filteredWebSiteList.length}
           onPageChange={handlePageChange}
           onRowsPerPageChange={handleLimitChange}
           page={page}
@@ -361,4 +369,4 @@ function RecentOrdersTable(props: RecentOrdersTableProps) {
   );
 }
 
-export default RecentOrdersTable;
+export default WebSiteTable;

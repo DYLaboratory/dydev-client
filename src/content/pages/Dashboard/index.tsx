@@ -9,7 +9,7 @@ function Dashboard() {
   return (
     <>
       <Helmet>
-        <title>Crypto Dashboard</title>
+        <title>DYLABO Dashboard</title>
       </Helmet>
       <PageTitleWrapper>
         <PageHeader />

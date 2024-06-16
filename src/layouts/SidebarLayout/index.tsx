@@ -1,24 +1,71 @@
 import { ReactNode, useEffect } from "react";
-import { alpha, Box, lighten, useTheme } from "@mui/material";
+import { alpha, Box, CircularProgress, lighten, useTheme } from "@mui/material";
 import { Outlet } from "react-router-dom";
 
 import Sidebar from "./Sidebar";
 import Header from "./Header";
-import { useAppDispatch } from "src/app/hooks";
+import { useAppDispatch, useAppSelector } from "src/app/hooks";
 import { getUserAsync } from "src/features/user/userSlice";
+import { setLoading } from "src/features/loading/loadingSlice";
+import { useNavigate } from "react-router";
+
+const LoadingComponent = () => {
+  return (
+    <Box
+      sx={{
+        position: 'fixed',
+        left: 0,
+        top: 0,
+        width: '100%',
+        height: '100%'
+      }}
+      display="flex"
+      alignItems="center"
+      justifyContent="center">
+      <CircularProgress size={64} disableShrink thickness={3} />
+    </Box>
+  )
+}
+
+interface WithAuthComponentProps {
+  isAdmin: boolean;
+}
+
+function WithAuthComponent({ isAdmin }: WithAuthComponentProps) {
+  if (isAdmin) {
+    return <Outlet />;
+  } else {
+    return <LoadingComponent />;
+  }
+}
 
 interface SidebarLayoutProps {
+  withAuth?: boolean;
   children?: ReactNode;
 }
 
-function SidebarLayout({ children }: SidebarLayoutProps) {
+function SidebarLayout({ withAuth, children }: SidebarLayoutProps) {
   const theme = useTheme();
 
+  const navigate = useNavigate();
+
   const dispatch = useAppDispatch();
+  const isAdmin = useAppSelector(state => state.user).isAdmin;
+  const isLoading = useAppSelector(state => state.loading).isLoading;
 
   useEffect(() => {
-    dispatch(getUserAsync());
+    dispatch(getUserAsync())
+      .then(() => {
+        dispatch(setLoading(true));
+      });
   }, []);
+
+  useEffect(() => {
+    if (isLoading && withAuth && !isAdmin) {
+      alert('비정상적인 접근입니다.');
+      navigate('/');
+    }
+  }, [isLoading]);
 
   return (
     <Box
@@ -61,7 +108,12 @@ function SidebarLayout({ children }: SidebarLayoutProps) {
           }
         }}>
         <Box display="block">
-          <Outlet />
+          {isLoading
+            ? withAuth
+              ? <WithAuthComponent isAdmin={isAdmin} />
+              : <Outlet />
+            : <LoadingComponent />
+          }
         </Box>
       </Box>
     </Box>

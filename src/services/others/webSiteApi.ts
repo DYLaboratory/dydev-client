@@ -17,3 +17,7 @@ export const setUpdateWebSite = (data: SiteData) => {
 export const setDeleteWebSite = (id: number) => {
   return apiClient.delete(URL_INFO.API_V1.ADMIN_WEB_SITE.concat("/", String(id)));
 }
+
+export const setDeleteWebSiteList = (idList: number[]) => {
+  return apiClient.delete(URL_INFO.API_V1.ADMIN_WEB_SITE.concat("/list"), { params: { list: idList.join(",") } });
+}
