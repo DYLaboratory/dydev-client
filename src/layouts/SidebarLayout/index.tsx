@@ -1,5 +1,5 @@
 import { ReactNode, useEffect } from "react";
-import { alpha, Box, CircularProgress, lighten, useTheme } from "@mui/material";
+import { alpha, Box, CircularProgress, lighten, styled, useTheme } from "@mui/material";
 import { Outlet } from "react-router-dom";
 
 import Sidebar from "./Sidebar";
@@ -8,6 +8,15 @@ import { useAppDispatch, useAppSelector } from "src/app/hooks";
 import { getUserAsync } from "src/features/user/userSlice";
 import { setLoading } from "src/features/loading/loadingSlice";
 import { useNavigate } from "react-router";
+
+const SideLayoutBox = styled(Box)(
+  () => `
+    -webkit-user-select:none;
+    -moz-user-select:none;
+    -ms-user-select:none;
+    user-select:none
+  `
+);
 
 const LoadingComponent = () => {
   return (
@@ -68,7 +77,7 @@ function SidebarLayout({ withAuth, children }: SidebarLayoutProps) {
   }, [isLoading]);
 
   return (
-    <Box
+    <SideLayoutBox
       sx={{
         flex: 1,
         height: '100%',
@@ -116,7 +125,7 @@ function SidebarLayout({ withAuth, children }: SidebarLayoutProps) {
           }
         </Box>
       </Box>
-    </Box>
+    </SideLayoutBox>
   );
 }
 

@@ -1,14 +1,4 @@
-import {
-  Box,
-  Button,
-  CircularProgress,
-  FormControl,
-  Grid,
-  InputLabel,
-  MenuItem,
-  Select,
-  Typography
-} from '@mui/material';
+import { Box, CircularProgress, FormControl, InputLabel, MenuItem, Select, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { getWeather } from "src/services/dashboard/externalApi";
 import { toDatePattern, toTimePattern } from "src/utils/stringUtils";
@@ -158,7 +148,7 @@ function WeatherInfo() {
               {currentWeather?.sys.country + " " + currentWeather?.name}
             </Typography>
             <FormControl variant="outlined">
-              <InputLabel>Type</InputLabel>
+              <InputLabel>City</InputLabel>
               <Select
                 value={city}
                 onChange={e => setCity(e.target.value)}
