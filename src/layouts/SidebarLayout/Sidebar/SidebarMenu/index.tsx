@@ -12,10 +12,16 @@ import {
 import { NavLink as RouterLink } from 'react-router-dom';
 import { SidebarContext } from 'src/contexts/SidebarContext';
 
+import DashboardTwoToneIcon from '@mui/icons-material/DashboardTwoTone';
+import CampaignTwoToneIcon from '@mui/icons-material/CampaignTwoTone';
+import ImportContactsTwoToneIcon from '@mui/icons-material/ImportContactsTwoTone';
+import DynamicFeedTwoToneIcon from '@mui/icons-material/DynamicFeedTwoTone';
+import TableChartTwoToneIcon from '@mui/icons-material/TableChartTwoTone';
+import LinkTwoToneIcon from '@mui/icons-material/LinkTwoTone';
+
 import DesignServicesTwoToneIcon from '@mui/icons-material/DesignServicesTwoTone';
 import BrightnessLowTwoToneIcon from '@mui/icons-material/BrightnessLowTwoTone';
 import MmsTwoToneIcon from '@mui/icons-material/MmsTwoTone';
-import TableChartTwoToneIcon from '@mui/icons-material/TableChartTwoTone';
 import AccountCircleTwoToneIcon from '@mui/icons-material/AccountCircleTwoTone';
 import BallotTwoToneIcon from '@mui/icons-material/BallotTwoTone';
 import BeachAccessTwoToneIcon from '@mui/icons-material/BeachAccessTwoTone';
@@ -191,7 +197,7 @@ function SidebarMenu() {
                 component={RouterLink}
                 onClick={closeSidebar}
                 to="/"
-                startIcon={<DesignServicesTwoToneIcon />}>
+                startIcon={<DashboardTwoToneIcon />}>
                 Dashboard
               </Button>
             </ListItem>
@@ -213,7 +219,7 @@ function SidebarMenu() {
                 component={RouterLink}
                 onClick={closeSidebar}
                 to="/introduction/about"
-                startIcon={<BrightnessLowTwoToneIcon />}>
+                startIcon={<ImportContactsTwoToneIcon />}>
                 About
               </Button>
             </ListItem>
@@ -222,18 +228,9 @@ function SidebarMenu() {
                 disableRipple
                 component={RouterLink}
                 onClick={closeSidebar}
-                to="/introduction/intro"
-                startIcon={<BrightnessLowTwoToneIcon />}>
-                Introduction
-              </Button>
-            </ListItem>
-            <ListItem component="div">
-              <Button
-                disableRipple
-                component={RouterLink}
-                onClick={closeSidebar}
                 to="/introduction/notice"
-                startIcon={<MmsTwoToneIcon />}>
+                startIcon={<CampaignTwoToneIcon />}
+              >
                 Notice
               </Button>
             </ListItem>
@@ -256,7 +253,7 @@ function SidebarMenu() {
                 component={RouterLink}
                 onClick={closeSidebar}
                 to="/blog/feed"
-                startIcon={<BrightnessLowTwoToneIcon />}>
+                startIcon={<DynamicFeedTwoToneIcon />}>
                 Feed
               </Button>
             </ListItem>
@@ -266,7 +263,7 @@ function SidebarMenu() {
                 component={RouterLink}
                 onClick={closeSidebar}
                 to="/blog/blog"
-                startIcon={<BrightnessLowTwoToneIcon />}>
+                startIcon={<TableChartTwoToneIcon />}>
                 Blog
               </Button>
             </ListItem>
@@ -289,7 +286,7 @@ function SidebarMenu() {
                 component={RouterLink}
                 onClick={closeSidebar}
                 to="/others/site"
-                startIcon={<BrightnessLowTwoToneIcon />}>
+                startIcon={<LinkTwoToneIcon />}>
                 Site
               </Button>
             </ListItem>

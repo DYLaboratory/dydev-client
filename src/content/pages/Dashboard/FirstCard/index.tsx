@@ -1,262 +1,140 @@
-import {
-  alpha,
-  Box,
-  Card,
-  Divider,
-  Grid,
-  List,
-  ListItem,
-  ListItemAvatar,
-  ListItemText,
-  styled,
-  Typography,
-  useTheme
-} from '@mui/material';
-import Text from 'src/components/Text';
-import Chart from 'react-apexcharts';
-import type { ApexOptions } from 'apexcharts';
-import WeatherInfo from 'src/content/pages/Dashboard/FirstCard/WeatherInfo';
+import { Box, Card, CircularProgress, Divider, Grid, Typography } from "@mui/material";
+import PresentWeather from "src/content/pages/Dashboard/FirstCard/PresentWeather";
+import { useEffect, useState } from "react";
+import { getWeather } from "src/services/dashboard/externalApi";
+import { epochToDate, toDatePattern, toTimePattern } from "src/utils/stringUtils";
+import ForecastWeather from "src/content/pages/Dashboard/FirstCard/ForecastWeather";
 
-const ListItemAvatarWrapper = styled(ListItemAvatar)(
-  ({ theme }) => `
-  min-width: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-right: ${theme.spacing(1)};
-  padding: ${theme.spacing(0.5)};
-  border-radius: 60px;
-  background: ${
-    theme.palette.mode === 'dark'
-      ? theme.colors.alpha.trueWhite[30]
-      : alpha(theme.colors.alpha.black[100], 0.07)
+interface WeatherMainTypes {
+  city: {
+    id: number,
+    name: string,
+    country: string,
+    sunrise: number,
+    sunset: number
+  },
+  cnt: number, // list 수
+  list: WeatherTypes[]
+}
+
+interface WeatherTypes {
+  dt: number;
+  dt_txt: string;
+  date?: string;
+  time?: string;
+
+  name?: string;
+  sys?: {
+    type: number;
+    country: string;
+    sunrise: number;
+    sunset: number;
+  };
+  wind: {
+    speed: number;
+    deg: number;
   };
 
-  img {
-    background: ${theme.colors.alpha.trueWhite[100]};
-    padding: ${theme.spacing(0.5)};
-    display: block;
-    border-radius: inherit;
-    height: ${theme.spacing(4.5)};
-    width: ${theme.spacing(4.5)};
-  }
-`
-);
+  main: {
+    temp: number;
+    temp_max: number;
+    temp_min: number;
+    feels_like: number;
+    humidity: number;
+  };
+  weather: DailyWeather[];
+}
+
+interface DailyWeather {
+  main: string;
+  description: string;
+  icon: string;
+}
 
 function FirstCard() {
-  const theme = useTheme();
+  const [present, setPresent] = useState<WeatherTypes>(null);
+  const [forecast, setForecast] = useState<WeatherMainTypes>(null);
 
-  const chartOptions: ApexOptions = {
-    chart: {
-      background: 'transparent',
-      stacked: false,
-      toolbar: {
-        show: false
-      }
-    },
-    plotOptions: {
-      pie: {
-        donut: {
-          size: '60%'
-        }
-      }
-    },
-    colors: ['#ff9900', '#1c81c2', '#333', '#5c6ac0'],
-    dataLabels: {
-      enabled: true,
-      formatter(val) {
-        return `${val}%`;
-      },
-      style: {
-        colors: [theme.colors.alpha.trueWhite[100]]
-      },
-      background: {
-        enabled: true,
-        foreColor: theme.colors.alpha.trueWhite[100],
-        padding: 8,
-        borderRadius: 4,
-        borderWidth: 0,
-        opacity: 0.3,
-        dropShadow: {
-          enabled: true,
-          top: 1,
-          left: 1,
-          blur: 1,
-          color: theme.colors.alpha.black[70],
-          opacity: 0.5
-        }
-      },
-      dropShadow: {
-        enabled: true,
-        top: 1,
-        left: 1,
-        blur: 1,
-        color: theme.colors.alpha.black[50],
-        opacity: 0.5
-      }
-    },
-    fill: {
-      opacity: 1
-    },
-    labels: ['Bitcoin', 'Ripple', 'Cardano', 'Ethereum'],
-    legend: {
-      labels: {
-        colors: theme.colors.alpha.trueWhite[100]
-      },
-      show: false
-    },
-    stroke: {
-      width: 0
-    },
-    theme: {
-      mode: theme.palette.mode
-    }
-  };
+  const [city, setCity] = useState<string>('Seoul');
 
-  const chartSeries = [10, 20, 25, 45];
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchCurrentWeather = async () => {
+      setLoading(true);
+
+      await getWeather(city)
+        .then(
+          res => {
+            const data = res.data;
+
+            const p: WeatherTypes = JSON.parse(data.present);
+            const f: WeatherMainTypes = JSON.parse(data.forecast);
+
+            const dt = epochToDate(p.dt);
+            setPresent({
+              ...p,
+              date: toDatePattern(dt),
+              time: toTimePattern(dt).substring(0, 5)
+            });
+            setForecast(f);
+
+            setLoading(false);
+          },
+          () => {
+            setError("날씨 정보를 불러오지 못하였습니다.");
+            setLoading(false);
+          }
+        );
+    };
+
+    fetchCurrentWeather();
+  }, [city]);
+
+  // 에러
+  if (error) {
+    return (
+      <Box p={4}>
+        <Typography
+          sx={{
+            pb: 3
+          }}
+          variant="h4">
+          Weather
+        </Typography>
+        <Box display="flex" justifyContent="space-between">
+          <Typography variant="h4" gutterBottom>
+            {error}
+          </Typography>
+        </Box>
+      </Box>
+    );
+  }
 
   return (
     <Card>
-      <Grid spacing={0} container>
-        <Grid item xs={12} md={6}>
-          <WeatherInfo />
-        </Grid>
-        <Grid
-          sx={{
-            position: 'relative'
-          }}
-          display="flex"
-          alignItems="center"
-          item
-          xs={12}
-          md={6}>
+      {loading
+        ?
           <Box
-            component="span"
-            sx={{
-              display: { xs: 'none', md: 'inline-block' }
-            }}>
-            <Divider absolute orientation="vertical" />
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            height={200}
+          >
+            <CircularProgress size={64} disableShrink thickness={3} />
           </Box>
-          <Box py={4} pr={4} flex={1}>
-            <Grid container spacing={0}>
-              <Grid
-                xs={12}
-                sm={5}
-                item
-                display="flex"
-                justifyContent="center"
-                alignItems="center">
-                <Chart
-                  height={250}
-                  options={chartOptions}
-                  series={chartSeries}
-                  type="donut"
-                />
-              </Grid>
-              <Grid xs={12} sm={7} item display="flex" alignItems="center">
-                <List
-                  disablePadding
-                  sx={{
-                    width: '100%'
-                  }}>
-                  <ListItem disableGutters>
-                    <ListItemAvatarWrapper>
-                      <img
-                        alt="BTC"
-                        src="/static/images/placeholders/logo/bitcoin.png"
-                      />
-                    </ListItemAvatarWrapper>
-                    <ListItemText
-                      primary="BTC"
-                      primaryTypographyProps={{ variant: 'h5', noWrap: true }}
-                      secondary="Bitcoin"
-                      secondaryTypographyProps={{
-                        variant: 'subtitle2',
-                        noWrap: true
-                      }}
-                    />
-                    <Box>
-                      <Typography align="right" variant="h4" noWrap>
-                        20%
-                      </Typography>
-                      <Text color="success">+2.54%</Text>
-                    </Box>
-                  </ListItem>
-                  <ListItem disableGutters>
-                    <ListItemAvatarWrapper>
-                      <img
-                        alt="XRP"
-                        src="/static/images/placeholders/logo/ripple.png"
-                      />
-                    </ListItemAvatarWrapper>
-                    <ListItemText
-                      primary="XRP"
-                      primaryTypographyProps={{ variant: 'h5', noWrap: true }}
-                      secondary="Ripple"
-                      secondaryTypographyProps={{
-                        variant: 'subtitle2',
-                        noWrap: true
-                      }}
-                    />
-                    <Box>
-                      <Typography align="right" variant="h4" noWrap>
-                        10%
-                      </Typography>
-                      <Text color="error">-1.22%</Text>
-                    </Box>
-                  </ListItem>
-                  <ListItem disableGutters>
-                    <ListItemAvatarWrapper>
-                      <img
-                        alt="ADA"
-                        src="/static/images/placeholders/logo/cardano.png"
-                      />
-                    </ListItemAvatarWrapper>
-                    <ListItemText
-                      primary="ADA"
-                      primaryTypographyProps={{ variant: 'h5', noWrap: true }}
-                      secondary="Cardano"
-                      secondaryTypographyProps={{
-                        variant: 'subtitle2',
-                        noWrap: true
-                      }}
-                    />
-                    <Box>
-                      <Typography align="right" variant="h4" noWrap>
-                        40%
-                      </Typography>
-                      <Text color="success">+10.50%</Text>
-                    </Box>
-                  </ListItem>
-                  <ListItem disableGutters>
-                    <ListItemAvatarWrapper>
-                      <img
-                        alt="ETH"
-                        src="/static/images/placeholders/logo/ethereum.png"
-                      />
-                    </ListItemAvatarWrapper>
-                    <ListItemText
-                      primary="ETH"
-                      primaryTypographyProps={{ variant: 'h5', noWrap: true }}
-                      secondary="Ethereum"
-                      secondaryTypographyProps={{
-                        variant: 'subtitle2',
-                        noWrap: true
-                      }}
-                    />
-                    <Box>
-                      <Typography align="right" variant="h4" noWrap>
-                        30%
-                      </Typography>
-                      <Text color="error">-12.38%</Text>
-                    </Box>
-                  </ListItem>
-                </List>
-              </Grid>
+        :
+          <Grid spacing={0} container>
+            <Grid item xs={12} md={6}>
+              <PresentWeather present={present} city={city} setCity={setCity} />
             </Grid>
-          </Box>
-        </Grid>
-      </Grid>
+            <Divider absolute orientation="vertical" />
+            <Grid item xs={12} md={6}>
+              <ForecastWeather forecast={forecast} />
+            </Grid>
+          </Grid>
+      }
     </Card>
   );
 }

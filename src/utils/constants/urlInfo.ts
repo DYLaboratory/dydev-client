@@ -41,6 +41,12 @@ const URL_INFO = {
     // others
     WEB_SITE: API_PREFIX_COMMON + WEB_SITE_URL,
     ADMIN_WEB_SITE: API_PREFIX_ADMIN + WEB_SITE_URL
+  },
+
+  // 외부 URL
+  EXTERNAL: {
+    // weather
+    OPEN_WEATHER_IMAGE: "https://openweathermap.org/img/wn/"
   }
 };
 

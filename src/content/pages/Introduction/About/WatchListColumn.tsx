@@ -76,7 +76,7 @@ function WatchListColumn() {
       mode: theme.palette.mode
     },
     stroke: {
-      show: true,
+      curve: 'smooth',
       colors: [theme.colors.primary.main],
       width: 3
     },

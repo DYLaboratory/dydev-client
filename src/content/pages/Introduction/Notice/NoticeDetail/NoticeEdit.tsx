@@ -28,21 +28,6 @@ import SaveIcon from "@mui/icons-material/Save";
 import { noticeTypeOptions } from "src/content/pages/Introduction/Notice";
 import { err400Alert } from "src/utils/errUtils";
 
-const NoticeTitle = () => {
-  return (
-    <>
-      <Typography variant="h5">
-        TITLE
-      </Typography>
-      <TextField
-        id="outlined-required"
-        fullWidth
-        placeholder="Enter Notice Title"
-      />
-    </>
-  )
-}
-
 function NoticeEdit() {
   const { id } = useParams();
   const navigate = useNavigate();

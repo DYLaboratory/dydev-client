@@ -13,6 +13,16 @@ export function timePattern(time) {
   return changeTime;
 }
 
+export function epochToDate(epochTime: number, isUTC?: boolean) {
+  if (isUTC) {
+    const hours9 = 60 * 60 * 9 * 1000;
+    return new Date(epochTime * 1000 - hours9);
+  } else {
+    return new Date(epochTime * 1000);
+  }
+
+}
+
 export function toDatePattern(date: Date) {
   const month = date.getMonth() + 1;
   const day = date.getDate();

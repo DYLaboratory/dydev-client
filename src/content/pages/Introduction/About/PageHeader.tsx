@@ -1,27 +1,24 @@
-import { Typography, Avatar, Grid } from '@mui/material';
-import { useTheme } from '@mui/material/styles';
+import { Grid, Typography } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
+import AvatarIcon from "src/components/AvatarIcon";
 
 function PageHeader() {
   const user = {
     name: "DY's Space",
-    avatar: '/static/images/avatars/me.jpg'
+    avatarLight: '/static/images/dylabo/main-logo.png',
+    avatarDark: '/static/images/dylabo/main-logo-dark.png'
   };
+
   const theme = useTheme();
 
   return (
     <Grid container alignItems="center">
-      {/* <Grid item>
-        <Avatar
-          sx={{
-            mr: 2,
-            width: theme.spacing(8),
-            height: theme.spacing(8)
-          }}
-          variant="rounded"
+      <Grid item>
+        <AvatarIcon
           alt={user.name}
-          src={user.avatar}
+          image={theme.palette.mode === "dark" ? user.avatarLight : user.avatarDark}
         />
-      </Grid> */}
+      </Grid>
       <Grid item>
         <Typography variant="h3" component="h3" gutterBottom>
           Welcome, {user.name}!

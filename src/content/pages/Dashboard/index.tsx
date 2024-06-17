@@ -3,16 +3,27 @@ import PageTitleWrapper from 'src/components/PageTitleWrapper';
 import { Container, Grid } from '@mui/material';
 import Footer from 'src/components/Footer';
 import FirstCard from 'src/content/pages/Dashboard/FirstCard';
-import PageHeader from './PageHeader';
+import DashboardTwoToneIcon from "@mui/icons-material/DashboardTwoTone";
+import PageHeader from "src/components/PageHeader";
 
 function Dashboard() {
+  const header = {
+    title: "Dashboard",
+    subTitle: 'Have a nice day!',
+    icon: <DashboardTwoToneIcon fontSize="large" />
+  };
+
   return (
     <>
       <Helmet>
         <title>DYLABO Dashboard</title>
       </Helmet>
       <PageTitleWrapper>
-        <PageHeader />
+        <PageHeader
+          title={header.title}
+          subTitle={header.subTitle}
+          icon={header.icon}
+        />
       </PageTitleWrapper>
       <Container maxWidth="lg">
         <Grid
