@@ -1,7 +1,11 @@
 export const err400Alert = (err, message: string) => {
-  const status = err.response.status;
+  const { response } = err;
 
-  if (status === 400) {
-    alert(message);
+  if (response) {
+    const status = response.status;
+
+    if (status && status === 400) {
+      alert(message);
+    }
   }
 }

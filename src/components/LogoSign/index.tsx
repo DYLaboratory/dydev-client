@@ -1,12 +1,4 @@
-import {
-  Box,
-  Tooltip,
-  Badge,
-  TooltipProps,
-  tooltipClasses,
-  styled,
-  useTheme
-} from '@mui/material';
+import { Badge, Box, styled, Tooltip, tooltipClasses, TooltipProps, useTheme } from '@mui/material';
 import { Link } from 'react-router-dom';
 
 const LogoWrapper = styled(Link)(
@@ -94,8 +86,30 @@ const TooltipWrapper = styled(({ className, ...props }: TooltipProps) => (
   }
 }));
 
-function Logo() {
+interface LogoProps {
+  isTheme?: boolean;
+}
+
+function Logo(props: LogoProps) {
+  const { isTheme } = props;
+
   const theme = useTheme();
+
+  const mainLogo = () => {
+    if (isTheme) {
+      return theme.palette.mode === "dark" ? "/static/images/dylabo/main-logo.png" : "/static/images/dylabo/main-logo-dark.png"
+    } else {
+      return "/static/images/dylabo/main-logo.png";
+    }
+  }
+
+  const textLogo = () => {
+    if (isTheme) {
+      return theme.palette.mode === "dark" ? "/static/images/dylabo/main-text.png" : "/static/images/dylabo/main-text-dark.png"
+    } else {
+      return "/static/images/dylabo/main-text.png";
+    }
+  }
 
   return (
     <TooltipWrapper title="DY Laboratory" arrow>
@@ -113,7 +127,7 @@ function Logo() {
           badgeContent="1.0">
           <LogoSignWrapper>
             <img
-              src="/static/images/overview/main-logo.png"
+              src={mainLogo()}
               alt=""
               height="50px"
               width="50px"
@@ -124,7 +138,7 @@ function Logo() {
           </LogoSignWrapper>
         </Badge>
         <img
-          src="/static/images/overview/main-text.png"
+          src={textLogo()}
           alt=""
           height="45px"
           width="180px"

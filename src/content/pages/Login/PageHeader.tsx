@@ -12,7 +12,7 @@ function PageHeader() {
       sx={{
         width: 52
       }}>
-      <Logo />
+      <Logo isTheme />
     </Box>
   );
 }

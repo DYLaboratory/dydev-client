@@ -5,21 +5,13 @@ import { useNavigate } from "react-router";
 import { useAppDispatch, useAppSelector } from "src/app/hooks";
 import { loginAsync } from "src/features/auth/authSlice";
 import { LoginData } from "src/models/data/dataModels";
+import HeaderTheme from "src/layouts/SidebarLayout/Header/Buttons/Theme";
 
 /* style (s) */
-const LoginTextField = styled(TextField)`
-  width: 100%;
-`;
-
-const ButtonBox = styled(Box)`
-  display: flex;
-  justify-content: space-between;
+const LoginCard = styled(Card)`
+  max-width: 500px;
 `;
 /* style (e) */
-
-const checkLogin = () => {
-
-}
 
 function LoginForm() {
   const dispatch = useAppDispatch();
@@ -95,29 +87,34 @@ function LoginForm() {
   };
 
   return (
-    <Card>
-      <Grid spacing={0} container>
+    <LoginCard>
+      <Grid spacing={0}>
         <Grid item md={12}>
           <Box p={3}>
-            <Typography sx={{ pb: 3 }} variant="h3">
-              SIGN IN
-            </Typography>
+            <Box pb={3} display="flex" justifyContent="space-between">
+              <Typography variant="h3">
+                SIGN IN
+              </Typography>
+              <HeaderTheme />
+            </Box>
             <Box p={1}>
               <Typography variant="h4">ID</Typography>
-              <LoginTextField
+              <TextField
                 type="text"
                 name="id"
                 placeholder="Enter your ID"
+                fullWidth
                 onChange={handleInputChange}
                 onKeyPress={handleKeyPress}
               />
             </Box>
             <Box p={1}>
               <Typography variant="h4">PASSWORD</Typography>
-              <LoginTextField
+              <TextField
                 type="password"
                 name="pwd"
                 placeholder="Enter your Password"
+                fullWidth
                 onChange={handleInputChange}
                 onKeyPress={handleKeyPress}
               />
@@ -147,7 +144,7 @@ function LoginForm() {
           </Box>
         </Grid>
       </Grid>
-    </Card>
+    </LoginCard>
   );
 }
 
