@@ -1,64 +1,75 @@
-import { Avatar, Box, Button, Grid, styled, Typography } from '@mui/material';
-import TrendingUp from '@mui/icons-material/TrendingUp';
+import {
+  Box,
+  Button,
+  CircularProgress,
+  FormControl,
+  Grid,
+  InputLabel,
+  MenuItem,
+  Select,
+  Typography
+} from '@mui/material';
 import { useEffect, useState } from 'react';
-import { CONSTANTS } from 'src/utils/constants';
-import axios from 'axios';
-import apiClient from 'src/services/lib/dylaboAxios';
 import { getWeather } from "src/services/dashboard/externalApi";
-import { err400Alert } from "src/utils/errUtils";
+import { toDatePattern, toTimePattern } from "src/utils/stringUtils";
 
-const AvatarSuccess = styled(Avatar)(
-  ({ theme }) => `
-      background-color: ${theme.colors.success.main};
-      color: ${theme.palette.success.contrastText};
-      width: ${theme.spacing(8)};
-      height: ${theme.spacing(8)};
-      box-shadow: ${theme.colors.shadows.success};
-`
-);
+interface DailyWeather {
+  main: string;
+  description: string;
+  icon: string;
+}
 
 interface CurrentWeather {
+  id: number;
+  name: string;
+  dt: number | string;
   coord: {
     lat: number;
     lon: number;
   };
-  weather: {
-    description: string;
-    main: string;
-  }[];
+  weather: DailyWeather[];
   main: {
     temp: number;
+    temp_max: number;
+    temp_min: number;
+    feels_like: number;
+    humidity: number;
+    pressure: number;
   };
-  name: string;
+  wind: {
+    speed: number;
+    deg: number;
+  }
+  sys: {
+    country: string;
+    sunrise: number | string;
+    sunset: number | string;
+  }
 }
 
-interface DailyWeather {
-  dt: number;
-  temp: {
-    day: number;
-  };
-  weather: {
-    description: string;
-    main: string;
-  }[];
-}
-
-interface Weather {
-  current: {
-    temp: number;
-    weather: {
-      description: string;
-      main: string;
-    }[];
-  };
-  daily: DailyWeather[];
-}
+const cityTypes = [
+  {
+    id: "Seoul",
+    name: "Seoul"
+  },
+  {
+    id: "Daegu",
+    name: "Daegu"
+  }
+]
 
 function WeatherInfo() {
   const [currentWeather, setCurrentWeather] = useState<CurrentWeather | null>(
     null
   );
-  const [weeklyWeather, setWeeklyWeather] = useState<Weather | null>(null);
+
+  const [dailyWeather, setDailyWeather] = useState<DailyWeather>(null);
+
+  const [dateTime, setDateTime] = useState<{ date: string; time: string; }>({
+    date: '',
+    time: ''
+  });
+
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -66,98 +77,123 @@ function WeatherInfo() {
 
   useEffect(() => {
     const fetchCurrentWeather = async () => {
-      try {
-        await getWeather(city)
-            .then(
-              res => setCurrentWeather(res.data),
-              err => err400Alert(err, "날씨 정보를 불러오지 못하였습니다.")
-            );
+      setLoading(true);
 
-        setLoading(false);
-      } catch (error) {
-        setError("An error has occurred.");
-        setLoading(false);
-      }
+      await getWeather(city)
+        .then(
+          res => {
+            setCurrentWeather(res.data);
+            setDailyWeather(res.data.weather[0]);
+
+            const dt = new Date(res.data.dt * 1000);
+            setDateTime({
+              date: toDatePattern(dt),
+              time: toTimePattern(dt)
+            });
+
+            setLoading(false);
+          },
+          () => {
+            setError("날씨 정보를 불러오지 못하였습니다.");
+            setLoading(false);
+          }
+        );
     };
 
     fetchCurrentWeather();
-  }, []);
+  }, [city]);
 
-  const getBackgroundColor = (main: string) => {
-    switch (main) {
-      case 'Clear':
-        return 'linear-gradient(to right, #56CCF2, #2F80ED)';
-      case 'Clouds':
-        return 'linear-gradient(to right, #bdc3c7, #2c3e50)';
-      case 'Rain':
-        return 'linear-gradient(to right, #00c6ff, #0072ff)';
-      case 'Snow':
-        return 'linear-gradient(to right, #e0eafc, #cfdef3)';
-      default:
-        return 'linear-gradient(to right, #6a11cb, #2575fc)';
-    }
-  };
-
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
-
-  const currentWeatherMain = currentWeather?.weather[0].main;
+  // 에러
+  if (error) {
+    return (
+      <Box p={4}>
+        <Typography
+          sx={{
+            pb: 3
+          }}
+          variant="h4">
+          Weather
+        </Typography>
+        <Box display="flex" justifyContent="space-between">
+          <Typography variant="h4" gutterBottom>
+            {error}
+          </Typography>
+        </Box>
+      </Box>
+    );
+  }
 
   return (
     <Box p={4}>
-      <Typography
-        sx={{
-          pb: 3
-        }}
-        variant="h4">
-        Weather
-      </Typography>
-      <WeatherBox bg={getBackgroundColor(currentWeatherMain)}>
-        <Typography variant="h1" gutterBottom>
-          {currentWeather?.name}
+      <Box display="flex" justifyContent="space-between">
+        <Typography
+          sx={{
+            pb: 3
+          }}
+          variant="h4">
+          Weather
         </Typography>
-        <Typography variant="h4" fontWeight="normal" color="text.secondary">
-          {currentWeather?.main.temp}°C
+        <Typography
+          sx={{
+            pb: 3
+          }}
+          variant="h4">
+          {dateTime.date}
         </Typography>
+      </Box>
+      {loading &&
         <Box
           display="flex"
-          sx={{
-            py: 4
-          }}
-          alignItems="center">
-          <AvatarSuccess
-            sx={{
-              mr: 2
-            }}
-            variant="rounded">
-            <TrendingUp fontSize="large" />
-          </AvatarSuccess>
-          <Box>
-            <Typography variant="h4">+ $3,594.00</Typography>
-            <Typography variant="subtitle2" noWrap>
-              this month
-            </Typography>
-          </Box>
+          justifyContent="center"
+          alignItems="center"
+          height={200}
+        >
+          <CircularProgress size={64} disableShrink thickness={3} />
         </Box>
-      </WeatherBox>
-      <Grid container spacing={3}>
-        <Grid sm item>
-          <Button fullWidth variant="outlined">
-            Send
-          </Button>
-        </Grid>
-        <Grid sm item>
-          <Button fullWidth variant="contained">
-            Receive
-          </Button>
-        </Grid>
-      </Grid>
+      }
+      {!loading &&
+        <>
+          <Box display="flex" justifyContent="space-between">
+            <Typography variant="h1" gutterBottom>
+              {currentWeather?.sys.country + " " + currentWeather?.name}
+            </Typography>
+            <FormControl variant="outlined">
+              <InputLabel>Type</InputLabel>
+              <Select
+                value={city}
+                onChange={e => setCity(e.target.value)}
+                label="City"
+              >
+                {cityTypes.map(typeOption => (
+                  <MenuItem key={typeOption.id} value={typeOption.id}>
+                    {typeOption.name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Box>
+          <Box
+            display="flex"
+            sx={{
+              py: 4
+            }}
+            alignItems="center">
+            <Box>
+              {dailyWeather && <img src={"https://openweathermap.org/img/wn/" + dailyWeather.icon + ".png"} alt={dailyWeather.description} />}
+            </Box>
+            <Box>
+              <Typography variant="h4">
+                {currentWeather?.main.temp}°C
+              </Typography>
+              <Typography variant="subtitle2" noWrap>
+                기준시간 {dateTime.time}
+              </Typography>
+            </Box>
+          </Box>
+        </>
+      }
     </Box>
   );
 }
 
 export default WeatherInfo;
-
-const WeatherBox = styled(Box)<{ bg: string }>`
-  background: ${props => props.bg};
-`;

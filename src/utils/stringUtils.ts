@@ -13,6 +13,32 @@ export function timePattern(time) {
   return changeTime;
 }
 
+export function toDatePattern(date: Date) {
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
+
+  return date.getFullYear().toString().concat(
+    "-",
+    month < 10 ? "0" + month : month.toString(),
+    "-",
+    day < 10 ? "0" + day : day.toString()
+  );
+}
+
+export function toTimePattern(date: Date) {
+  const hours = date.getHours();
+  const minutes = date.getMinutes();
+  const seconds = date.getSeconds();
+
+  return "".concat(
+    hours < 10 ? "0" + hours : hours.toString(),
+    ":",
+    minutes < 10 ? "0" + minutes : minutes.toString(),
+    ":",
+    seconds < 10 ? "0" + seconds : seconds.toString()
+  );
+}
+
 /*
   data Type 에 따른 값 변환
   isMan //필수여부

@@ -76,6 +76,10 @@ function NoticeEdit() {
     setNotice({ ...notice, content: data });
   };
 
+  const handleTitleChange = e => {
+    setNotice({ ...notice, title: e.target.value });
+  }
+
   const handleTypeChange = e => {
     setNotice({ ...notice, noticeType: e.target.value });
   }
@@ -116,7 +120,20 @@ function NoticeEdit() {
           spacing={3}>
           <Grid item xs={12}>
             <Card>
-              <CardHeader title={<NoticeTitle />} />
+              <CardHeader title={
+                <>
+                  <Typography variant="h5">
+                    TITLE
+                  </Typography>
+                  <TextField
+                    id="outlined-required"
+                    value={notice.title}
+                    fullWidth
+                    placeholder="Enter Notice Title"
+                    onChange={handleTitleChange}
+                  />
+                </>
+              } />
               <Divider />
               <CardContent>
                 <Typography variant="h5">

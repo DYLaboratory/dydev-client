@@ -3,8 +3,8 @@ import { useTheme } from '@mui/material/styles';
 
 function PageHeader() {
   const title = {
-    title: "Welcome, DY's Space",
-    subTitle: 'Today is a good day!',
+    title: "Dashboard",
+    subTitle: 'Have a nice day!',
     image: '/static/images/avatars/1.jpg'
   };
   const theme = useTheme();
@@ -25,7 +25,7 @@ function PageHeader() {
       </Grid> */}
       <Grid item>
         <Typography variant="h3" component="h3" gutterBottom>
-          {title.title}!
+          {title.title}
         </Typography>
         <Typography variant="subtitle2">{title.subTitle}</Typography>
       </Grid>
