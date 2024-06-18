@@ -10,6 +10,7 @@ import { useAppSelector } from "src/app/hooks";
 import { getNoticeList } from "src/services/introduction/noticeApi";
 import NoticeTable from "src/content/pages/Introduction/Notice/NoticeTable";
 import { err400Alert } from "src/utils/errUtils";
+import LoadingProgress from "src/components/LoadingProgress";
 
 export const noticeTypeOptions: { id: NoticeTypes; name: string }[] = [
   {
@@ -29,9 +30,12 @@ export const noticeTypeOptions: { id: NoticeTypes; name: string }[] = [
 function NoticeList() {
   const isAdmin = useAppSelector(state => state.user).isAdmin;
 
+  const [loading, setLoading] = useState<boolean>(true);
+
   const [notices, setNotices] = useState<NoticeData[]>([]);
 
   useEffect(() => {
+    setLoading(true);
     fetchNoticeList();
   }, []);
 
@@ -39,8 +43,14 @@ function NoticeList() {
   const fetchNoticeList = () => {
     getNoticeList()
       .then(
-        res => setNotices(res.data),
-        err => err400Alert(err, "공지사항 목록을 불러오지 못하였습니다.")
+        res => {
+          setNotices(res.data);
+          setLoading(false);
+        },
+        err => {
+          err400Alert(err, "공지사항 목록을 불러오지 못하였습니다.");
+          setLoading(false);
+        }
       );
   }
   // get (e)
@@ -53,20 +63,23 @@ function NoticeList() {
       <PageTitleWrapper>
         <PageHeader isAdmin={isAdmin} />
       </PageTitleWrapper>
-      <Container maxWidth="lg">
-        <Grid
-          container
-          direction="row"
-          justifyContent="center"
-          alignItems="stretch"
-          spacing={3}>
-          <Grid item xs={12}>
-            <NoticeTable
-              notices={notices}
-            />
+      {loading && <LoadingProgress />}
+      {!loading &&
+        <Container maxWidth="lg">
+          <Grid
+            container
+            direction="row"
+            justifyContent="center"
+            alignItems="stretch"
+            spacing={3}>
+            <Grid item xs={12}>
+              <NoticeTable
+                notices={notices}
+              />
+            </Grid>
           </Grid>
-        </Grid>
-      </Container>
+        </Container>
+      }
       <Footer />
     </>
   );

@@ -11,6 +11,7 @@ import parse from "html-react-parser";
 import Footer from "src/components/Footer";
 import { ListAlt } from "@mui/icons-material";
 import { URL_INFO } from "src/utils/constants";
+import LoadingProgress from "src/components/LoadingProgress";
 
 const NoticeTitle = (props: { type: NoticeTypes, title: string }) => {
   const { type, title } = props;
@@ -47,6 +48,8 @@ function NoticeView() {
   const { id } = useParams();
   const navigate = useNavigate();
 
+  const [loading, setLoading] = useState<boolean>(true);
+
   const [notice, setNotice] = useState<NoticeData>({
     noticeType: null,
     title: '',
@@ -58,11 +61,13 @@ function NoticeView() {
     getNoticeById(id)
       .then(
         res => {
-          setNotice(res.data)
+          setNotice(res.data);
+          setLoading(false);
         },
         err => {
           alert(err.response.data.message);
           navigate(URL_INFO.PAGE.NOTICE);
+          setLoading(false);
         }
       );
   }, []);
@@ -75,38 +80,42 @@ function NoticeView() {
       <PageTitleWrapper>
         <PageHeader isAdmin={isAdmin} />
       </PageTitleWrapper>
-      <Container maxWidth="lg">
-        <Grid
-          container
-          direction="row"
-          justifyContent="center"
-          alignItems="stretch"
-          spacing={3}>
-          <Grid item xs={12}>
-            <Card>
-              <CardHeader
-                title={<NoticeTitle type={notice.noticeType} title={notice.title} />}
-                subheader={<NoticeSubTitle dateTime={notice.createDateTime} />}
-              />
-              <Divider />
-              <CardContent>
-                <Card sx={{ minWidth: 275 }}>
-                  <CardContent>
-                    {parse(notice.content)}
-                  </CardContent>
-                </Card>
-              </CardContent>
-              <Divider />
-              <CardHeader
-                title={
-                  <Button variant="outlined" onClick={() => navigate(URL_INFO.PAGE.NOTICE)}>
-                    <ListAlt /> LIST
-                  </Button>}
-              />
-            </Card>
+      {loading && <LoadingProgress />}
+
+      {!loading &&
+        <Container maxWidth="lg">
+          <Grid
+            container
+            direction="row"
+            justifyContent="center"
+            alignItems="stretch"
+            spacing={3}>
+            <Grid item xs={12}>
+              <Card>
+                <CardHeader
+                  title={<NoticeTitle type={notice.noticeType} title={notice.title} />}
+                  subheader={<NoticeSubTitle dateTime={notice.createDateTime} />}
+                />
+                <Divider />
+                <CardContent>
+                  <Card sx={{ minWidth: 275 }}>
+                    <CardContent>
+                      {parse(notice.content)}
+                    </CardContent>
+                  </Card>
+                </CardContent>
+                <Divider />
+                <CardHeader
+                  title={
+                    <Button variant="outlined" onClick={() => navigate(URL_INFO.PAGE.NOTICE)}>
+                      <ListAlt /> LIST
+                    </Button>}
+                />
+              </Card>
+            </Grid>
           </Grid>
-        </Grid>
-      </Container>
+        </Container>
+      }
       <Footer />
     </>
   )

@@ -35,6 +35,7 @@ import {
 } from "src/services/others/webSiteApi";
 import { useAppSelector } from "src/app/hooks";
 import { err400Alert } from "src/utils/errUtils";
+import LoadingProgress from "src/components/LoadingProgress";
 
 const ListItemWrapper = styled(ListItem)(`
   display: flex;
@@ -88,6 +89,9 @@ interface ModalType {
 function SiteList() {
   const isAdmin = useAppSelector(state => state.user).isAdmin;
 
+  const [editLoading, setEditLoading] = useState<boolean>(false);
+  const [fetchLoading, setFetchLoading] = useState<boolean>(true);
+
   // modal
   const initialModalState: ModalType = {
     isNew: true,
@@ -99,6 +103,7 @@ function SiteList() {
   const [sites, setSites] = useState<SiteData[]>([]);
 
   useEffect(() => {
+    setFetchLoading(true);
     getSiteList();
   }, []);
 
@@ -111,8 +116,14 @@ function SiteList() {
   const getSiteList = () => {
     getWebSiteList()
       .then(
-        res => setSites(res.data),
-        err => err400Alert(err, "웹 사이트 목록을 불러오지 못하였습니다.")
+        res => {
+          setSites(res.data);
+          setFetchLoading(false);
+        },
+        err => {
+          err400Alert(err, "웹 사이트 목록을 불러오지 못하였습니다.");
+          setFetchLoading(false);
+        }
       );
   }
   // get (e)
@@ -138,16 +149,19 @@ function SiteList() {
   }
 
   const handleClickSaveButton = () => {
+    setEditLoading(true);
     if (modalState.isNew) {
       setInsertWebSite(webSite)
         .then(
           () => {
             alert('등록을 완료하였습니다.');
+            setEditLoading(false);
             handleCloseModal();
             getSiteList();
           },
           () => {
             alert('등록 중 오류가 발생하였습니다.');
+            setEditLoading(false);
           }
         );
     } else {
@@ -155,11 +169,13 @@ function SiteList() {
         .then(
           () => {
             alert('수정을 완료하였습니다.');
+            setEditLoading(false);
             handleCloseModal();
             getSiteList();
           },
           () => {
             alert('수정 중 오류가 발생하였습니다.')
+            setEditLoading(false);
           }
         );
     }
@@ -169,26 +185,36 @@ function SiteList() {
   // delete (s)
   const handleDeleteButton = (id: number) => {
     if (confirm('해당 웹사이트를 삭제하시겠습니까?')) {
+      setFetchLoading(true);
       setDeleteWebSite(id)
         .then(
           () => {
             alert('삭제를 완료하였습니다.');
+            setFetchLoading(false);
             getSiteList();
           },
-          () => alert('삭제 중 오류가 발생하였습니다.')
+          () => {
+            alert('삭제 중 오류가 발생하였습니다.');
+            setFetchLoading(false);
+          }
         );
     }
   }
 
   const handleDeleteListButton = (idList: number[]) => {
     if (confirm('선택한 리스트를 삭제하시겠습니까?')) {
+      setFetchLoading(true);
       setDeleteWebSiteList(idList)
         .then(
           () => {
             alert('삭제를 완료하였습니다.');
+            setFetchLoading(false);
             getSiteList();
           },
-          () => alert('삭제 중 오류가 발생하였습니다.')
+          () => {
+            alert('삭제 중 오류가 발생하였습니다.');
+            setFetchLoading(false);
+          }
         )
     }
   }
@@ -202,25 +228,28 @@ function SiteList() {
       <PageTitleWrapper>
         <PageHeader isAdmin={isAdmin} onOpenModal={setModalState} />
       </PageTitleWrapper>
-      <Container maxWidth="lg">
-        <Grid
-          container
-          direction="row"
-          justifyContent="center"
-          alignItems="stretch"
-          spacing={3}>
-          <Grid item xs={12}>
-            <WebSiteTable
-              isAdmin={isAdmin}
-              onOpenModal={setModalState}
-              setWebSite={setWebSite}
-              sites={sites}
-              handleDeleteSite={handleDeleteButton}
-              handleDeleteSiteList={handleDeleteListButton}
-            />
+      {fetchLoading && <LoadingProgress />}
+      {!fetchLoading &&
+        <Container maxWidth="lg">
+          <Grid
+            container
+            direction="row"
+            justifyContent="center"
+            alignItems="stretch"
+            spacing={3}>
+            <Grid item xs={12}>
+              <WebSiteTable
+                isAdmin={isAdmin}
+                onOpenModal={setModalState}
+                setWebSite={setWebSite}
+                sites={sites}
+                handleDeleteSite={handleDeleteButton}
+                handleDeleteSiteList={handleDeleteListButton}
+              />
+            </Grid>
           </Grid>
-        </Grid>
-      </Container>
+        </Container>
+      }
       <Footer />
 
       {/* modal */}
@@ -228,89 +257,93 @@ function SiteList() {
         <DialogTitle gutterBottom>
           {modalState.isNew ? "Add New Web Site" : "Edit Web Site"}
         </DialogTitle>
-        <List sx={{ pt: 0 }}>
-          <ListItemWrapper>
-            <Typography variant="h4" component="h4">
-              type
-            </Typography>
-            <FormControlWrapper variant="outlined">
-              <InputLabel>Type</InputLabel>
-              <Select
-                value={webSite.webSiteType}
-                onChange={handleTypeChange}
-                label="Status"
-                autoWidth>
-                {saveTypeOptions.map(typeOption => (
-                  <MenuItem key={typeOption.id} value={typeOption.id}>
-                    {typeOption.name}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControlWrapper>
-          </ListItemWrapper>
+        {editLoading && <LoadingProgress />}
 
-          <ListItemWrapper>
-            <Typography variant="h4" component="h4">
-              name
-            </Typography>
-            <OutlinedInputWrapper
-              name="name"
-              type="text"
-              placeholder="Web Site Name"
-              value={webSite.name}
-              onChange={handleInputChange}
-            />
-          </ListItemWrapper>
-
-          <ListItemWrapper>
-            <Typography variant="h4" component="h4">
-              description
-            </Typography>
-            <OutlinedInputWrapper
-              name="description"
-              type="text"
-              placeholder="Web Site Description"
-              value={webSite.description}
-              onChange={handleInputChange}
-            />
-          </ListItemWrapper>
-
-          <ListItemWrapper>
-            <Typography variant="h4" component="h4">
-              url
-            </Typography>
-            <OutlinedInputWrapper
-              name="url"
-              type="text"
-              placeholder="Web Site URL"
-              value={webSite.url}
-              onChange={handleInputChange}
-            />
-          </ListItemWrapper>
-
-          <ListItemEndWrapper>
-            <Button color={"inherit"} onClick={handleClickSaveButton}>
-              <ListItemAvatar>
-                <Avatar>
-                  <CancelIcon />
-                </Avatar>
-              </ListItemAvatar>
-              <Typography variant="h4">
-                CANCEL
+        {!editLoading &&
+          <List sx={{pt: 0}}>
+            <ListItemWrapper>
+              <Typography variant="h4" component="h4">
+                type
               </Typography>
-            </Button>
-            <Button color={"inherit"} onClick={handleClickSaveButton}>
-              <ListItemAvatar>
-                <Avatar>
-                  <SaveIcon />
-                </Avatar>
-              </ListItemAvatar>
-              <Typography variant="h4">
-                SAVE
+              <FormControlWrapper variant="outlined">
+                <InputLabel>Type</InputLabel>
+                <Select
+                  value={webSite.webSiteType}
+                  onChange={handleTypeChange}
+                  label="Status"
+                  autoWidth>
+                  {saveTypeOptions.map(typeOption => (
+                    <MenuItem key={typeOption.id} value={typeOption.id}>
+                      {typeOption.name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControlWrapper>
+            </ListItemWrapper>
+
+            <ListItemWrapper>
+              <Typography variant="h4" component="h4">
+                name
               </Typography>
-            </Button>
-          </ListItemEndWrapper>
-        </List>
+              <OutlinedInputWrapper
+                name="name"
+                type="text"
+                placeholder="Web Site Name"
+                value={webSite.name}
+                onChange={handleInputChange}
+              />
+            </ListItemWrapper>
+
+            <ListItemWrapper>
+              <Typography variant="h4" component="h4">
+                description
+              </Typography>
+              <OutlinedInputWrapper
+                name="description"
+                type="text"
+                placeholder="Web Site Description"
+                value={webSite.description}
+                onChange={handleInputChange}
+              />
+            </ListItemWrapper>
+
+            <ListItemWrapper>
+              <Typography variant="h4" component="h4">
+                url
+              </Typography>
+              <OutlinedInputWrapper
+                name="url"
+                type="text"
+                placeholder="Web Site URL"
+                value={webSite.url}
+                onChange={handleInputChange}
+              />
+            </ListItemWrapper>
+
+            <ListItemEndWrapper>
+              <Button color="inherit" onClick={handleCloseModal}>
+                <ListItemAvatar>
+                  <Avatar>
+                    <CancelIcon/>
+                  </Avatar>
+                </ListItemAvatar>
+                <Typography variant="h4">
+                  CANCEL
+                </Typography>
+              </Button>
+              <Button color="inherit" onClick={handleClickSaveButton}>
+                <ListItemAvatar>
+                  <Avatar>
+                    <SaveIcon/>
+                  </Avatar>
+                </ListItemAvatar>
+                <Typography variant="h4">
+                  SAVE
+                </Typography>
+              </Button>
+            </ListItemEndWrapper>
+          </List>
+        }
       </Dialog>
     </>
   );

@@ -1,4 +1,4 @@
-import { Box, FormControl, InputLabel, MenuItem, Select, Typography } from "@mui/material";
+import { Box, FormControl, Grid, InputLabel, MenuItem, Select, Typography } from "@mui/material";
 import AirTwoToneIcon from "@mui/icons-material/AirTwoTone";
 
 interface WeatherTypes {
@@ -67,40 +67,43 @@ function PresentWeather(props: PresentWeatherProps) {
           variant="h4">
           Weather
         </Typography>
-        <Typography
-          sx={{
-            pb: 3
-          }}
-          variant="h4">
-          {present && present.date}
-        </Typography>
-      </Box>
-        <Box display="flex" justifyContent="space-between">
-          <Typography variant="h1" gutterBottom>
-            {present?.sys.country + " " + present?.name}
+        {present &&
+          <Typography
+            sx={{
+              pb: 3
+            }}
+            variant="h4"
+          >
+            <Typography>
+              {present.date}
+            </Typography>
+            <Typography>
+              기준시간 {present.time}
+            </Typography>
           </Typography>
-          <FormControl variant="outlined">
-            <InputLabel>City</InputLabel>
-            <Select
-              value={city}
-              onChange={e => setCity(e.target.value)}
-              label="City"
-            >
-              {cityTypes.map(typeOption => (
-                <MenuItem key={typeOption.id} value={typeOption.id}>
-                  {typeOption.name}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-        </Box>
-        <Box
-          display="flex"
-          sx={{
-            py: 4
-          }}
-          justifyContent="space-between"
-        >
+        }
+      </Box>
+      <Box display="flex" justifyContent="space-between">
+        <Typography variant="h1" gutterBottom>
+          {present?.sys.country + " " + present?.name}
+        </Typography>
+        <FormControl variant="outlined">
+          <InputLabel>City</InputLabel>
+          <Select
+            value={city}
+            onChange={e => setCity(e.target.value)}
+            label="City"
+          >
+            {cityTypes.map(typeOption => (
+              <MenuItem key={typeOption.id} value={typeOption.id}>
+                {typeOption.name}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+      </Box>
+      <Grid spacing={0} container alignItems="center">
+        <Grid item xs={12} md={6}>
           <Box display="flex" alignItems="center">
             {present && <img src={"/static/images/weathers/100/" + present.weather[0].icon + "@2x.png"} alt={present.weather[0].description} />}
             <Box>
@@ -112,6 +115,8 @@ function PresentWeather(props: PresentWeatherProps) {
               </Typography>
             </Box>
           </Box>
+        </Grid>
+        <Grid item xs={12} md={6}>
           <Box display="flex" alignItems="center">
             <AirTwoToneIcon fontSize="large" />
             <Box>
@@ -123,7 +128,38 @@ function PresentWeather(props: PresentWeatherProps) {
               </Typography>
             </Box>
           </Box>
-        </Box>
+        </Grid>
+      </Grid>
+        {/*<Box*/}
+        {/*  display="flex"*/}
+        {/*  sx={{*/}
+        {/*    py: 4*/}
+        {/*  }}*/}
+        {/*  justifyContent="space-between"*/}
+        {/*>*/}
+        {/*  <Box display="flex" alignItems="center">*/}
+        {/*    {present && <img src={"/static/images/weathers/100/" + present.weather[0].icon + "@2x.png"} alt={present.weather[0].description} />}*/}
+        {/*    <Box>*/}
+        {/*      <Typography variant="h4">*/}
+        {/*        {present.main.temp}°C*/}
+        {/*      </Typography>*/}
+        {/*      <Typography variant="subtitle2" noWrap>*/}
+        {/*        체감온도 {present.main.feels_like}°C*/}
+        {/*      </Typography>*/}
+        {/*    </Box>*/}
+        {/*  </Box>*/}
+        {/*  <Box display="flex" alignItems="center">*/}
+        {/*    <AirTwoToneIcon fontSize="large" />*/}
+        {/*    <Box>*/}
+        {/*      <Typography variant="h4">*/}
+        {/*        {present.wind.speed} m/s*/}
+        {/*      </Typography>*/}
+        {/*      <Typography variant="subtitle2" noWrap>*/}
+        {/*        {present.wind.deg}°*/}
+        {/*      </Typography>*/}
+        {/*    </Box>*/}
+        {/*  </Box>*/}
+        {/*</Box>*/}
     </Box>
   );
 }

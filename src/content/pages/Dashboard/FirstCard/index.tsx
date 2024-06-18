@@ -1,9 +1,10 @@
-import { Box, Card, CircularProgress, Divider, Grid, Typography } from "@mui/material";
+import { Box, Card, Divider, Grid, Typography } from "@mui/material";
 import PresentWeather from "src/content/pages/Dashboard/FirstCard/PresentWeather";
 import { useEffect, useState } from "react";
 import { getWeather } from "src/services/dashboard/externalApi";
 import { diffTime, epochToDate, toDatePattern, toTimePattern } from "src/utils/stringUtils";
 import ForecastWeather from "src/content/pages/Dashboard/FirstCard/ForecastWeather";
+import LoadingProgress from "src/components/LoadingProgress";
 
 interface WeatherMainTypes {
   city: {
@@ -71,6 +72,10 @@ function FirstCard() {
           const p: WeatherTypes = JSON.parse(data.present);
           const f: WeatherMainTypes = JSON.parse(data.forecast);
 
+          const dt = epochToDate(p.dt);
+          p.date = toDatePattern(dt);
+          p.time = toTimePattern(dt).substring(0, 5);
+
           sessionStorage.setItem("weather", JSON.stringify({
             lastAsync: new Date(),
             city: city,
@@ -78,12 +83,7 @@ function FirstCard() {
             forecast: f
           }));
 
-          const dt = epochToDate(p.dt);
-          setPresent({
-            ...p,
-            date: toDatePattern(dt),
-            time: toTimePattern(dt).substring(0, 5)
-          });
+          setPresent(p);
           setForecast(f);
 
           setLoading(false);
@@ -137,14 +137,7 @@ function FirstCard() {
     <Card>
       {loading
         ?
-          <Box
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-            height={200}
-          >
-            <CircularProgress size={64} disableShrink thickness={3} />
-          </Box>
+          <LoadingProgress />
         :
           <Grid spacing={0} container>
             <Grid item xs={12} md={6}>
