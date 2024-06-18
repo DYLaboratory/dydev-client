@@ -172,7 +172,7 @@ function ForecastWeatherChart(props: { weatherList: WeatherTypes[] }) {
                 tableList
                   .filter(w => w.isFirstDate)
                   .map(w => (
-                      <TableCell colSpan={w.dateCount}>{w.date}</TableCell>
+                      <TableCell key={w.dt} colSpan={w.dateCount}>{w.date}</TableCell>
                     )
                   )
               }
@@ -180,7 +180,7 @@ function ForecastWeatherChart(props: { weatherList: WeatherTypes[] }) {
             <TableRow>
               {
                 weatherList.map(w => (
-                  <TableCell align="center">{w.time}</TableCell>
+                  <TableCell key={w.dt} align="center">{w.time}</TableCell>
                 ))
               }
             </TableRow>
@@ -189,7 +189,7 @@ function ForecastWeatherChart(props: { weatherList: WeatherTypes[] }) {
             <TableRow>
               {
                 weatherList.map(w => (
-                  <TableCell align="center">
+                  <TableCell key={w.dt} align="center">
                     <img src={"/static/images/weathers/50/" + w.weather[0].icon + ".png"} alt={w.weather[0].description} />
                     <Typography display="flex" alignItems="center" variant="h5">
                       <NorthTwoToneIcon fontSize="small" /> {w.main.temp_max}°C
