@@ -9,14 +9,13 @@ import {
   Typography,
   useTheme
 } from "@mui/material";
-import Chart from 'react-apexcharts';
+import Chart from "react-apexcharts";
 import { ApexOptions } from "apexcharts";
-import NorthTwoToneIcon from '@mui/icons-material/NorthTwoTone';
-import SouthTwoToneIcon from '@mui/icons-material/SouthTwoTone';
 
 interface WeatherTypes {
   dt: number;
   dt_txt: string;
+  year?: string;
   date?: string;
   time?: string;
   isFirstDate?: boolean;
@@ -57,6 +56,7 @@ function ForecastWeatherChart(props: { weatherList: WeatherTypes[] }) {
   let cnt = weatherList.length;
 
   const tableList = weatherList.map((w, i) => {
+    w.date = w.date.substring(5, 10);
     w.time = w.time.substring(0, 2);
 
     const hours = Number(w.time);
@@ -134,7 +134,7 @@ function ForecastWeatherChart(props: { weatherList: WeatherTypes[] }) {
         top: 10,
         right: 30,
         bottom: 10,
-        left: 40
+        left: 25
       }
     },
     tooltip: {
@@ -172,7 +172,9 @@ function ForecastWeatherChart(props: { weatherList: WeatherTypes[] }) {
                 tableList
                   .filter(w => w.isFirstDate)
                   .map(w => (
-                      <TableCell key={w.dt} colSpan={w.dateCount}>{w.date}</TableCell>
+                      <TableCell key={w.dt} colSpan={w.dateCount}>
+                        <Typography variant="h5">{w.date}</Typography>
+                      </TableCell>
                     )
                   )
               }
@@ -191,11 +193,8 @@ function ForecastWeatherChart(props: { weatherList: WeatherTypes[] }) {
                 weatherList.map(w => (
                   <TableCell key={w.dt} align="center">
                     <img src={"/static/images/weathers/50/" + w.weather[0].icon + ".png"} alt={w.weather[0].description} />
-                    <Typography display="flex" alignItems="center" variant="h5">
-                      <NorthTwoToneIcon fontSize="small" /> {w.main.temp_max}°C
-                    </Typography>
-                    <Typography display="flex" alignItems="center" variant="h5">
-                      <SouthTwoToneIcon fontSize="small" /> {w.main.temp_min}°C
+                    <Typography variant="h5">
+                      {w.main.temp}°C
                     </Typography>
                   </TableCell>
                 ))
@@ -214,22 +213,6 @@ function ForecastWeatherChart(props: { weatherList: WeatherTypes[] }) {
           </TableBody>
         </Table>
       </TableContainer>
-      {/*<Stack*/}
-      {/*  direction="row"*/}
-      {/*  justifyContent="space-evenly"*/}
-      {/*  alignItems="stretch"*/}
-      {/*  divider={<Divider orientation="vertical" flexItem />}*/}
-      {/*  spacing={0}>*/}
-      {/*  <Box p={3}>*/}
-      {/*    <Chart*/}
-      {/*      options={Box1Options}*/}
-      {/*      series={Box1Data}*/}
-      {/*      type="line"*/}
-      {/*      width="500"*/}
-      {/*      height="200"*/}
-      {/*    />*/}
-      {/*  </Box>*/}
-      {/*</Stack>*/}
     </Card>
   )
 }

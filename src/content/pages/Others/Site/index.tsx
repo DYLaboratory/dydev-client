@@ -17,7 +17,6 @@ import PageHeader from "./PageHeader";
 import { useEffect, useState } from "react";
 import { SiteData, SiteTypes } from "src/models/data/dataModels";
 import WebSiteTable from "src/content/pages/Others/Site/WebSiteTable";
-import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import List from "@mui/material/List";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
@@ -36,6 +35,7 @@ import {
 import { useAppSelector } from "src/app/hooks";
 import { err400Alert } from "src/utils/errUtils";
 import LoadingProgress from "src/components/LoadingProgress";
+import DialogModal from "src/components/DialogModal";
 
 const ListItemWrapper = styled(ListItem)(`
   display: flex;
@@ -253,7 +253,7 @@ function SiteList() {
       <Footer />
 
       {/* modal */}
-      <Dialog onClose={handleCloseModal} open={modalState.isOpen}>
+      <DialogModal onClose={handleCloseModal} open={modalState.isOpen}>
         <DialogTitle gutterBottom>
           {modalState.isNew ? "Add New Web Site" : "Edit Web Site"}
         </DialogTitle>
@@ -344,7 +344,7 @@ function SiteList() {
             </ListItemEndWrapper>
           </List>
         }
-      </Dialog>
+      </DialogModal>
     </>
   );
 }

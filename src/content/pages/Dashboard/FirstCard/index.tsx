@@ -5,6 +5,7 @@ import { getWeather } from "src/services/dashboard/externalApi";
 import { diffTime, epochToDate, toDatePattern, toTimePattern } from "src/utils/stringUtils";
 import ForecastWeather from "src/content/pages/Dashboard/FirstCard/ForecastWeather";
 import LoadingProgress from "src/components/LoadingProgress";
+import PresentDust from "src/content/pages/Dashboard/FirstCard/PresentDust";
 
 interface WeatherMainTypes {
   city: {
@@ -52,25 +53,53 @@ interface DailyWeather {
   icon: string;
 }
 
+interface DustResponse {
+  response: {
+    body: DustBody,
+    header: {
+      resultMsg: string,
+      resultCode: string
+    }
+  }
+}
+
+interface DustBody {
+  items: {
+    dateTime: string;
+    pm10Grade: string;
+    pm10Value: string;
+    pm25Grade: string;
+    pm25Value: string;
+    sidoName: string;
+    stationName: string;
+  }[];
+  totalCount: number;
+  numOfRows: number;
+}
+
 function FirstCard() {
   const [present, setPresent] = useState<WeatherTypes>(null);
   const [forecast, setForecast] = useState<WeatherMainTypes>(null);
+  const [dust, setDust] = useState<DustBody>(null);
 
-  const [city, setCity] = useState<string>('Seoul');
+  const [city, setCity] = useState<{ id: string, name: string }>({
+    id: "Seoul",
+    name: "서울"
+  });
 
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
   const fetchCurrentWeather = async () => {
-    setLoading(true);
-
-    await getWeather(city)
+    await getWeather(city.id)
       .then(
         res => {
           const data = res.data;
 
           const p: WeatherTypes = JSON.parse(data.present);
           const f: WeatherMainTypes = JSON.parse(data.forecast);
+          const dRes: DustResponse = data.dust && JSON.parse(data.dust);
+          const d: DustBody = dRes && dRes.response.body;
 
           const dt = epochToDate(p.dt);
           p.date = toDatePattern(dt);
@@ -80,11 +109,13 @@ function FirstCard() {
             lastAsync: new Date(),
             city: city,
             present: p,
-            forecast: f
+            forecast: f,
+            dust: d
           }));
 
           setPresent(p);
           setForecast(f);
+          setDust(d);
 
           setLoading(false);
         },
@@ -96,12 +127,14 @@ function FirstCard() {
   };
 
   useEffect(() => {
+    setLoading(true);
+
     const weather = JSON.parse(sessionStorage.getItem("weather"));
 
     if (weather) {
       const diff = diffTime(new Date(), weather.lastAsync, 'm');
 
-      if (diff >= 10 || weather.city !== city) {
+      if (diff >= 10 || weather.city.id !== city.id) {
         fetchCurrentWeather();
       } else {
         setPresent(weather.present);
@@ -112,6 +145,10 @@ function FirstCard() {
       fetchCurrentWeather();
     }
   }, [city]);
+
+  const handleRefresh = () => {
+    fetchCurrentWeather();
+  }
 
   // 에러
   if (error) {
@@ -140,13 +177,26 @@ function FirstCard() {
           <LoadingProgress />
         :
           <Grid spacing={0} container>
-            <Grid item xs={12} md={6}>
-              <PresentWeather present={present} city={city} setCity={setCity} />
-            </Grid>
-            <Divider absolute orientation="vertical" />
-            <Grid item xs={12} md={6}>
-              <ForecastWeather forecast={forecast} />
-            </Grid>
+            {error}
+            {!error &&
+              <>
+                <Grid item xs={12} md={6}>
+                  <PresentWeather present={present} city={city} setCity={setCity} handleRefresh={handleRefresh} />
+                  {dust
+                    ? <PresentDust dust={dust} />
+                    :
+                      <Typography p={4} variant="h4">
+                        미세먼지 정보를 불러오지 못하였습니다
+                      </Typography>
+
+                  }
+                </Grid>
+                  <Divider absolute orientation="vertical" />
+                  <Grid item xs={12} md={6}>
+                  <ForecastWeather forecast={forecast} />
+                </Grid>
+              </>
+            }
           </Grid>
       }
     </Card>

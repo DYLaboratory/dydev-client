@@ -1,5 +1,16 @@
-import { Box, FormControl, Grid, InputLabel, MenuItem, Select, Typography } from "@mui/material";
+import { Box, FormControl, Grid, IconButton, InputLabel, MenuItem, Select, Tooltip, Typography } from "@mui/material";
+import RefreshTwoToneIcon from "@mui/icons-material/RefreshTwoTone";
+import NorthTwoToneIcon from "@mui/icons-material/NorthTwoTone";
+import SouthTwoToneIcon from "@mui/icons-material/SouthTwoTone";
 import AirTwoToneIcon from "@mui/icons-material/AirTwoTone";
+import OpacityTwoToneIcon from "@mui/icons-material/OpacityTwoTone";
+import { styled } from "@mui/material/styles";
+import { useEffect, useState } from "react";
+
+const RotatingIcon = styled(RefreshTwoToneIcon)(({ theme, rotate }) => ({
+  transition: 'transform 1s linear',
+  transform: rotate ? 'rotate(540deg)' : 'rotate(0deg)',
+}));
 
 interface WeatherTypes {
   dt: number;
@@ -37,27 +48,66 @@ interface DailyWeather {
 
 interface PresentWeatherProps {
   present: WeatherTypes;
-  city: string;
-  setCity: (city: string) => void;
+  city: {
+    id: string,
+    name: string
+  };
+  setCity: (city: {
+    id: string,
+    name: string
+  }) => void;
+  handleRefresh: () => void;
 }
+
+const countryTypes = [
+  {
+    id: "KR",
+    name: "대한민국"
+  }
+]
 
 const cityTypes = [
   {
     id: "Seoul",
-    name: "Seoul"
+    name: "서울"
   },
   {
     id: "Daegu",
-    name: "Daegu"
+    name: "대구"
   }
 ]
 
 function PresentWeather(props: PresentWeatherProps) {
-  const { present, city, setCity } = props;
+  const { present, city, setCity, handleRefresh } = props;
+
+  const [rotate, setRotate] = useState<boolean>(false);
+
+  const countryType = countryTypes.find(c => c.id === present.sys.country);
+  const cityType = cityTypes.find(c => c.id === present.name);
+
+  const handleChangeCity = e => {
+    const ct = cityTypes.find(c => c.id === e.target.value);
+
+    setCity(ct);
+  }
+
+  const handleRefreshButton = () => {
+    if (rotate) {
+      alert("정보를 불러오는 중입니다.");
+      return;
+    }
+
+    setRotate(true);
+    handleRefresh();
+  }
+
+  useEffect(() => {
+    setRotate(false);
+  }, [present]);
 
   return (
     <Box p={4}>
-      <Box display="flex" justifyContent="space-between">
+      <Box display="flex" justifyContent="space-between" alignItems="center">
         <Typography
           sx={{
             pb: 3
@@ -65,7 +115,7 @@ function PresentWeather(props: PresentWeatherProps) {
           display="flex"
           justifyContent="space-between"
           variant="h4">
-          Weather
+          날씨 정보
         </Typography>
         {present &&
           <Typography
@@ -74,24 +124,24 @@ function PresentWeather(props: PresentWeatherProps) {
             }}
             variant="h4"
           >
-            <Typography>
-              {present.date}
-            </Typography>
-            <Typography>
-              기준시간 {present.time}
+            <Typography display="flex" alignItems="center">
+              {present.date} {present.time}
+              <IconButton onClick={handleRefreshButton}>
+                <RotatingIcon fontSize="small" rotate={rotate ? 1 : 0} />
+              </IconButton>
             </Typography>
           </Typography>
         }
       </Box>
       <Box display="flex" justifyContent="space-between">
         <Typography variant="h1" gutterBottom>
-          {present?.sys.country + " " + present?.name}
+          {countryType.name + " " + cityType.name}
         </Typography>
         <FormControl variant="outlined">
-          <InputLabel>City</InputLabel>
+          <InputLabel>지역</InputLabel>
           <Select
-            value={city}
-            onChange={e => setCity(e.target.value)}
+            value={city.id}
+            onChange={handleChangeCity}
             label="City"
           >
             {cityTypes.map(typeOption => (
@@ -103,11 +153,15 @@ function PresentWeather(props: PresentWeatherProps) {
         </FormControl>
       </Box>
       <Grid spacing={0} container alignItems="center">
-        <Grid item xs={12} md={6}>
-          <Box display="flex" alignItems="center">
-            {present && <img src={"/static/images/weathers/100/" + present.weather[0].icon + "@2x.png"} alt={present.weather[0].description} />}
+        <Grid item>
+          <Box display="flex" alignItems="center" justifyContent="flex-start">
+            {present &&
+              <Tooltip title={present.weather[0].description} arrow>
+                <img src={"/static/images/weathers/100/" + present.weather[0].icon + "@2x.png"} alt={present.weather[0].description} />
+              </Tooltip>
+            }
             <Box>
-              <Typography variant="h4">
+              <Typography variant="h3">
                 {present.main.temp}°C
               </Typography>
               <Typography variant="subtitle2" noWrap>
@@ -116,50 +170,45 @@ function PresentWeather(props: PresentWeatherProps) {
             </Box>
           </Box>
         </Grid>
-        <Grid item xs={12} md={6}>
-          <Box display="flex" alignItems="center">
-            <AirTwoToneIcon fontSize="large" />
+      </Grid>
+      <Grid spacing={0} container alignItems="center">
+        <Grid item xs={6} md={6}>
+          <Box display="flex" alignItems="center" justifyContent="flex-start">
             <Box>
-              <Typography variant="h4">
-                {present.wind.speed} m/s
+              <Typography variant="h5" display="flex" alignItems="center" color="default">
+                <NorthTwoToneIcon fontSize="small" /> 최고기온 {present.main.temp_max}°C
               </Typography>
-              <Typography variant="subtitle2" noWrap>
-                {present.wind.deg}°
+              <Typography variant="h5" display="flex" alignItems="center" color="secondary">
+                <SouthTwoToneIcon fontSize="small" /> 최저기온 {present.main.temp_min}°C
               </Typography>
             </Box>
           </Box>
         </Grid>
+        <Grid item xs={3} md={3}></Grid>
+        <Grid item xs={3} md={3}>
+          <Grid item>
+            <Box display="flex" alignItems="center" justifyContent="flex-start">
+              <AirTwoToneIcon fontSize="large" />
+              <Box>
+                <Typography variant="h4" display="flex" alignItems="center">
+                  {present.wind.speed}m/s
+                </Typography>
+                <Typography variant="subtitle2" display="flex" alignItems="center">
+                  {present.wind.deg}°
+                </Typography>
+              </Box>
+            </Box>
+          </Grid>
+          <Grid item>
+            <Box display="flex" alignItems="center" justifyContent="flex-start">
+              <OpacityTwoToneIcon fontSize="large" />
+              <Typography variant="h5" display="flex" alignItems="center">
+                {present.main.humidity}%
+              </Typography>
+            </Box>
+          </Grid>
+        </Grid>
       </Grid>
-        {/*<Box*/}
-        {/*  display="flex"*/}
-        {/*  sx={{*/}
-        {/*    py: 4*/}
-        {/*  }}*/}
-        {/*  justifyContent="space-between"*/}
-        {/*>*/}
-        {/*  <Box display="flex" alignItems="center">*/}
-        {/*    {present && <img src={"/static/images/weathers/100/" + present.weather[0].icon + "@2x.png"} alt={present.weather[0].description} />}*/}
-        {/*    <Box>*/}
-        {/*      <Typography variant="h4">*/}
-        {/*        {present.main.temp}°C*/}
-        {/*      </Typography>*/}
-        {/*      <Typography variant="subtitle2" noWrap>*/}
-        {/*        체감온도 {present.main.feels_like}°C*/}
-        {/*      </Typography>*/}
-        {/*    </Box>*/}
-        {/*  </Box>*/}
-        {/*  <Box display="flex" alignItems="center">*/}
-        {/*    <AirTwoToneIcon fontSize="large" />*/}
-        {/*    <Box>*/}
-        {/*      <Typography variant="h4">*/}
-        {/*        {present.wind.speed} m/s*/}
-        {/*      </Typography>*/}
-        {/*      <Typography variant="subtitle2" noWrap>*/}
-        {/*        {present.wind.deg}°*/}
-        {/*      </Typography>*/}
-        {/*    </Box>*/}
-        {/*  </Box>*/}
-        {/*</Box>*/}
     </Box>
   );
 }
