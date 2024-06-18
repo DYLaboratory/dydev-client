@@ -20,32 +20,32 @@ function PageHeader(props: PageHeaderProps) {
   };
 
   return (
-    <Grid container>
-      <Grid item>
-        <AvatarIcon alt={title.title}>
-          <CampaignTwoToneIcon fontSize="large" />
-        </AvatarIcon>
-      </Grid>
-      <Grid justifyContent="space-between" alignItems="center">
+    <Grid container justifyContent="space-between" alignItems="center">
+      <Grid item display="flex" alignItems="center">
         <Grid item>
+          <AvatarIcon alt={title.title}>
+            <CampaignTwoToneIcon fontSize="large" />
+          </AvatarIcon>
+        </Grid>
+        <Grid item justifyContent="space-between" alignItems="center">
           <Typography variant="h3" component="h3">
             {title.title}
           </Typography>
           <Typography variant="subtitle2">{title.subTitle}</Typography>
         </Grid>
-        {isAdmin &&
-          <Grid item>
-            <Button
-              sx={{ mt: { xs: 2, md: 0 } }}
-              variant="contained"
-              startIcon={<AddTwoToneIcon fontSize="small" />}
-              onClick={() => navigate(URL_INFO.PAGE.NOTICE.concat("/add"))}
-            >
-              ADD NOTICE
-            </Button>
-          </Grid>
-        }
       </Grid>
+      {isAdmin &&
+        <Grid item>
+          <Button
+            sx={{ mt: { xs: 2, md: 0 } }}
+            variant="contained"
+            startIcon={<AddTwoToneIcon fontSize="small" />}
+            onClick={() => navigate(URL_INFO.PAGE.NOTICE.concat("/add"))}
+          >
+            ADD NOTICE
+          </Button>
+        </Grid>
+      }
     </Grid>
   );
 }
