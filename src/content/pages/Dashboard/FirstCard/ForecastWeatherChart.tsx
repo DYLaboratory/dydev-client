@@ -1,12 +1,26 @@
-import { Box, Divider, Stack, useTheme } from "@mui/material";
-import Chart from "react-apexcharts";
+import {
+  Card,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography,
+  useTheme
+} from "@mui/material";
+import Chart from 'react-apexcharts';
 import { ApexOptions } from "apexcharts";
+import NorthTwoToneIcon from '@mui/icons-material/NorthTwoTone';
+import SouthTwoToneIcon from '@mui/icons-material/SouthTwoTone';
 
 interface WeatherTypes {
   dt: number;
   dt_txt: string;
   date?: string;
   time?: string;
+  isFirstDate?: boolean;
+  dateCount?: number;
 
   name?: string;
   sys?: {
@@ -40,7 +54,34 @@ function ForecastWeatherChart(props: { weatherList: WeatherTypes[] }) {
   const { weatherList } = props;
   const theme = useTheme();
 
-  const Box1Options: ApexOptions = {
+  let cnt = weatherList.length;
+
+  const tableList = weatherList.map((w, i) => {
+    w.time = w.time.substring(0, 2);
+
+    const hours = Number(w.time);
+
+    if (i === 0) {
+      w.isFirstDate = true;
+      w.dateCount = (24 - hours) / 3;
+    }
+
+    if (hours === 0 || hours === 24) {
+      w.isFirstDate = true;
+      w.dateCount = 24 / 3;
+      if (cnt > w.dateCount) {
+        cnt -= w.dateCount;
+      } else {
+        w.dateCount = cnt;
+      }
+    }
+
+    w.time += '시';
+
+    return w;
+  });
+
+  const chartOption: ApexOptions = {
     chart: {
       background: 'transparent',
       toolbar: {
@@ -50,7 +91,16 @@ function ForecastWeatherChart(props: { weatherList: WeatherTypes[] }) {
         enabled: true
       },
       zoom: {
-        enabled: true
+        enabled: false
+      }
+    },
+    markers: {
+      size: 3,
+      colors: theme.palette.text.primary,
+      strokeColors: theme.palette.text.primary,
+      strokeWidth: 2,
+      hover: {
+        size: 5
       }
     },
     colors: [theme.colors.primary.main],
@@ -70,10 +120,10 @@ function ForecastWeatherChart(props: { weatherList: WeatherTypes[] }) {
         show: false
       },
       axisBorder: {
-        show: true
+        show: false
       },
       axisTicks: {
-        show: true
+        show: false
       }
     },
     yaxis: {
@@ -82,9 +132,9 @@ function ForecastWeatherChart(props: { weatherList: WeatherTypes[] }) {
     grid: {
       padding: {
         top: 10,
-        right: 5,
+        right: 30,
         bottom: 10,
-        left: 5
+        left: 40
       }
     },
     tooltip: {
@@ -105,7 +155,7 @@ function ForecastWeatherChart(props: { weatherList: WeatherTypes[] }) {
     }
   };
 
-  const Box1Data = [
+  const chartData = [
     {
       name: '',
       data: weatherList.map(w => w.main.temp)
@@ -113,22 +163,74 @@ function ForecastWeatherChart(props: { weatherList: WeatherTypes[] }) {
   ];
 
   return (
-    <Stack
-      direction="row"
-      justifyContent="space-evenly"
-      alignItems="stretch"
-      divider={<Divider orientation="vertical" flexItem />}
-      spacing={0}>
-      <Box p={3}>
-        <Chart
-          options={Box1Options}
-          series={Box1Data}
-          type="line"
-          width="500"
-          height="200"
-        />
-      </Box>
-    </Stack>
+    <Card>
+      <TableContainer>
+        <Table>
+          <TableHead>
+            <TableRow>
+              {
+                tableList
+                  .filter(w => w.isFirstDate)
+                  .map(w => (
+                      <TableCell colSpan={w.dateCount}>{w.date}</TableCell>
+                    )
+                  )
+              }
+            </TableRow>
+            <TableRow>
+              {
+                weatherList.map(w => (
+                  <TableCell align="center">{w.time}</TableCell>
+                ))
+              }
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            <TableRow>
+              {
+                weatherList.map(w => (
+                  <TableCell align="center">
+                    <img src={"/static/images/weathers/50/" + w.weather[0].icon + ".png"} alt={w.weather[0].description} />
+                    <Typography display="flex" alignItems="center" variant="h5">
+                      <NorthTwoToneIcon fontSize="small" /> {w.main.temp_max}°C
+                    </Typography>
+                    <Typography display="flex" alignItems="center" variant="h5">
+                      <SouthTwoToneIcon fontSize="small" /> {w.main.temp_min}°C
+                    </Typography>
+                  </TableCell>
+                ))
+              }
+            </TableRow>
+            <TableRow>
+              <TableCell align="center" colSpan={weatherList.length}>
+                <Chart
+                  options={chartOption}
+                  series={chartData}
+                  type="line"
+                  height={50}
+                />
+              </TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      </TableContainer>
+      {/*<Stack*/}
+      {/*  direction="row"*/}
+      {/*  justifyContent="space-evenly"*/}
+      {/*  alignItems="stretch"*/}
+      {/*  divider={<Divider orientation="vertical" flexItem />}*/}
+      {/*  spacing={0}>*/}
+      {/*  <Box p={3}>*/}
+      {/*    <Chart*/}
+      {/*      options={Box1Options}*/}
+      {/*      series={Box1Data}*/}
+      {/*      type="line"*/}
+      {/*      width="500"*/}
+      {/*      height="200"*/}
+      {/*    />*/}
+      {/*  </Box>*/}
+      {/*</Stack>*/}
+    </Card>
   )
 }
 

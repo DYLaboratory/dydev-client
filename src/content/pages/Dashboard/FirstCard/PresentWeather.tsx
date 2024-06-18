@@ -1,6 +1,5 @@
 import { Box, FormControl, InputLabel, MenuItem, Select, Typography } from "@mui/material";
 import AirTwoToneIcon from "@mui/icons-material/AirTwoTone";
-import { URL_INFO } from "src/utils/constants";
 
 interface WeatherTypes {
   dt: number;
@@ -103,13 +102,13 @@ function PresentWeather(props: PresentWeatherProps) {
           justifyContent="space-between"
         >
           <Box display="flex" alignItems="center">
-            {present && <img src={URL_INFO.EXTERNAL.OPEN_WEATHER_IMAGE + present.weather[0].icon + ".png"} alt={present.weather[0].description} />}
+            {present && <img src={"/static/images/weathers/100/" + present.weather[0].icon + "@2x.png"} alt={present.weather[0].description} />}
             <Box>
               <Typography variant="h4">
                 {present.main.temp}°C
               </Typography>
               <Typography variant="subtitle2" noWrap>
-                기준시간 {present.time}
+                체감온도 {present.main.feels_like}°C
               </Typography>
             </Box>
           </Box>

@@ -49,6 +49,21 @@ export function toTimePattern(date: Date) {
   );
 }
 
+export function diffTime(date1: Date, date2: Date, type: 'h' | 'm' | 's'): number {
+  const time1 = new Date(date1).getTime();
+  const time2 = new Date(date2).getTime();
+
+  switch (type) {
+    case 'h':
+      return (time1 - time2) / 60 / 60 / 1000;
+    case 'm':
+      return (time1 - time2) / 60 / 1000;
+    case 's': default:
+      return (time1 - time2) / 1000;
+
+  }
+}
+
 /*
   data Type 에 따른 값 변환
   isMan //필수여부

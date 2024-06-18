@@ -62,7 +62,7 @@ function ForecastWeather(props: ForecastWeatherProps) {
       const dt = epochToDate(w.dt);
 
       w.date = toDatePattern(dt);
-      w.time = toTimePattern(dt).substring(0, 2) + "시";
+      w.time = toTimePattern(dt);
 
       return w;
     });

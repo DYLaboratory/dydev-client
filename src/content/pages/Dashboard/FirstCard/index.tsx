@@ -2,7 +2,7 @@ import { Box, Card, CircularProgress, Divider, Grid, Typography } from "@mui/mat
 import PresentWeather from "src/content/pages/Dashboard/FirstCard/PresentWeather";
 import { useEffect, useState } from "react";
 import { getWeather } from "src/services/dashboard/externalApi";
-import { epochToDate, toDatePattern, toTimePattern } from "src/utils/stringUtils";
+import { diffTime, epochToDate, toDatePattern, toTimePattern } from "src/utils/stringUtils";
 import ForecastWeather from "src/content/pages/Dashboard/FirstCard/ForecastWeather";
 
 interface WeatherMainTypes {
@@ -60,36 +60,57 @@ function FirstCard() {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
+  const fetchCurrentWeather = async () => {
+    setLoading(true);
+
+    await getWeather(city)
+      .then(
+        res => {
+          const data = res.data;
+
+          const p: WeatherTypes = JSON.parse(data.present);
+          const f: WeatherMainTypes = JSON.parse(data.forecast);
+
+          sessionStorage.setItem("weather", JSON.stringify({
+            lastAsync: new Date(),
+            city: city,
+            present: p,
+            forecast: f
+          }));
+
+          const dt = epochToDate(p.dt);
+          setPresent({
+            ...p,
+            date: toDatePattern(dt),
+            time: toTimePattern(dt).substring(0, 5)
+          });
+          setForecast(f);
+
+          setLoading(false);
+        },
+        () => {
+          setError("날씨 정보를 불러오지 못하였습니다.");
+          setLoading(false);
+        }
+      );
+  };
+
   useEffect(() => {
-    const fetchCurrentWeather = async () => {
-      setLoading(true);
+    const weather = JSON.parse(sessionStorage.getItem("weather"));
 
-      await getWeather(city)
-        .then(
-          res => {
-            const data = res.data;
+    if (weather) {
+      const diff = diffTime(new Date(), weather.lastAsync, 'm');
 
-            const p: WeatherTypes = JSON.parse(data.present);
-            const f: WeatherMainTypes = JSON.parse(data.forecast);
-
-            const dt = epochToDate(p.dt);
-            setPresent({
-              ...p,
-              date: toDatePattern(dt),
-              time: toTimePattern(dt).substring(0, 5)
-            });
-            setForecast(f);
-
-            setLoading(false);
-          },
-          () => {
-            setError("날씨 정보를 불러오지 못하였습니다.");
-            setLoading(false);
-          }
-        );
-    };
-
-    fetchCurrentWeather();
+      if (diff >= 10 || weather.city !== city) {
+        fetchCurrentWeather();
+      } else {
+        setPresent(weather.present);
+        setForecast(weather.forecast);
+        setLoading(false);
+      }
+    } else {
+      fetchCurrentWeather();
+    }
   }, [city]);
 
   // 에러
