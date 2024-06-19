@@ -88,62 +88,60 @@ function LoginForm() {
 
   return (
     <LoginCard>
-      <Grid container spacing={0}>
-        <Grid item md={12}>
-          <Box p={3}>
-            <Box pb={3} display="flex" justifyContent="space-between">
-              <Typography variant="h3">
-                SIGN IN
-              </Typography>
-              <HeaderTheme />
-            </Box>
-            <Box p={1}>
-              <Typography variant="h4">ID</Typography>
-              <TextField
-                type="text"
-                name="id"
-                placeholder="Enter your ID"
-                fullWidth
-                onChange={handleInputChange}
-                onKeyPress={handleKeyPress}
-              />
-            </Box>
-            <Box p={1}>
-              <Typography variant="h4">PASSWORD</Typography>
-              <TextField
-                type="password"
-                name="pwd"
-                placeholder="Enter your Password"
-                fullWidth
-                onChange={handleInputChange}
-                onKeyPress={handleKeyPress}
-              />
-            </Box>
-            <Box p={1}>
-              <FormControlLabel
-                key="Y"
-                name="Y"
-                checked={idSaveYn}
-                control={
-                  <Checkbox
-                    id="Y"
-                    name="Y"
-                    value={idSaveYn}
-                    onChange={() => setIdSaveYn(!idSaveYn)}
-                  />
-                }
-                label="Save ID"
-                labelPlacement="end"
-              />
-            </Box>
-            <Box p={1}>
-              <Button variant="contained" fullWidth onClick={handleLoginButton}>
-                SIGN IN
-              </Button>
-            </Box>
+      <Box>
+        <Box p={3}>
+          <Box pb={3} display="flex" justifyContent="space-between">
+            <Typography variant="h3">
+              SIGN IN
+            </Typography>
+            <HeaderTheme />
           </Box>
-        </Grid>
-      </Grid>
+          <Box p={1}>
+            <Typography variant="h4">ID</Typography>
+            <TextField
+              type="text"
+              name="id"
+              placeholder="Enter your ID"
+              fullWidth
+              onChange={handleInputChange}
+              onKeyPress={handleKeyPress}
+            />
+          </Box>
+          <Box p={1}>
+            <Typography variant="h4">PASSWORD</Typography>
+            <TextField
+              type="password"
+              name="pwd"
+              placeholder="Enter your Password"
+              fullWidth
+              onChange={handleInputChange}
+              onKeyPress={handleKeyPress}
+            />
+          </Box>
+          <Box p={1}>
+            <FormControlLabel
+              key="Y"
+              name="Y"
+              checked={idSaveYn}
+              control={
+                <Checkbox
+                  id="Y"
+                  name="Y"
+                  value={idSaveYn}
+                  onChange={() => setIdSaveYn(!idSaveYn)}
+                />
+              }
+              label="Save ID"
+              labelPlacement="end"
+            />
+          </Box>
+          <Box p={1}>
+            <Button variant="contained" fullWidth onClick={handleLoginButton}>
+              SIGN IN
+            </Button>
+          </Box>
+        </Box>
+      </Box>
     </LoginCard>
   );
 }

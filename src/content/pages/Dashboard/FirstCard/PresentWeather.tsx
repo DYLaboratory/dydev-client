@@ -134,7 +134,7 @@ function PresentWeather(props: PresentWeatherProps) {
         }
       </Box>
       <Box display="flex" justifyContent="space-between">
-        <Typography variant="h2" gutterBottom>
+        <Typography variant="h3" gutterBottom>
           {countryType.name + " " + cityType.name}
         </Typography>
         <FormControl variant="outlined">
