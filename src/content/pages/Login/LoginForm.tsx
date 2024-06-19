@@ -88,7 +88,7 @@ function LoginForm() {
 
   return (
     <LoginCard>
-      <Grid spacing={0}>
+      <Grid container spacing={0}>
         <Grid item md={12}>
           <Box p={3}>
             <Box pb={3} display="flex" justifyContent="space-between">

@@ -1,7 +1,7 @@
 import { Box, Card, Divider, Grid, Typography } from "@mui/material";
 import PresentWeather from "src/content/pages/Dashboard/FirstCard/PresentWeather";
 import { useEffect, useState } from "react";
-import { getWeather } from "src/services/dashboard/externalApi";
+import { getWeatherDust } from "src/services/dashboard/externalApi";
 import { diffTime, epochToDate, toDatePattern, toTimePattern } from "src/utils/stringUtils";
 import ForecastWeather from "src/content/pages/Dashboard/FirstCard/ForecastWeather";
 import LoadingProgress from "src/components/LoadingProgress";
@@ -78,76 +78,138 @@ interface DustBody {
 }
 
 function FirstCard() {
-  const [present, setPresent] = useState<WeatherTypes>(null);
-  const [forecast, setForecast] = useState<WeatherMainTypes>(null);
-  const [dust, setDust] = useState<DustBody>(null);
-
   const [city, setCity] = useState<{ id: string, name: string }>({
     id: "Seoul",
     name: "서울"
   });
 
+  const [search, setSearch] = useState<{ city: string, weather: boolean, dust: boolean, refresh?: boolean }>({
+    city: city.id,
+    weather: true,
+    dust: true,
+    refresh: false
+  });
+
+  const [present, setPresent] = useState<WeatherTypes>(null);
+  const [forecast, setForecast] = useState<WeatherMainTypes>(null);
+  const [dust, setDust] = useState<DustBody>(null);
+
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
   const fetchCurrentWeather = async () => {
-    await getWeather(city.id)
-      .then(
-        res => {
-          const data = res.data;
+    if (search.weather || search.dust) {
+      await getWeatherDust(search)
+        .then(
+          res => {
+            const data = res.data;
 
-          const p: WeatherTypes = JSON.parse(data.present);
-          const f: WeatherMainTypes = JSON.parse(data.forecast);
-          const dRes: DustResponse = data.dust && JSON.parse(data.dust);
-          const d: DustBody = dRes && dRes.response.body;
+            console.log(data.dust);
 
-          const dt = epochToDate(p.dt);
-          p.date = toDatePattern(dt);
-          p.time = toTimePattern(dt).substring(0, 5);
+            const p: WeatherTypes = JSON.parse(data.present);
+            const f: WeatherMainTypes = JSON.parse(data.forecast);
+            const dRes: DustResponse = data.dust && JSON.parse(data.dust);
+            const d: DustBody = dRes && dRes.response.body;
 
-          sessionStorage.setItem("weather", JSON.stringify({
-            lastAsync: new Date(),
-            city: city,
-            present: p,
-            forecast: f,
-            dust: d
-          }));
+            const dt = epochToDate(p.dt);
+            p.date = toDatePattern(dt);
+            p.time = toTimePattern(dt).substring(0, 5);
 
-          setPresent(p);
-          setForecast(f);
-          setDust(d);
+            const nowDate = new Date();
 
-          setLoading(false);
-        },
-        () => {
-          setError("날씨 정보를 불러오지 못하였습니다.");
-          setLoading(false);
-        }
-      );
+            if (search.weather) {
+              sessionStorage.setItem("weather", JSON.stringify({
+                lastAsync: nowDate,
+                city: city,
+                present: p,
+                forecast: f
+              }));
+
+              setPresent(p);
+              setForecast(f);
+            }
+
+            if (search.dust) {
+              sessionStorage.setItem("dust", JSON.stringify({
+                lastAsync: nowDate,
+                city: city,
+                dust: d
+              }));
+
+              setDust(d);
+            }
+
+            setLoading(false);
+          },
+          () => {
+            setError("날씨 정보를 불러오지 못하였습니다.");
+            setLoading(false);
+          }
+        );
+    } else {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
     setLoading(true);
 
+    // 스토리지에서 데이터 가져오기
     const weather = JSON.parse(sessionStorage.getItem("weather"));
+    const dust = JSON.parse(sessionStorage.getItem("dust"));
 
+    let callWeather: boolean;
+    let callDust: boolean;
+
+    const nowDate = new Date();
+
+    // 날씨
     if (weather) {
-      const diff = diffTime(new Date(), weather.lastAsync, 'm');
+      // 동기화 10분이상 지났으면 재호출
+      const diff = diffTime(nowDate, weather.lastAsync, 'm');
 
       if (diff >= 10 || weather.city.id !== city.id) {
-        fetchCurrentWeather();
+        callWeather = true;
       } else {
+        callWeather = false;
         setPresent(weather.present);
         setForecast(weather.forecast);
         setLoading(false);
       }
     } else {
-      fetchCurrentWeather();
+      callWeather = true;
     }
+
+    // 미세먼지
+    if (dust) {
+      // 동기화 3시간 이상 지났으면 재호출
+      const diff = diffTime(nowDate, dust.lastAsync, 'h');
+
+      if (diff >= 3 || dust.city.id !== city.id) {
+        callDust = true;
+      } else {
+        callDust = false;
+        setDust(dust);
+        setLoading(false);
+      }
+    } else {
+      callDust = true;
+    }
+
+    setSearch({ ...search, weather: callWeather, dust: callDust });
+
+    fetchCurrentWeather();
   }, [city]);
 
-  const handleRefresh = () => {
-    fetchCurrentWeather();
+  useEffect(() => {
+    if (search.refresh) {
+      fetchCurrentWeather();
+      setSearch({ ...search, refresh: false });
+    }
+  }, [search.refresh]);
+
+  const handleRefresh = async () => {
+    setSearch({...search, weather: true, dust: true, refresh: true});
   }
 
   // 에러
@@ -182,7 +244,7 @@ function FirstCard() {
               <>
                 <Grid item xs={12} md={6}>
                   <PresentWeather present={present} city={city} setCity={setCity} handleRefresh={handleRefresh} />
-                  {dust
+                  {dust && dust.items && dust.items.length > 0
                     ? <PresentDust dust={dust} />
                     :
                       <Typography p={4} variant="h4">
@@ -191,9 +253,22 @@ function FirstCard() {
 
                   }
                 </Grid>
-                  <Divider absolute orientation="vertical" />
-                  <Grid item xs={12} md={6}>
+                <Grid item xs={12} md={6}>
                   <ForecastWeather forecast={forecast} />
+                  <Box pl={4} pr={4} pb={4}>
+                    <Typography variant="subtitle2">
+                      데이터는 실시간 관측자료이며 상황에 따라 수집되지 않을 수 있습니다.
+                    </Typography>
+                    <Box pt={1} textAlign="right">
+                      <Typography variant="h5">[정보제공]</Typography>
+                      <Typography>
+                        날씨: <a href="https://api.openweathermap.org" target="_blank" rel="noopener noreferrer">OpenWeather</a>
+                      </Typography>
+                      <Typography>
+                        미세먼지: <a href="https://www.data.go.kr/index.do" target="_blank" rel="noopener noreferrer">한국환경공단 에어코리아</a>
+                      </Typography>
+                    </Box>
+                  </Box>
                 </Grid>
               </>
             }

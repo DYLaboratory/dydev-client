@@ -8,8 +8,8 @@ import { styled } from "@mui/material/styles";
 import { useEffect, useState } from "react";
 
 const RotatingIcon = styled(RefreshTwoToneIcon)(({ theme, rotate }) => ({
-  transition: 'transform 1s linear',
-  transform: rotate ? 'rotate(540deg)' : 'rotate(0deg)',
+  transition: 'transform 3s linear',
+  transform: rotate ? 'rotate(360deg)' : 'rotate(0deg)',
 }));
 
 interface WeatherTypes {
@@ -134,7 +134,7 @@ function PresentWeather(props: PresentWeatherProps) {
         }
       </Box>
       <Box display="flex" justifyContent="space-between">
-        <Typography variant="h1" gutterBottom>
+        <Typography variant="h2" gutterBottom>
           {countryType.name + " " + cityType.name}
         </Typography>
         <FormControl variant="outlined">
