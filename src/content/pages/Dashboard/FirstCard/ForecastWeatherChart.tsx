@@ -172,7 +172,7 @@ function ForecastWeatherChart(props: { weatherList: WeatherTypes[] }) {
                 tableList
                   .filter(w => w.isFirstDate)
                   .map(w => (
-                      <TableCell key={w.dt} colSpan={w.dateCount} style={{ position: "sticky", left: 0 }}>
+                      <TableCell key={w.dt} colSpan={w.dateCount}>
                         <Typography variant="h5">{w.date}</Typography>
                       </TableCell>
                     )

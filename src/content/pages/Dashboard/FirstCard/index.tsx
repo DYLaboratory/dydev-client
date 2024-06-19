@@ -104,8 +104,6 @@ function FirstCard() {
           res => {
             const data = res.data;
 
-            console.log(data.dust);
-
             const p: WeatherTypes = JSON.parse(data.present);
             const f: WeatherMainTypes = JSON.parse(data.forecast);
             const dRes: DustResponse = data.dust && JSON.parse(data.dust);
@@ -208,6 +206,13 @@ function FirstCard() {
     }
   }, [search.refresh]);
 
+  // city 변경
+  const handleChangeCity = ct => {
+    setSearch({ ...search, city: ct.id, weather: true, dust: true });
+    setCity(ct);
+  }
+
+  // refresh 버튼
   const handleRefresh = async () => {
     setSearch({...search, weather: true, dust: true, refresh: true});
   }
@@ -243,7 +248,7 @@ function FirstCard() {
             {!error &&
               <>
                 <Grid item xs={12} md={6}>
-                  <PresentWeather present={present} city={city} setCity={setCity} handleRefresh={handleRefresh} />
+                  <PresentWeather present={present} city={city} setCity={handleChangeCity} handleRefresh={handleRefresh} />
                   {dust && dust.items && dust.items.length > 0
                     ? <PresentDust dust={dust} />
                     :
