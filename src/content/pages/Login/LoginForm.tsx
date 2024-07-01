@@ -44,11 +44,11 @@ function LoginForm() {
 
   // 로그인 버튼 클릭
   const handleLoginButton = async () => {
-    if (hasText(userInfo.userId)) {
+    if (!hasText(userInfo.userId)) {
       alert('아이디를 입력하세요');
       return;
     }
-    if (hasText(userInfo.password)) {
+    if (!hasText(userInfo.password)) {
       alert('비밀번호를 입력하세요');
       return;
     }

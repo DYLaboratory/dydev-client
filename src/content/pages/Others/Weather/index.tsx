@@ -1,11 +1,16 @@
-import { Box, Card, Divider, Grid, Typography } from "@mui/material";
-import PresentWeather from "src/content/pages/Dashboard/FirstCard/PresentWeather";
+import { Box, Card, Container, Divider, Grid, Typography } from "@mui/material";
+import PresentWeather from "src/content/pages/Others/Weather/PresentWeather";
 import { useEffect, useState } from "react";
 import { getWeatherDust } from "src/services/dashboard/externalApi";
 import { diffTime, epochToDate, toDatePattern, toTimePattern } from "src/utils/stringUtils";
-import ForecastWeather from "src/content/pages/Dashboard/FirstCard/ForecastWeather";
+import ForecastWeather from "src/content/pages/Others/Weather/ForecastWeather";
 import LoadingProgress from "src/components/LoadingProgress";
-import PresentDust from "src/content/pages/Dashboard/FirstCard/PresentDust";
+import PresentDust from "src/content/pages/Others/Weather/PresentDust";
+import { Helmet } from "react-helmet-async";
+import PageTitleWrapper from "src/components/PageTitleWrapper";
+import PageHeader from "src/components/PageHeader";
+import Footer from "src/components/Footer";
+import DashboardTwoToneIcon from "@mui/icons-material/DashboardTwoTone";
 
 interface WeatherMainTypes {
   city: {
@@ -77,7 +82,13 @@ interface DustBody {
   numOfRows: number;
 }
 
-function FirstCard() {
+function Weather() {
+  const header = {
+    title: "날씨",
+    subTitle: 'The weather is fickle',
+    icon: <DashboardTwoToneIcon fontSize="large" />
+  };
+
   const [city, setCity] = useState<{ id: string, name: string }>({
     id: "Seoul",
     name: "서울"
@@ -238,49 +249,75 @@ function FirstCard() {
   }
 
   return (
-    <Card>
-      {loading
-        ?
-          <LoadingProgress />
-        :
-          <Grid spacing={0} container>
-            {error}
-            {!error &&
-              <>
-                <Grid item xs={12} md={6}>
-                  <PresentWeather present={present} city={city} setCity={handleChangeCity} handleRefresh={handleRefresh} />
-                  {dust && dust.items && dust.items.length > 0
-                    ? <PresentDust dust={dust} />
-                    :
+    <>
+      <Helmet>
+        <title>DYLABO Dashboard</title>
+      </Helmet>
+      <PageTitleWrapper>
+        <PageHeader
+          title={header.title}
+          subTitle={header.subTitle}
+          icon={header.icon}
+        />
+      </PageTitleWrapper>
+      <Container maxWidth="lg">
+        <Grid
+          container
+          direction="row"
+          justifyContent="center"
+          alignItems="stretch"
+          spacing={4}>
+          <Grid item xs={12}>
+            <Card>
+              {loading && <LoadingProgress />}
+              {!loading &&
+              <Grid spacing={0} container>
+                {error}
+                {!error && present &&
+                <>
+                  <Grid item xs={12} md={6}>
+                    <PresentWeather present={present} city={city} setCity={handleChangeCity} handleRefresh={handleRefresh} />
+                    {dust && dust.items && dust.items.length > 0
+                      ? <PresentDust dust={dust} />
+                      :
                       <Typography p={4} variant="h4">
                         미세먼지 정보를 불러오지 못하였습니다
                       </Typography>
 
-                  }
-                </Grid>
-                <Grid item xs={12} md={6}>
-                  <ForecastWeather forecast={forecast} />
-                  <Box pl={4} pr={4} pb={4}>
-                    <Typography variant="subtitle2">
-                      데이터는 실시간 관측자료이며 상황에 따라 수집되지 않을 수 있습니다.
-                    </Typography>
-                    <Box pt={1} textAlign="right">
-                      <Typography variant="h5">[정보제공]</Typography>
-                      <Typography>
-                        날씨: <a href="https://api.openweathermap.org" target="_blank" rel="noopener noreferrer">OpenWeather</a>
+                    }
+                  </Grid>
+                  {forecast &&
+                  <Grid item xs={12} md={6}>
+                    <ForecastWeather forecast={forecast} />
+                    <Box pl={4} pr={4} pb={4}>
+                      <Typography variant="subtitle2">
+                        데이터는 실시간 관측자료이며 상황에 따라 수집되지 않을 수 있습니다.
                       </Typography>
-                      <Typography>
-                        미세먼지: <a href="https://www.data.go.kr/index.do" target="_blank" rel="noopener noreferrer">한국환경공단 에어코리아</a>
-                      </Typography>
+                      <Box pt={1} textAlign="right">
+                        <Typography variant="h5">[정보제공]</Typography>
+                        <Typography>
+                          날씨: <a href="https://api.openweathermap.org" target="_blank"
+                                 rel="noopener noreferrer">OpenWeather</a>
+                        </Typography>
+                        <Typography>
+                          미세먼지: <a href="https://www.data.go.kr/index.do" target="_blank" rel="noopener noreferrer">한국환경공단
+                          에어코리아</a>
+                        </Typography>
+                      </Box>
                     </Box>
-                  </Box>
-                </Grid>
-              </>
-            }
+                  </Grid>
+                  }
+                </>
+                }
+              </Grid>
+              }
+            </Card>
           </Grid>
-      }
-    </Card>
+        </Grid>
+      </Container>
+      <Footer />
+    </>
   );
 }
 
-export default FirstCard;
+export default Weather;

@@ -4,7 +4,7 @@ import AvatarIcon from "src/components/AvatarIcon";
 
 function PageHeader() {
   const user = {
-    name: "DY's Space",
+    name: "DYLABO",
     avatarLight: '/static/images/dylabo/main-logo.png',
     avatarDark: '/static/images/dylabo/main-logo-dark.png'
   };
@@ -23,7 +23,9 @@ function PageHeader() {
         <Typography variant="h3" component="h3" gutterBottom>
           Welcome, {user.name}!
         </Typography>
-        <Typography variant="subtitle2">Today is a good day!</Typography>
+        <Typography variant="subtitle2">
+          About Me
+        </Typography>
       </Grid>
     </Grid>
   );

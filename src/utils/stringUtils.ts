@@ -1,5 +1,7 @@
-export const hasText = (text: string) => {
-  return text && text === '';
+import { ReactNode } from "react";
+
+export const hasText = (text: string): boolean => {
+  return text && text !== '';
 };
 
 // 시,분 형태 정규화
@@ -60,7 +62,6 @@ export function diffTime(date1: Date, date2: Date, type: 'h' | 'm' | 's'): numbe
       return (time1 - time2) / 60 / 1000;
     case 's': default:
       return (time1 - time2) / 1000;
-
   }
 }
 

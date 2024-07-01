@@ -12,8 +12,8 @@ function PageHeader(props: PageHeaderProps) {
   const { isAdmin, onOpenModal } = props;
 
   const title = {
-    title: 'Web Site List',
-    subTitle: 'These are the useful websites'
+    title: 'Site',
+    subTitle: 'Useful WebSite List'
   };
 
   return (

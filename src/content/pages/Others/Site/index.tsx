@@ -33,7 +33,7 @@ import {
   setUpdateWebSite
 } from "src/services/others/webSiteApi";
 import { useAppSelector } from "src/app/hooks";
-import { err400Alert } from "src/utils/errUtils";
+import { useErrAlert } from "src/utils/errUtils";
 import LoadingProgress from "src/components/LoadingProgress";
 import DialogModal from "src/components/DialogModal";
 
@@ -88,6 +88,8 @@ interface ModalType {
 
 function SiteList() {
   const isAdmin = useAppSelector(state => state.user).isAdmin;
+
+  const { err400Alert } = useErrAlert();
 
   const [editLoading, setEditLoading] = useState<boolean>(false);
   const [fetchLoading, setFetchLoading] = useState<boolean>(true);

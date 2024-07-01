@@ -37,6 +37,7 @@ import ChromeReaderModeTwoToneIcon from '@mui/icons-material/ChromeReaderModeTwo
 import WorkspacePremiumTwoToneIcon from '@mui/icons-material/WorkspacePremiumTwoTone';
 import CameraFrontTwoToneIcon from '@mui/icons-material/CameraFrontTwoTone';
 import DisplaySettingsTwoToneIcon from '@mui/icons-material/DisplaySettingsTwoTone';
+import FilterDramaTwoToneIcon from '@mui/icons-material/FilterDramaTwoTone';
 import { useAppSelector } from "src/app/hooks";
 
 const MenuWrapper = styled(Box)(
@@ -288,6 +289,16 @@ function SidebarMenu() {
                 to="/others/site"
                 startIcon={<LinkTwoToneIcon />}>
                 Site
+              </Button>
+            </ListItem>
+            <ListItem component="div">
+              <Button
+                disableRipple
+                component={RouterLink}
+                onClick={closeSidebar}
+                to="/others/weather"
+                startIcon={<FilterDramaTwoToneIcon />}>
+                Weather
               </Button>
             </ListItem>
           </List>

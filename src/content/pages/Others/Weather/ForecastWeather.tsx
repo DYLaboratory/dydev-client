@@ -1,5 +1,5 @@
 import { Box, Grid, useTheme } from "@mui/material";
-import ForecastWeatherChart from "src/content/pages/Dashboard/FirstCard/ForecastWeatherChart";
+import ForecastWeatherChart from "src/content/pages/Others/Weather/ForecastWeatherChart";
 import { epochToDate, toDatePattern, toTimePattern } from "src/utils/stringUtils";
 
 interface WeatherMainTypes {

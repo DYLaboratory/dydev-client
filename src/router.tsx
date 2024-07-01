@@ -35,6 +35,10 @@ const Notice = Loader(
 
 /* Others */
 const Site = Loader(lazy(() => import('src/content/pages/Others/Site')));
+const Weather = Loader(lazy(() => import('src/content/pages/Others/Weather')));
+
+/* My Page */
+const Settings = Loader(lazy(() => import('src/content/pages/MyPage/AccountSetting')));
 
 /* Login */
 const Login = Loader(lazy(() => import('src/content/pages/Login')));
@@ -175,8 +179,8 @@ const routes: RouteObject[] = [
       },
       {
         path: 'about',
-        // element: <About />
-        element: <StatusComingSoon isMain />
+        element: <About />
+        // element: <StatusComingSoon isMain />
       },
       {
         path: 'intro',
@@ -238,10 +242,27 @@ const routes: RouteObject[] = [
       {
         path: 'site',
         element: <Site />
+      },
+      {
+        path: 'weather',
+        element: <Weather />
       }
     ]
   },
 
+  // my page
+  {
+    path: 'profile',
+    element: <SidebarLayout withAuth />,
+    children: [
+      {
+        path: 'settings',
+        element: <Settings />
+      }
+    ]
+  },
+
+  // admin
   {
     path: '',
     element: <SidebarLayout withAuth />,
@@ -257,7 +278,7 @@ const routes: RouteObject[] = [
                 element: <NoticeEdit />
               },
               {
-                path: '*/edit',
+                path: ':id/edit',
                 element: <NoticeEdit />
               }
             ]

@@ -16,7 +16,7 @@ function PageHeader(props: PageHeaderProps) {
 
   const title = {
     title: 'Notice',
-    subTitle: 'This is the notice page'
+    subTitle: '공지사항입니다'
   };
 
   return (

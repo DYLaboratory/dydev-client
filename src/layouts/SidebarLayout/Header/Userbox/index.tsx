@@ -163,7 +163,7 @@ function HeaderUserbox() {
           </ListItem>
           <ListItem
             button
-            to="/management/profile/settings"
+            to="/profile/settings"
             component={NavLink}>
             <AccountTreeTwoToneIcon fontSize="small" />
             <ListItemText primary="Account Settings" />

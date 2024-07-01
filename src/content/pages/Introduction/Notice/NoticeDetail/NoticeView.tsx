@@ -6,12 +6,13 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { getNoticeById } from "src/services/introduction/noticeApi";
 import { NoticeData, NoticeTypes } from "src/models/data/dataModels";
-import { Button, Card, CardContent, CardHeader, Container, Divider, Grid, Typography } from "@mui/material";
+import { Box, Button, Card, CardContent, CardHeader, Container, Divider, Grid, Typography } from "@mui/material";
 import parse from "html-react-parser";
 import Footer from "src/components/Footer";
-import { ListAlt } from "@mui/icons-material";
 import { URL_INFO } from "src/utils/constants";
 import LoadingProgress from "src/components/LoadingProgress";
+import DriveFileRenameOutlineTwoToneIcon from '@mui/icons-material/DriveFileRenameOutlineTwoTone';
+import ListAltTwoToneIcon from '@mui/icons-material/ListAltTwoTone';
 
 const NoticeTitle = (props: { type: NoticeTypes, title: string }) => {
   const { type, title } = props;
@@ -94,7 +95,7 @@ function NoticeView() {
               <Card>
                 <CardHeader
                   title={<NoticeTitle type={notice.noticeType} title={notice.title} />}
-                  subheader={<NoticeSubTitle dateTime={notice.createDateTime} />}
+                  subheader={<NoticeSubTitle dateTime={notice.createDateTime.substring(0, 19)} />}
                 />
                 <Divider />
                 <CardContent>
@@ -107,9 +108,15 @@ function NoticeView() {
                 <Divider />
                 <CardHeader
                   title={
-                    <Button variant="outlined" onClick={() => navigate(URL_INFO.PAGE.NOTICE)}>
-                      <ListAlt /> LIST
-                    </Button>}
+                    <Box display="flex" alignItems="center">
+                      <Button color="info" onClick={() => navigate(URL_INFO.PAGE.NOTICE + "/" + id + "/edit")}>
+                        <DriveFileRenameOutlineTwoToneIcon /> EDIT
+                      </Button>
+                      <Button onClick={() => navigate(URL_INFO.PAGE.NOTICE)}>
+                        <ListAltTwoToneIcon /> LIST
+                      </Button>
+                    </Box>
+                  }
                 />
               </Card>
             </Grid>

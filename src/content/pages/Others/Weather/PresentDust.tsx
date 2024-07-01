@@ -1,4 +1,8 @@
-import { Box, Grid, Typography, useTheme } from "@mui/material";
+import { Box, Grid, Tooltip, Typography, useTheme } from "@mui/material";
+import SentimentVeryDissatisfiedTwoToneIcon from '@mui/icons-material/SentimentVeryDissatisfiedTwoTone';
+import SentimentDissatisfiedTwoToneIcon from '@mui/icons-material/SentimentDissatisfiedTwoTone';
+import SentimentNeutralTwoToneIcon from '@mui/icons-material/SentimentNeutralTwoTone';
+import SentimentSatisfiedAltTwoToneIcon from '@mui/icons-material/SentimentSatisfiedAltTwoTone';
 
 const DustGrid = (props: { grade: string, text: string; pm: string }) => {
   const { grade, text, pm } = props;
@@ -8,41 +12,37 @@ const DustGrid = (props: { grade: string, text: string; pm: string }) => {
   const isGrade = pm === grade;
 
   let bgcolor;
+  let icon;
+  let name;
 
-  if (theme.palette.mode === "light") {
-    switch (grade) {
-      case "1":
-        bgcolor = isGrade ? theme.colors.info.light : theme.colors.info.lighter;
-        break;
-      case "2":
-        bgcolor = isGrade ? theme.colors.success.light : theme.colors.success.lighter;
-        break;
-      case "3":
-        bgcolor = isGrade ? theme.colors.warning.light : theme.colors.warning.lighter;
-        break;
-      case "4": default:
-        bgcolor = isGrade ? theme.colors.error.light : theme.colors.error.lighter;
-    }
-  } else {
-    switch (grade) {
-      case "1":
-        bgcolor = isGrade ? theme.colors.info.dark : theme.colors.info.lighter;
-        break;
-      case "2":
-        bgcolor = isGrade ? theme.colors.success.dark : theme.colors.success.lighter;
-        break;
-      case "3":
-        bgcolor = isGrade ? theme.colors.warning.dark : theme.colors.warning.lighter;
-        break;
-      case "4": default:
-        bgcolor = isGrade ? theme.colors.error.dark : theme.colors.error.lighter;
-    }
+  switch (grade) {
+    case "1":
+      bgcolor = isGrade ? theme.colors.success[theme.palette.mode] : theme.colors.success.lighter;
+      icon = <SentimentSatisfiedAltTwoToneIcon />;
+      name = "좋음";
+      break;
+    case "2":
+      bgcolor = isGrade ? theme.colors.info[theme.palette.mode] : theme.colors.info.lighter;
+      icon = <SentimentNeutralTwoToneIcon />;
+      name = "보통"
+      break;
+    case "3":
+      bgcolor = isGrade ? theme.colors.warning[theme.palette.mode] : theme.colors.warning.lighter;
+      icon = <SentimentDissatisfiedTwoToneIcon />;
+      name = "나쁨"
+      break;
+    case "4": default:
+      bgcolor = isGrade ? theme.colors.error[theme.palette.mode] : theme.colors.error.lighter;
+      icon = <SentimentVeryDissatisfiedTwoToneIcon />;
+      name = "매우 나쁨"
   }
 
   return (
     <Grid item xs={12} md={3} textAlign="center" bgcolor={bgcolor}>
       <Typography variant={isGrade ? "h5" : "subtitle2"} display="flex" justifyContent="center" alignItems="center">
-        {text}
+        <Tooltip title={name} arrow>
+          {icon}
+        </Tooltip>
       </Typography>
     </Grid>
   )

@@ -5,7 +5,8 @@ import SouthTwoToneIcon from "@mui/icons-material/SouthTwoTone";
 import AirTwoToneIcon from "@mui/icons-material/AirTwoTone";
 import OpacityTwoToneIcon from "@mui/icons-material/OpacityTwoTone";
 import { styled } from "@mui/material/styles";
-import { useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
+import { convertDegToDir } from "src/content/pages/Dashboard/WeatherCard";
 
 const RotatingIcon = styled(RefreshTwoToneIcon)(({ theme, rotate }) => ({
   transition: 'transform 3s linear',
@@ -80,6 +81,8 @@ const cityTypes = [
 function PresentWeather(props: PresentWeatherProps) {
   const { present, city, setCity, handleRefresh } = props;
 
+  const [wind, setWind] = useState<{ name: string, icon: ReactNode }>();
+
   const [rotate, setRotate] = useState<boolean>(false);
 
   const countryType = countryTypes.find(c => c.id === present.sys.country);
@@ -103,6 +106,10 @@ function PresentWeather(props: PresentWeatherProps) {
 
   useEffect(() => {
     setRotate(false);
+
+    if (present) {
+      setWind(convertDegToDir(present.wind.deg));
+    }
   }, [present]);
 
   return (
@@ -193,9 +200,11 @@ function PresentWeather(props: PresentWeatherProps) {
                 <Typography variant="h4" display="flex" alignItems="center">
                   {present.wind.speed}m/s
                 </Typography>
-                <Typography variant="subtitle2" display="flex" alignItems="center">
-                  {present.wind.deg}°
-                </Typography>
+                {wind &&
+                  <Typography variant="subtitle2" display="flex" alignItems="center">
+                    {wind.icon} {wind.name}
+                  </Typography>
+                }
               </Box>
             </Box>
           </Grid>

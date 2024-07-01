@@ -1,13 +1,11 @@
-export const apiErrorResponse = async err => {
+export const apiErrorResponse = async (err, errNetworkAlert, errAuthAlert) => {
   const { config, response } = err;
 
-  if (err.message && err.message === 'Network Error') {
-    alert('서버 통신 중 에러가 발생하였습니다.');
-  }
-
-  if (response.status === 401 || response.status === 403) {
-    alert('권한이 없습니다.');
-  }
+  // 네트워크 에러
+  errNetworkAlert(err);
+  
+  // 권한 에러
+  errAuthAlert(response?.status);
 
   await Promise.reject(err);
 };
