@@ -1,8 +1,7 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { LoginData } from "src/models/data/dataModels";
 import { signIn, signOut } from "src/services/auth/authApi";
 import { AuthState } from "src/models/state/stateModels";
-import { AxiosResponse } from "axios";
 import { clearLoginUserInfo } from "src/features/user/userSlice";
 
 const initialState: AuthState = {
@@ -40,12 +39,9 @@ export const authSlice = createSlice({
       .addCase(loginAsync.pending, state => {
         state.status = 'loading';
       })
-      .addCase(
-        loginAsync.fulfilled,
-        (state, action: PayloadAction<AxiosResponse>) => {
+      .addCase(loginAsync.fulfilled, (state, action) => {
           state.status = 'idle';
-        }
-      )
+      })
       .addCase(loginAsync.rejected, state => {
         state.status = 'failed';
       })

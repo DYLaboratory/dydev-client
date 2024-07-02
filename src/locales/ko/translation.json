@@ -1,0 +1,26 @@
+{
+  "header": {
+    "language": "언어",
+    "theme": "테마",
+    "signIn": "로그인"
+  },
+  "sideMenu": {
+    "dashboard": "대시보드",
+    "introduction": "소개",
+    "about": "소개",
+    "notice": "공지사항",
+    "blog": "블로그",
+    "feed": "피드",
+    "others": "기타",
+    "site": "사이트",
+    "weather": "날씨"
+  },
+  "dashboard": {
+    "title": "대시보드",
+    "subtitle": "좋은 하루 되세요."
+  },
+  "about": {
+    "title": "소개",
+    "subtitle": "저에 대해서..."
+  }
+}

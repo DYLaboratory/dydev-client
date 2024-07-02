@@ -1,7 +1,6 @@
-import { Box } from '@mui/material';
-import HeaderSearch from './Search';
-import HeaderNotifications from './Notifications';
-import HeaderTheme from './Theme';
+import { Box } from "@mui/material";
+import HeaderTheme from "./Theme";
+import HeaderLanguage from "src/layouts/SidebarLayout/Header/Buttons/Language";
 
 function HeaderButtons() {
   return (
@@ -10,6 +9,7 @@ function HeaderButtons() {
       {/*<Box sx={{ mx: 0.5 }} component="span">*/}
       {/*  <HeaderNotifications />*/}
       {/*</Box>*/}
+      <HeaderLanguage />
       <HeaderTheme />
     </Box>
   );

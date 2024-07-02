@@ -13,6 +13,7 @@ import { URL_INFO } from "src/utils/constants";
 import LoadingProgress from "src/components/LoadingProgress";
 import DriveFileRenameOutlineTwoToneIcon from '@mui/icons-material/DriveFileRenameOutlineTwoTone';
 import ListAltTwoToneIcon from '@mui/icons-material/ListAltTwoTone';
+import { useSnackbarAlert } from "src/utils/errUtils";
 
 const NoticeTitle = (props: { type: NoticeTypes, title: string }) => {
   const { type, title } = props;

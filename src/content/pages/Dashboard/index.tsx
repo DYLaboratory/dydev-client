@@ -9,7 +9,7 @@ import { ReactElement } from "react";
 
 function Dashboard() {
   const header = {
-    title: "대시보드",
+    title: "Dashboard",
     subTitle: 'Have a nice day!',
     icon: <DashboardTwoToneIcon fontSize="large" />
   };

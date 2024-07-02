@@ -30,7 +30,7 @@ export const noticeTypeOptions: { id: NoticeTypes; name: string }[] = [
 function NoticeList() {
   const isAdmin = useAppSelector(state => state.user).isAdmin;
 
-  const { err400Alert } = useSnackbarAlert();
+  const { errAlert } = useSnackbarAlert();
 
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -50,7 +50,7 @@ function NoticeList() {
           setLoading(false);
         },
         err => {
-          err400Alert(err, "공지사항 목록을 불러오지 못하였습니다.");
+          errAlert("공지사항 목록을 불러오지 못하였습니다.");
           setLoading(false);
         }
       );
