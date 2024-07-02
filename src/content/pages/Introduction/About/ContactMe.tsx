@@ -1,9 +1,8 @@
-import { Avatar, Box, Card, CardHeader, Divider, styled, Typography, useTheme } from "@mui/material";
-
-import FavoriteTwoToneIcon from "@mui/icons-material/FavoriteTwoTone";
-import StarTwoToneIcon from "@mui/icons-material/StarTwoTone";
+import { Avatar, Box, Card, CardHeader, Divider, Link, styled, Typography, useTheme } from "@mui/material";
 import EmailTwoToneIcon from "@mui/icons-material/EmailTwoTone";
 import ContentCopyTwoToneIcon from "@mui/icons-material/ContentCopyTwoTone";
+import GitHubIcon from "@mui/icons-material/GitHub";
+import TableChartTwoToneIcon from "@mui/icons-material/TableChartTwoTone";
 import { useSnackbar } from "notistack";
 
 const AvatarPrimary = styled(Avatar)(
@@ -20,20 +19,14 @@ function ContactMe() {
 
   const { enqueueSnackbar } = useSnackbar();
 
-  const email = "ldy033000@gmail.com";
+  const content = {
+    email: "ldy033000@gmail.com",
+    github: "https://github.com/leedy-dev",
+    blog: "Coming soon"
+  }
 
-  const copyToClipboard = async type => {
-    let text;
-
+  const copyToClipboard = async text => {
     try {
-      switch(type) {
-        case 'email':
-          text = email;
-          break;
-        default:
-          text = '';
-      }
-
       await navigator.clipboard.writeText(text);
 
       enqueueSnackbar(
@@ -43,11 +36,21 @@ function ContactMe() {
             vertical: 'bottom',
             horizontal: 'center',
           },
-          autoHideDuration: 1000
+          autoHideDuration: 2000
         }
       );
     } catch (err) {
-      alert('클립보드에 저장하지 못하였습니다.');
+      enqueueSnackbar(
+        '클립보드에 저장하지 못하였습니다.',
+        {
+          variant: 'error',
+          anchorOrigin: {
+            vertical: 'bottom',
+            horizontal: 'center',
+          },
+          autoHideDuration: 2000
+        }
+      );
     }
   }
 
@@ -60,71 +63,35 @@ function ContactMe() {
           <EmailTwoToneIcon />
         </AvatarPrimary>
         <Box pl={2} flex={1} >
-          <Typography variant="h3">EMAIL</Typography>
+          <Typography variant="h3">Email</Typography>
           <Typography gutterBottom display="flex" alignItems="center">
-            {email}&nbsp;
-            <ContentCopyTwoToneIcon fontSize="small" cursor="pointer" onClick={() => copyToClipboard("email")}/>
+            {content.email}&nbsp;
+            <ContentCopyTwoToneIcon fontSize="small" cursor="pointer" onClick={() => copyToClipboard(content.email)}/>
           </Typography>
         </Box>
       </Box>
-      <Divider />
       <Box px={2} py={4} display="flex" alignItems="flex-start">
         <AvatarPrimary>
-          <FavoriteTwoToneIcon />
+          <GitHubIcon />
         </AvatarPrimary>
-        <Box pl={2} flex={1}>
-          <Typography variant="h3">Favourites</Typography>
-
-          <Box pt={2} display="flex">
-            <Box pr={8}>
-              <Typography
-                gutterBottom
-                variant="caption"
-                sx={{ fontSize: `${theme.typography.pxToRem(16)}` }}>
-                Products
-              </Typography>
-              <Typography variant="h2">64</Typography>
-            </Box>
-            <Box>
-              <Typography
-                gutterBottom
-                variant="caption"
-                sx={{ fontSize: `${theme.typography.pxToRem(16)}` }}>
-                Lists
-              </Typography>
-              <Typography variant="h2">15</Typography>
-            </Box>
-          </Box>
+        <Box pl={2} flex={1} >
+          <Typography variant="h3">Github</Typography>
+          <Typography gutterBottom display="flex" alignItems="center">
+            <Link href={content.github}>{content.github}</Link>&nbsp;
+            <ContentCopyTwoToneIcon fontSize="small" cursor="pointer" onClick={() => copyToClipboard(content.github)}/>
+          </Typography>
         </Box>
       </Box>
-      <Divider />
       <Box px={2} py={4} display="flex" alignItems="flex-start">
         <AvatarPrimary>
-          <StarTwoToneIcon />
+          <TableChartTwoToneIcon />
         </AvatarPrimary>
-        <Box pl={2} flex={1}>
-          <Typography variant="h3">Reviews</Typography>
-
-          <Box pt={2} display="flex">
-            <Box pr={8}>
-              <Typography
-                gutterBottom
-                variant="caption"
-                sx={{ fontSize: `${theme.typography.pxToRem(16)}` }}>
-                Total
-              </Typography>
-              <Typography variant="h2">654</Typography>
-            </Box>
-            <Box>
-              <Typography
-                gutterBottom
-                variant="caption"
-                sx={{ fontSize: `${theme.typography.pxToRem(16)}` }}>
-                Useful
-              </Typography>
-              <Typography variant="h2">21</Typography>
-            </Box>
-          </Box>
+        <Box pl={2} flex={1} >
+          <Typography variant="h3">Blog</Typography>
+          <Typography gutterBottom display="flex" alignItems="center">
+            {content.blog}&nbsp;
+            {/*<ContentCopyTwoToneIcon fontSize="small" cursor="pointer" onClick={() => copyToClipboard(content.blog)}/>*/}
+          </Typography>
         </Box>
       </Box>
     </Card>

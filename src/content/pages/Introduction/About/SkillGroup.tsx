@@ -1,17 +1,22 @@
 import {
-  Typography,
+  Box,
   Card,
   CardHeader,
   Divider,
+  Grid,
   List,
   ListItem,
-  ListItemAvatar,
-  ListSubheader,
   ListItemText,
-  Avatar,
-  useTheme,
-  styled, Box, Grid
+  styled,
+  Typography,
+  useTheme
 } from "@mui/material";
+
+import DnsTwoToneIcon from '@mui/icons-material/DnsTwoTone';
+import LaptopTwoToneIcon from "@mui/icons-material/LaptopTwoTone";
+import StorageTwoToneIcon from "@mui/icons-material/StorageTwoTone";
+import DeveloperBoardTwoToneIcon from '@mui/icons-material/DeveloperBoardTwoTone';
+import BuildTwoToneIcon from '@mui/icons-material/BuildTwoTone';
 
 const ListWrapper = styled(List)(
   () => `
@@ -40,7 +45,11 @@ function SkillGroup() {
           {/* backend */}
           <Grid item xs={12} sm={6}>
             <Card sx={{ height: '100%' }}>
-              <CardHeader title="Backend" />
+              <CardHeader title={
+                <Typography display="flex" alignItems="center">
+                  <DnsTwoToneIcon />&nbsp;Backend
+                </Typography>
+              } />
               <Divider />
               <ListWrapper disablePadding>
                 {backendSkills.map((item, index) => {
@@ -51,7 +60,7 @@ function SkillGroup() {
                           color: `${theme.colors.primary.main}`,
                           '&:hover': { color: `${theme.colors.primary.dark}` }
                         }}>
-                        <ListItemText primary={item} />
+                        <ListItemText primary={"- " + item} />
                       </ListItem>
                       {index !== backendSkills.length-1 && <Divider />}
                     </Box>
@@ -63,7 +72,11 @@ function SkillGroup() {
           {/* frontend */}
           <Grid item xs={12} sm={6}>
             <Card sx={{ height: '100%' }}>
-              <CardHeader title="Frontend" />
+              <CardHeader title={
+                <Typography display="flex" alignItems="center">
+                  <LaptopTwoToneIcon />&nbsp;Frontend
+                </Typography>
+              } />
               <Divider />
               <ListWrapper disablePadding>
                 {frontendSkills.map((item, index) => {
@@ -74,7 +87,7 @@ function SkillGroup() {
                           color: `${theme.colors.primary.main}`,
                           '&:hover': { color: `${theme.colors.primary.dark}` }
                         }}>
-                        <ListItemText primary={item} />
+                        <ListItemText primary={"- " + item} />
                       </ListItem>
                       {index !== frontendSkills.length-1 && <Divider />}
                     </Box>
@@ -86,7 +99,11 @@ function SkillGroup() {
           {/* database */}
           <Grid item xs={12} sm={4}>
             <Card sx={{ height: '100%' }}>
-              <CardHeader title="Database" />
+              <CardHeader title={
+                <Typography display="flex" alignItems="center">
+                  <StorageTwoToneIcon />&nbsp;Database
+                </Typography>
+              } />
               <Divider />
               <ListWrapper disablePadding>
                 {dbSkills.map((item, index) => {
@@ -97,7 +114,7 @@ function SkillGroup() {
                           color: `${theme.colors.primary.main}`,
                           '&:hover': { color: `${theme.colors.primary.dark}` }
                         }}>
-                        <ListItemText primary={item} />
+                        <ListItemText primary={"- " + item} />
                       </ListItem>
                       {index !== dbSkills.length-1 && <Divider />}
                     </Box>
@@ -109,7 +126,11 @@ function SkillGroup() {
           {/* OS */}
           <Grid item xs={12} sm={4}>
             <Card sx={{ height: '100%' }}>
-              <CardHeader title="OS" />
+              <CardHeader title={
+                <Typography display="flex" alignItems="center">
+                  <DeveloperBoardTwoToneIcon />&nbsp;OS
+                </Typography>
+              } />
               <Divider />
               <ListWrapper disablePadding>
                 {osSkills.map((item, index) => {
@@ -120,7 +141,7 @@ function SkillGroup() {
                           color: `${theme.colors.primary.main}`,
                           '&:hover': { color: `${theme.colors.primary.dark}` }
                         }}>
-                        <ListItemText primary={item} />
+                        <ListItemText primary={"- " + item} />
                       </ListItem>
                       {index !== osSkills.length-1 && <Divider />}
                     </Box>
@@ -132,7 +153,11 @@ function SkillGroup() {
           {/* etcSkills */}
           <Grid item xs={12} sm={4}>
             <Card sx={{ height: '100%' }}>
-              <CardHeader title="ETC" />
+              <CardHeader title={
+                <Typography display="flex" alignItems="center">
+                  <BuildTwoToneIcon />&nbsp;ETC
+                </Typography>
+              } />
               <Divider />
               <ListWrapper disablePadding>
                 {etcSkills.map((item, index) => {
@@ -143,7 +168,7 @@ function SkillGroup() {
                           color: `${theme.colors.primary.main}`,
                           '&:hover': { color: `${theme.colors.primary.dark}` }
                         }}>
-                        <ListItemText primary={item} />
+                        <ListItemText primary={"- " + item} />
                       </ListItem>
                       {index !== etcSkills.length-1 && <Divider />}
                     </Box>

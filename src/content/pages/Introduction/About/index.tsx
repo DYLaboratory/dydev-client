@@ -1,11 +1,12 @@
 import { Helmet } from "react-helmet-async";
 import PageTitleWrapper from "src/components/PageTitleWrapper";
-import { Container, Grid } from "@mui/material";
+import { Box, Container, Grid, Typography } from "@mui/material";
 import Footer from "src/components/Footer";
 import PageHeader from "./PageHeader";
 import ProfileCover from "src/content/pages/Introduction/About/ProfileCover";
 import ContactMe from "src/content/pages/Introduction/About/ContactMe";
 import SkillGroup from "src/content/pages/Introduction/About/SkillGroup";
+import PopularTags from "src/content/pages/Introduction/About/PopularTags";
 
 function IntroductionAbout() {
   const user = {
@@ -33,6 +34,16 @@ function IntroductionAbout() {
         <PageHeader />
       </PageTitleWrapper>
       <Container maxWidth="lg">
+        <Box display="flex" mb={3}>
+          <Box>
+            <Typography variant="h3" component="h3" gutterBottom>
+              Profile for {user.nameEng}
+            </Typography>
+            <Typography variant="subtitle2">
+              발전과 성장을 지향하는 개발자 이동엽입니다.
+            </Typography>
+          </Box>
+        </Box>
         <Grid
           container
           direction="row"
@@ -45,8 +56,11 @@ function IntroductionAbout() {
           <Grid item xs={12} md={4}>
             <ContactMe />
           </Grid>
-          <Grid item>
+          <Grid item xs={12} md={10}>
             <SkillGroup />
+          </Grid>
+          <Grid item xs={12} md={2}>
+            <PopularTags />
           </Grid>
         </Grid>
       </Container>

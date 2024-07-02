@@ -171,7 +171,7 @@ function WeatherCard() {
           display="flex"
           justifyContent="space-between"
           variant="h4">
-          날씨 정보
+          날씨 정보&nbsp;
           <Tooltip title="자세히보기">
             <LoginTwoToneIcon fontSize="small" cursor="pointer" onClick={() => navigate("/others/weather")} />
           </Tooltip>
@@ -189,6 +189,11 @@ function WeatherCard() {
       </Box>
 
       {loading && <LoadingProgress />}
+      {!loading && !present &&
+        <Typography p={4} variant="h4">
+          날씨 정보를 불러오지 못하였습니다.
+        </Typography>
+      }
       {!loading && present &&
         <>
           <Box display="flex" justifyContent="space-between">

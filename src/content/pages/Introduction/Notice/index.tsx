@@ -9,7 +9,7 @@ import { NoticeData, NoticeTypes } from "src/models/data/dataModels";
 import { useAppSelector } from "src/app/hooks";
 import { getNoticeList } from "src/services/introduction/noticeApi";
 import NoticeTable from "src/content/pages/Introduction/Notice/NoticeTable";
-import { useErrAlert } from "src/utils/errUtils";
+import { useSnackbarAlert } from "src/utils/errUtils";
 import LoadingProgress from "src/components/LoadingProgress";
 
 export const noticeTypeOptions: { id: NoticeTypes; name: string }[] = [
@@ -30,7 +30,7 @@ export const noticeTypeOptions: { id: NoticeTypes; name: string }[] = [
 function NoticeList() {
   const isAdmin = useAppSelector(state => state.user).isAdmin;
 
-  const { err400Alert } = useErrAlert();
+  const { err400Alert } = useSnackbarAlert();
 
   const [loading, setLoading] = useState<boolean>(true);
 

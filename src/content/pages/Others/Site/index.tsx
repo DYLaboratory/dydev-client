@@ -33,7 +33,7 @@ import {
   setUpdateWebSite
 } from "src/services/others/webSiteApi";
 import { useAppSelector } from "src/app/hooks";
-import { useErrAlert } from "src/utils/errUtils";
+import { useSnackbarAlert } from "src/utils/errUtils";
 import LoadingProgress from "src/components/LoadingProgress";
 import DialogModal from "src/components/DialogModal";
 
@@ -89,7 +89,7 @@ interface ModalType {
 function SiteList() {
   const isAdmin = useAppSelector(state => state.user).isAdmin;
 
-  const { err400Alert } = useErrAlert();
+  const { successAlert, errAlert } = useSnackbarAlert();
 
   const [editLoading, setEditLoading] = useState<boolean>(false);
   const [fetchLoading, setFetchLoading] = useState<boolean>(true);
@@ -123,7 +123,7 @@ function SiteList() {
           setFetchLoading(false);
         },
         err => {
-          err400Alert(err, "웹 사이트 목록을 불러오지 못하였습니다.");
+          errAlert("웹 사이트 목록을 불러오지 못하였습니다.");
           setFetchLoading(false);
         }
       );
@@ -156,13 +156,13 @@ function SiteList() {
       setInsertWebSite(webSite)
         .then(
           () => {
-            alert('등록을 완료하였습니다.');
+            successAlert('등록을 완료하였습니다.');
             setEditLoading(false);
             handleCloseModal();
             getSiteList();
           },
           () => {
-            alert('등록 중 오류가 발생하였습니다.');
+            errAlert('등록 중 오류가 발생하였습니다.');
             setEditLoading(false);
           }
         );
@@ -170,13 +170,13 @@ function SiteList() {
       setUpdateWebSite(webSite)
         .then(
           () => {
-            alert('수정을 완료하였습니다.');
+            successAlert('수정을 완료하였습니다.');
             setEditLoading(false);
             handleCloseModal();
             getSiteList();
           },
           () => {
-            alert('수정 중 오류가 발생하였습니다.')
+            errAlert('수정 중 오류가 발생하였습니다.')
             setEditLoading(false);
           }
         );
@@ -191,12 +191,12 @@ function SiteList() {
       setDeleteWebSite(id)
         .then(
           () => {
-            alert('삭제를 완료하였습니다.');
+            successAlert('삭제를 완료하였습니다.');
             setFetchLoading(false);
             getSiteList();
           },
           () => {
-            alert('삭제 중 오류가 발생하였습니다.');
+            errAlert('삭제 중 오류가 발생하였습니다.');
             setFetchLoading(false);
           }
         );
@@ -209,12 +209,12 @@ function SiteList() {
       setDeleteWebSiteList(idList)
         .then(
           () => {
-            alert('삭제를 완료하였습니다.');
+            successAlert('삭제를 완료하였습니다.');
             setFetchLoading(false);
             getSiteList();
           },
           () => {
-            alert('삭제 중 오류가 발생하였습니다.');
+            errAlert('삭제 중 오류가 발생하였습니다.');
             setFetchLoading(false);
           }
         )

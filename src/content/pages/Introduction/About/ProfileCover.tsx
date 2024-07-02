@@ -31,23 +31,13 @@ const CardCover = styled(Card)(
 function ProfileCover({ user }) {
   return (
     <>
-      <Box display="flex" mb={3}>
-        <Box>
-          <Typography variant="h3" component="h3" gutterBottom>
-            Profile for {user.nameEng}
-          </Typography>
-          <Typography variant="subtitle2">
-            발전과 성장을 지향하는 개발자 이동엽입니다.
-          </Typography>
-        </Box>
-      </Box>
       <CardCover>
         <CardMedia image={user.coverImg} />
       </CardCover>
       <AvatarWrapper>
         <Avatar variant="rounded" alt={user.name} src={user.avatar} />
       </AvatarWrapper>
-      <Box py={2} pl={2} mb={3}>
+      <Box py={2} pl={2}>
         <Typography gutterBottom variant="h4">
           {user.name}
         </Typography>

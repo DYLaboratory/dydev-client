@@ -79,14 +79,14 @@ function Sidebar() {
         />
         <Box p={2}>
           <Button
-            href="https://github.com"
+            href="https://dylabo.me"
             target="_blank"
             rel="noopener noreferrer"
             variant="contained"
             color="primary"
             size="small"
             fullWidth>
-            GitHub
+            DYLABO
           </Button>
         </Box>
       </SidebarWrapper>

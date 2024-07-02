@@ -1,4 +1,4 @@
-import { Box, Button, Card, Checkbox, FormControlLabel, Grid, styled, TextField, Typography } from "@mui/material";
+import { Box, Button, Card, Checkbox, FormControlLabel, styled, TextField, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { hasText } from "src/utils/stringUtils";
 import { useNavigate } from "react-router";
@@ -6,6 +6,7 @@ import { useAppDispatch, useAppSelector } from "src/app/hooks";
 import { loginAsync } from "src/features/auth/authSlice";
 import { LoginData } from "src/models/data/dataModels";
 import HeaderTheme from "src/layouts/SidebarLayout/Header/Buttons/Theme";
+import { useSnackbarAlert } from "src/utils/errUtils";
 
 /* style (s) */
 const LoginCard = styled(Card)`
@@ -16,6 +17,8 @@ const LoginCard = styled(Card)`
 function LoginForm() {
   const dispatch = useAppDispatch();
   const isLogin = useAppSelector(state => state.user).isLogin;
+
+  const { errAlert } = useSnackbarAlert();
 
   const navigate = useNavigate();
 
@@ -45,11 +48,11 @@ function LoginForm() {
   // 로그인 버튼 클릭
   const handleLoginButton = async () => {
     if (!hasText(userInfo.userId)) {
-      alert('아이디를 입력하세요');
+      errAlert('아이디를 입력하세요.');
       return;
     }
     if (!hasText(userInfo.password)) {
-      alert('비밀번호를 입력하세요');
+      errAlert('비밀번호를 입력하세요.');
       return;
     }
 
@@ -77,9 +80,9 @@ function LoginForm() {
       } else {
         if (response) {
           if (response.status === 400) {
-            alert(response.data.message);
+            errAlert(response.data.message);
           } else {
-            alert('An error has occurred.');
+            errAlert('An error has occurred.');
           }
         }
       }

@@ -34,10 +34,13 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import SaveIcon from "@mui/icons-material/Save";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { hasText } from "src/utils/stringUtils";
+import { useSnackbarAlert } from "src/utils/errUtils";
 
 
 function SecurityTab() {
   const theme = useTheme();
+
+  const { errAlert } = useSnackbarAlert();
 
   // password
   const [pwdModal, setPwdModal] = useState<boolean>(false);
@@ -87,7 +90,7 @@ function SecurityTab() {
           setLoginHistoryList(res.data.content);
         },
         err => {
-          alert('로그인 내역을 불러오지 못하였습니다.');
+          errAlert('로그인 내역을 불러오지 못하였습니다.');
         });
   }, []);
 
@@ -123,17 +126,17 @@ function SecurityTab() {
 
   const handleSavePasswordButton = () => {
     if (!hasText(pwd.password)) {
-      alert('Check your password');
+      errAlert('Check your password');
       return;
     }
 
     if (!hasText(pwd.newPassword)) {
-      alert('Check new password');
+      errAlert('Check new password');
       return;
     }
 
     if (!hasText(pwd.confirmPassword)) {
-      alert('Check confirm password');
+      errAlert('Check confirm password');
       return;
     }
   }

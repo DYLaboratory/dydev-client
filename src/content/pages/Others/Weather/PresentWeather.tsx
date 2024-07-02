@@ -7,6 +7,7 @@ import OpacityTwoToneIcon from "@mui/icons-material/OpacityTwoTone";
 import { styled } from "@mui/material/styles";
 import { ReactNode, useEffect, useState } from "react";
 import { convertDegToDir } from "src/content/pages/Dashboard/WeatherCard";
+import { useSnackbarAlert } from "src/utils/errUtils";
 
 const RotatingIcon = styled(RefreshTwoToneIcon)(({ theme, rotate }) => ({
   transition: 'transform 3s linear',
@@ -81,6 +82,8 @@ const cityTypes = [
 function PresentWeather(props: PresentWeatherProps) {
   const { present, city, setCity, handleRefresh } = props;
 
+  const { infoAlert, errAlert } = useSnackbarAlert();
+
   const [wind, setWind] = useState<{ name: string, icon: ReactNode }>();
 
   const [rotate, setRotate] = useState<boolean>(false);
@@ -96,7 +99,7 @@ function PresentWeather(props: PresentWeatherProps) {
 
   const handleRefreshButton = () => {
     if (rotate) {
-      alert("정보를 불러오는 중입니다.");
+      infoAlert("정보를 불러오는 중입니다.");
       return;
     }
 

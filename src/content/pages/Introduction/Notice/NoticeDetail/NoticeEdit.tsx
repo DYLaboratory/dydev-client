@@ -27,7 +27,7 @@ import Editor from "src/components/Editor";
 import SaveAsTwoToneIcon from "@mui/icons-material/SaveAsTwoTone";
 import ListAltTwoToneIcon from "@mui/icons-material/ListAltTwoTone";
 import { noticeTypeOptions } from "src/content/pages/Introduction/Notice";
-import { useErrAlert } from "src/utils/errUtils";
+import { useSnackbarAlert } from "src/utils/errUtils";
 import { hasText } from "src/utils/stringUtils";
 import LoadingProgress from "src/components/LoadingProgress";
 
@@ -35,7 +35,7 @@ function NoticeEdit() {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const { err400Alert } = useErrAlert();
+  const { successAlert, errAlert } = useSnackbarAlert();
 
   const [isNew, setNew] = useState<boolean>(true);
   const [loading, setLoading] = useState<boolean>(true);
@@ -57,7 +57,7 @@ function NoticeEdit() {
             setLoading(false);
           },
           err => {
-            err400Alert(err, '저장 중 오류가 발생하였습니다.');
+            errAlert('저장 중 오류가 발생하였습니다.');
             setLoading(false);
           }
         );
@@ -71,13 +71,13 @@ function NoticeEdit() {
   const validateNotice = (): boolean => {
     // 제목
     if (!hasText(notice.title)) {
-      alert('제목을 입력하세요.');
+      errAlert('제목을 입력하세요.');
       return false;
     }
 
     // 내용
     if (!hasText(notice.content)) {
-      alert('내용을 입력하세요.');
+      errAlert('내용을 입력하세요.');
       return false;
     }
 
@@ -103,22 +103,22 @@ function NoticeEdit() {
       setInsertNotice(notice)
         .then(
           res => {
-            alert('저장을 완료하였습니다.');
+            successAlert('저장을 완료하였습니다.');
             navigate(URL_INFO.PAGE.NOTICE);
           },
           err => {
-            err400Alert(err, '저장 중 오류가 발생하였습니다.');
+            errAlert('저장 중 오류가 발생하였습니다.');
           }
         );
     } else {
       setUpdateNotice(notice)
         .then(
           res => {
-            alert('저장을 완료하였습니다.');
+            successAlert('저장을 완료하였습니다.');
             navigate(URL_INFO.PAGE.NOTICE + "/" + id);
           },
           err => {
-            err400Alert(err, '저장 중 오류가 발생하였습니다.');
+            errAlert('저장 중 오류가 발생하였습니다.');
           }
         );
     }

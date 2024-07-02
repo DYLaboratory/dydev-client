@@ -1,4 +1,4 @@
-import { Box, Card, Container, Divider, Grid, Typography } from "@mui/material";
+import { Box, Card, Container, Grid, Typography } from "@mui/material";
 import PresentWeather from "src/content/pages/Others/Weather/PresentWeather";
 import { useEffect, useState } from "react";
 import { getWeatherDust } from "src/services/dashboard/externalApi";
@@ -84,7 +84,7 @@ interface DustBody {
 
 function Weather() {
   const header = {
-    title: "날씨",
+    title: "Weather",
     subTitle: 'The weather is fickle',
     icon: <DashboardTwoToneIcon fontSize="large" />
   };
@@ -228,26 +228,6 @@ function Weather() {
     setSearch({...search, weather: true, dust: true, refresh: true});
   }
 
-  // 에러
-  if (error) {
-    return (
-      <Box p={4}>
-        <Typography
-          sx={{
-            pb: 3
-          }}
-          variant="h4">
-          Weather
-        </Typography>
-        <Box display="flex" justifyContent="space-between">
-          <Typography variant="h4" gutterBottom>
-            {error}
-          </Typography>
-        </Box>
-      </Box>
-    );
-  }
-
   return (
     <>
       <Helmet>
@@ -272,7 +252,22 @@ function Weather() {
               {loading && <LoadingProgress />}
               {!loading &&
               <Grid spacing={0} container>
-                {error}
+                {error &&
+                  <Box p={4}>
+                    <Typography
+                      sx={{
+                        pb: 3
+                      }}
+                      variant="h4">
+                      날씨 정보
+                    </Typography>
+                    <Box display="flex" justifyContent="space-between">
+                      <Typography variant="h4" gutterBottom>
+                        {error}
+                      </Typography>
+                    </Box>
+                  </Box>
+                }
                 {!error && present &&
                 <>
                   <Grid item xs={12} md={6}>
