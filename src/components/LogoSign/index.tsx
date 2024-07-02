@@ -1,3 +1,4 @@
+import packageJson from '../../../package.json';
 import { Badge, Box, styled, Tooltip, tooltipClasses, TooltipProps, useTheme } from '@mui/material';
 import { Link } from 'react-router-dom';
 
@@ -124,7 +125,7 @@ function Logo(props: LogoProps) {
           }}
           overlap="circular"
           color="success"
-          badgeContent="1.0">
+          badgeContent={packageJson.version}>
           <LogoSignWrapper>
             <img
               src={mainLogo()}
