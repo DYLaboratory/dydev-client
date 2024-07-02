@@ -17,10 +17,16 @@
   },
   "dashboard": {
     "title": "대시보드",
-    "subtitle": "좋은 하루 되세요."
+    "subtitle": "좋은 하루 되세요!"
   },
   "about": {
     "title": "소개",
     "subtitle": "저에 대해서..."
+  },
+  "tooltip": {
+    "detail": "자세히보기",
+    "changeLanguage": "언어 변경",
+    "darkMode": "다크 모드",
+    "lightMode": "라이트 모드"
   }
 }

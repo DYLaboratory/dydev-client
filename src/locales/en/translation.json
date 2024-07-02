@@ -1,0 +1,32 @@
+{
+  "header": {
+    "language": "Language",
+    "theme": "Theme",
+    "signIn": "Sign In"
+  },
+  "sideMenu": {
+    "dashboard": "Dashboard",
+    "introduction": "Introduction",
+    "about": "About",
+    "notice": "Notice",
+    "blog": "Blog",
+    "feed": "Feed",
+    "others": "Others",
+    "site": "Site",
+    "weather": "Weather"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "subtitle": "Have a nice day!"
+  },
+  "about": {
+    "title": "Welcome, DYLABO",
+    "subtitle": "About Me"
+  },
+  "tooltip": {
+    "detail": "Detail",
+    "changeLanguage": "Change Language",
+    "darkMode": "Dark Mode",
+    "lightMode": "Light Mode"
+  }
+}

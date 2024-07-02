@@ -1,13 +1,24 @@
 import { IconButton, Tooltip } from "@mui/material";
-import LanguageTwoToneIcon from '@mui/icons-material/LanguageTwoTone';
+import LanguageTwoToneIcon from "@mui/icons-material/LanguageTwoTone";
+import { useTranslation } from "react-i18next";
 
 function HeaderLanguage() {
+  const { t, i18n } = useTranslation();
+
   const handleToggleLanguage = () => {
-    alert('준비중입니다.');
+    let lang = 'ko';
+
+    if (i18n.language === 'ko') {
+      lang = 'en';
+    } else {
+      lang = 'ko';
+    }
+
+    i18n.changeLanguage(lang);
   }
 
   return (
-    <Tooltip arrow title="Language">
+    <Tooltip arrow title={t(`tooltip.changeLanguage`)}>
       <IconButton color="primary" onClick={handleToggleLanguage}>
         <LanguageTwoToneIcon />
       </IconButton>

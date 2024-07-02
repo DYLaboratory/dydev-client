@@ -9,6 +9,7 @@ import HeaderUserbox from "./Userbox";
 import HeaderButtons from "./Buttons";
 import LockTwoToneIcon from "@mui/icons-material/LockTwoTone";
 import { useNavigate } from "react-router";
+import { useTranslation } from "react-i18next";
 
 const HeaderWrapper = styled(Box)(
   ({ theme }) => `
@@ -31,6 +32,8 @@ const HeaderWrapper = styled(Box)(
 
 function Header() {
   const isLogin = useAppSelector(state => state.user).isLogin;
+
+  const { t } = useTranslation();
 
   const navigate = useNavigate();
 
@@ -72,7 +75,7 @@ function Header() {
           <Box sx={{ m: 1 }}>
             <Button color="primary" fullWidth onClick={handleClickSignIn}>
               <LockTwoToneIcon sx={{ mr: 1 }} />
-              Sign In
+              {t(`header.signIn`)}
             </Button>
           </Box>
         }

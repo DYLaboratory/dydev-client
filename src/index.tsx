@@ -7,6 +7,7 @@ import { SidebarProvider } from "src/contexts/SidebarContext";
 import * as serviceWorker from "src/serviceWorker";
 import { createRoot } from "react-dom/client";
 import { store } from "src/app/store";
+import 'src/locales/i18n';
 
 const container = document.getElementById('root');
 const root = createRoot(container);

@@ -3,8 +3,11 @@ import { useContext, useState } from 'react';
 import { ContrastTwoTone } from '@mui/icons-material';
 import { ThemeContext } from 'src/theme/ThemeProvider';
 import { themeType } from 'src/theme/base';
+import { useTranslation } from "react-i18next";
 
 function HeaderTheme() {
+  const { t } = useTranslation();
+
   const themeContext = useContext(ThemeContext);
   const [theme, setTheme] = useState<string>(themeType.light);
 
@@ -23,7 +26,7 @@ function HeaderTheme() {
   return (
     <Tooltip
       arrow
-      title={theme === themeType.light ? 'Dark Mode' : 'Light Mode'}>
+      title={theme === themeType.light ? t(`tooltip.darkMode`) : t(`tooltip.lightMode`)}>
       <IconButton color="primary" onClick={handleToggleTheme}>
         <ContrastTwoTone />
       </IconButton>

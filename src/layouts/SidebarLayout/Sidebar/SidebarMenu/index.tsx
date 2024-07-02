@@ -39,6 +39,7 @@ import CameraFrontTwoToneIcon from '@mui/icons-material/CameraFrontTwoTone';
 import DisplaySettingsTwoToneIcon from '@mui/icons-material/DisplaySettingsTwoTone';
 import FilterDramaTwoToneIcon from '@mui/icons-material/FilterDramaTwoTone';
 import { useAppSelector } from "src/app/hooks";
+import { useTranslation } from "react-i18next";
 
 const MenuWrapper = styled(Box)(
   ({ theme }) => `
@@ -187,6 +188,8 @@ function SidebarMenu() {
 
   const isAdmin = useAppSelector(state => state.user).isAdmin;
 
+  const { t } = useTranslation();
+
   return (
     <MenuWrapper>
       <List component="div">
@@ -199,7 +202,7 @@ function SidebarMenu() {
                 onClick={closeSidebar}
                 to="/"
                 startIcon={<DashboardTwoToneIcon />}>
-                Dashboard
+                {t(`sideMenu.dashboard`)}
               </Button>
             </ListItem>
           </List>
@@ -209,7 +212,7 @@ function SidebarMenu() {
         component="div"
         subheader={
           <ListSubheader component="div" disableSticky>
-            Introduction
+            {t(`sideMenu.introduction`)}
           </ListSubheader>
         }>
         <SubMenuWrapper>
@@ -221,7 +224,7 @@ function SidebarMenu() {
                 onClick={closeSidebar}
                 to="/introduction/about"
                 startIcon={<ImportContactsTwoToneIcon />}>
-                About
+                {t(`sideMenu.about`)}
               </Button>
             </ListItem>
             <ListItem component="div">
@@ -232,7 +235,7 @@ function SidebarMenu() {
                 to="/introduction/notice"
                 startIcon={<CampaignTwoToneIcon />}
               >
-                Notice
+                {t(`sideMenu.notice`)}
               </Button>
             </ListItem>
           </List>
@@ -243,7 +246,7 @@ function SidebarMenu() {
         component="div"
         subheader={
           <ListSubheader component="div" disableSticky>
-            Blog
+            {t(`sideMenu.blog`)}
           </ListSubheader>
         }>
         <SubMenuWrapper>
@@ -255,7 +258,7 @@ function SidebarMenu() {
                 onClick={closeSidebar}
                 to="/blog/feed"
                 startIcon={<DynamicFeedTwoToneIcon />}>
-                Feed
+                {t(`sideMenu.feed`)}
               </Button>
             </ListItem>
             <ListItem component="div">
@@ -265,7 +268,7 @@ function SidebarMenu() {
                 onClick={closeSidebar}
                 to="/blog/blog"
                 startIcon={<TableChartTwoToneIcon />}>
-                Blog
+                {t(`sideMenu.blog`)}
               </Button>
             </ListItem>
           </List>
@@ -276,7 +279,7 @@ function SidebarMenu() {
         component="div"
         subheader={
           <ListSubheader component="div" disableSticky>
-            Others
+            {t(`sideMenu.others`)}
           </ListSubheader>
         }>
         <SubMenuWrapper>
@@ -288,7 +291,7 @@ function SidebarMenu() {
                 onClick={closeSidebar}
                 to="/others/site"
                 startIcon={<LinkTwoToneIcon />}>
-                Site
+                {t(`sideMenu.site`)}
               </Button>
             </ListItem>
             <ListItem component="div">
@@ -298,7 +301,7 @@ function SidebarMenu() {
                 onClick={closeSidebar}
                 to="/others/weather"
                 startIcon={<FilterDramaTwoToneIcon />}>
-                Weather
+                {t(`sideMenu.weather`)}
               </Button>
             </ListItem>
           </List>
