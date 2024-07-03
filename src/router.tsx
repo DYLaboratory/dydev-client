@@ -43,8 +43,6 @@ const Settings = Loader(lazy(() => import('src/content/pages/MyPage/AccountSetti
 /* Login */
 const Login = Loader(lazy(() => import('src/content/pages/Login')));
 
-const Overview = Loader(lazy(() => import('src/content/overview')));
-
 // Dashboards
 
 const Crypto = Loader(lazy(() => import('src/content/dashboards/Crypto')));

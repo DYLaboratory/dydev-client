@@ -221,7 +221,7 @@ function WeatherCard() {
             </Grid>
           </Grid>
           <Grid spacing={0} container alignItems="center">
-            <Grid item xs={6} md={6}>
+            <Grid item xs={8} md={8}>
               <Box display="flex" alignItems="center" justifyContent="flex-start">
                 <Box>
                   <Typography variant="h5" display="flex" alignItems="center" color="default">
@@ -233,30 +233,32 @@ function WeatherCard() {
                 </Box>
               </Box>
             </Grid>
-            <Grid item xs={6} md={6}>
-              <Grid item>
-                <Box display="flex" alignItems="center" justifyContent="flex-start">
-                  <AirTwoToneIcon fontSize="large" />
-                  <Box>
-                    <Typography variant="h4" display="flex" alignItems="center">
-                      {present.wind.speed}m/s
-                    </Typography>
-                    {wind &&
-                      <Typography variant="subtitle2" display="flex" alignItems="center">
-                        {wind.icon} {wind.name}
+            <Grid item xs={4} md={4}>
+              <Box>
+                <Grid item>
+                  <Box display="flex" alignItems="center" justifyContent="flex-start">
+                    <AirTwoToneIcon fontSize="large" />
+                    <Box>
+                      <Typography variant="h4" display="flex" alignItems="center">
+                        {present.wind.speed}m/s
                       </Typography>
-                    }
+                      {wind &&
+                        <Typography variant="subtitle2" display="flex" alignItems="center">
+                          {wind.icon} {wind.name}
+                        </Typography>
+                      }
+                    </Box>
                   </Box>
-                </Box>
-              </Grid>
-              <Grid item>
-                <Box display="flex" alignItems="center" justifyContent="flex-start">
-                  <OpacityTwoToneIcon fontSize="large" />
-                  <Typography variant="h5" display="flex" alignItems="center">
-                    {present.main.humidity}%
-                  </Typography>
-                </Box>
-              </Grid>
+                </Grid>
+                <Grid item>
+                  <Box display="flex" alignItems="center" justifyContent="flex-start">
+                    <OpacityTwoToneIcon fontSize="large" />
+                    <Typography variant="h5" display="flex" alignItems="center">
+                      {present.main.humidity}%
+                    </Typography>
+                  </Box>
+                </Grid>
+              </Box>
             </Grid>
           </Grid>
         </>

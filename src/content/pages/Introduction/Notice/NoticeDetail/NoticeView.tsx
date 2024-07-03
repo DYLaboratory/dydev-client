@@ -110,9 +110,11 @@ function NoticeView() {
                 <CardHeader
                   title={
                     <Box display="flex" alignItems="center">
-                      <Button color="info" onClick={() => navigate(URL_INFO.PAGE.NOTICE + "/" + id + "/edit")}>
-                        <DriveFileRenameOutlineTwoToneIcon /> EDIT
-                      </Button>
+                      {isAdmin &&
+                        <Button color="info" onClick={() => navigate(URL_INFO.PAGE.NOTICE + "/" + id + "/edit")}>
+                          <DriveFileRenameOutlineTwoToneIcon/> EDIT
+                        </Button>
+                      }
                       <Button onClick={() => navigate(URL_INFO.PAGE.NOTICE)}>
                         <ListAltTwoToneIcon /> LIST
                       </Button>
