@@ -81,9 +81,9 @@ function NoticeCard() {
               </TableCell>
             </TableRow>
             }
-            {notices.map(notice => {
+            {notices.map((notice, index) => {
               return (
-                <PointerTableRow hover onClick={() => navigate("/introduction/notice/" + notice.id)}>
+                <PointerTableRow key={index} hover onClick={() => navigate("/introduction/notice/" + notice.id)}>
                   <TableCell align="center">
                     <Typography
                       variant="body1"
@@ -99,7 +99,7 @@ function NoticeCard() {
                       color="text.primary"
                       gutterBottom
                       noWrap>
-                      {notice.title}{notice.title}{notice.title}{notice.title}{notice.title}{notice.title}{notice.title}{notice.title}{notice.title}{notice.title}{notice.title}{notice.title}{notice.title}{notice.title}
+                      {notice.title}
                     </Typography>
                   </TableCell>
                 </PointerTableRow>
