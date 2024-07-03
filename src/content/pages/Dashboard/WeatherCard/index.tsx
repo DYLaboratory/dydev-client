@@ -1,8 +1,7 @@
-import { Box, Card, Grid, Tooltip, Typography } from "@mui/material";
+import { Box, Grid, Tooltip, Typography } from "@mui/material";
 import { getPresentWeather } from "src/services/dashboard/externalApi";
 import { ReactNode, useEffect, useState } from "react";
 import { diffTime, epochToDate, toDatePattern, toTimePattern } from "src/utils/stringUtils";
-import LoadingProgress from "src/components/LoadingProgress";
 import SouthTwoToneIcon from "@mui/icons-material/SouthTwoTone";
 import SouthWestTwoToneIcon from "@mui/icons-material/SouthWestTwoTone";
 import WestTwoToneIcon from "@mui/icons-material/WestTwoTone";
@@ -13,8 +12,8 @@ import EastTwoToneIcon from "@mui/icons-material/EastTwoTone";
 import SouthEastTwoToneIcon from "@mui/icons-material/SouthEastTwoTone";
 import AirTwoToneIcon from "@mui/icons-material/AirTwoTone";
 import OpacityTwoToneIcon from "@mui/icons-material/OpacityTwoTone";
-import LoginTwoToneIcon from '@mui/icons-material/LoginTwoTone';
 import { useNavigate } from "react-router";
+import DashboardCard from "src/content/pages/Dashboard/DashboardCard";
 
 interface WeatherTypes {
   dt: number;
@@ -158,43 +157,18 @@ function WeatherCard() {
   }, [present]);
 
   return (
-    <Card
-      sx={{
-        textAlign: 'center',
-        p: 3
-      }}>
-      <Box display="flex" justifyContent="space-between" alignItems="center">
-        <Typography
-          sx={{
-            pb: 3
-          }}
-          display="flex"
-          justifyContent="space-between"
-          variant="h4">
-          날씨 정보&nbsp;
-          <Tooltip title="자세히보기">
-            <LoginTwoToneIcon fontSize="small" cursor="pointer" onClick={() => navigate("/others/weather")} />
-          </Tooltip>
-        </Typography>
-        <Typography
-          sx={{
-            pb: 3
-          }}
-          variant="h4"
-        >
-          <Typography display="flex" alignItems="center">
-            {present && present.date + " "  + present.time}
-          </Typography>
-        </Typography>
-      </Box>
-
-      {loading && <LoadingProgress />}
-      {!loading && !present &&
-        <Typography p={4} variant="h4">
-          날씨 정보를 불러오지 못하였습니다.
+    <DashboardCard
+      loading={loading}
+      title="날씨 정보"
+      rightTitle={
+        <Typography display="flex" alignItems="center">
+          {present && present.date + " "  + present.time}
         </Typography>
       }
-      {!loading && present &&
+      error={!present && "날씨 정보를 불러오지 못하였습니다."}
+      url="/others/weather"
+    >
+      {present &&
         <>
           <Box display="flex" justifyContent="space-between">
             <Typography variant="h3" gutterBottom>
@@ -205,9 +179,9 @@ function WeatherCard() {
             <Grid item>
               <Box display="flex" alignItems="center" justifyContent="flex-start">
                 {present &&
-                  <Tooltip title={present.weather[0].description} arrow>
-                    <img src={"/static/images/weathers/100/" + present.weather[0].icon + "@2x.png"} alt={present.weather[0].description} />
-                  </Tooltip>
+                <Tooltip title={present.weather[0].description} arrow>
+                  <img src={"/static/images/weathers/100/" + present.weather[0].icon + "@2x.png"} alt={present.weather[0].description} />
+                </Tooltip>
                 }
                 <Box>
                   <Typography variant="h3">
@@ -243,9 +217,9 @@ function WeatherCard() {
                         {present.wind.speed}m/s
                       </Typography>
                       {wind &&
-                        <Typography variant="subtitle2" display="flex" alignItems="center">
-                          {wind.icon} {wind.name}
-                        </Typography>
+                      <Typography variant="subtitle2" display="flex" alignItems="center">
+                        {wind.icon} {wind.name}
+                      </Typography>
                       }
                     </Box>
                   </Box>
@@ -263,7 +237,7 @@ function WeatherCard() {
           </Grid>
         </>
       }
-    </Card>
+    </DashboardCard>
   )
 }
 

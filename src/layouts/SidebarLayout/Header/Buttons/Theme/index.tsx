@@ -26,7 +26,7 @@ function HeaderTheme() {
   return (
     <Tooltip
       arrow
-      title={theme === themeType.light ? t(`tooltip.darkMode`) : t(`tooltip.lightMode`)}>
+      title={theme === themeType.light ? t(`tooltip.dark_mode`) : t(`tooltip.light_mode`)}>
       <IconButton color="primary" onClick={handleToggleTheme}>
         <ContrastTwoTone />
       </IconButton>

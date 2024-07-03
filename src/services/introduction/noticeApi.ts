@@ -1,13 +1,13 @@
 import apiClient from "src/services/lib/dylaboAxios";
 import { URL_INFO } from "src/utils/constants";
-import { NoticeData } from "src/models/data/dataModels";
+import { NoticeData, NoticeSearch, Paging } from "src/models/data/dataModels";
 
 export const getNoticeById = id => {
   return apiClient.get(URL_INFO.API_V1.NOTICE.concat("/", id));
 }
 
-export const getNoticeList = () => {
-  return apiClient.get(URL_INFO.API_V1.NOTICE.concat("/list"));
+export const getNoticeList = (search?: NoticeSearch, paging?: Paging) => {
+  return apiClient.get(URL_INFO.API_V1.NOTICE.concat("/list"), { params: { ...search, ...paging } });
 }
 
 export const setInsertNotice = (data: NoticeData) => {

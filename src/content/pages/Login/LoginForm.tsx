@@ -7,6 +7,8 @@ import { loginAsync } from "src/features/auth/authSlice";
 import { LoginData } from "src/models/data/dataModels";
 import HeaderTheme from "src/layouts/SidebarLayout/Header/Buttons/Theme";
 import { useSnackbarAlert } from "src/utils/errUtils";
+import HeaderLanguage from "src/layouts/SidebarLayout/Header/Buttons/Language";
+import { useTranslation } from "react-i18next";
 
 /* style (s) */
 const LoginCard = styled(Card)`
@@ -17,6 +19,8 @@ const LoginCard = styled(Card)`
 function LoginForm() {
   const dispatch = useAppDispatch();
   const isLogin = useAppSelector(state => state.user).isLogin;
+
+  const { t } = useTranslation();
 
   const { errAlert } = useSnackbarAlert();
 
@@ -95,27 +99,30 @@ function LoginForm() {
         <Box p={3}>
           <Box pb={3} display="flex" justifyContent="space-between">
             <Typography variant="h3">
-              SIGN IN
+              {t(`login.title`)}
             </Typography>
-            <HeaderTheme />
+            <Box>
+              <HeaderLanguage />
+              <HeaderTheme />
+            </Box>
           </Box>
           <Box p={1}>
-            <Typography variant="h4">ID</Typography>
+            <Typography variant="h4">{t(`login.id`)}</Typography>
             <TextField
               type="text"
               name="id"
-              placeholder="Enter your ID"
+              placeholder={t(`login.id_ph`)}
               fullWidth
               onChange={handleInputChange}
               onKeyPress={handleKeyPress}
             />
           </Box>
           <Box p={1}>
-            <Typography variant="h4">PASSWORD</Typography>
+            <Typography variant="h4">{t(`login.password`)}</Typography>
             <TextField
               type="password"
               name="pwd"
-              placeholder="Enter your Password"
+              placeholder={t(`login.password_ph`)}
               fullWidth
               onChange={handleInputChange}
               onKeyPress={handleKeyPress}
@@ -134,13 +141,13 @@ function LoginForm() {
                   onChange={() => setIdSaveYn(!idSaveYn)}
                 />
               }
-              label="Save ID"
+              label={t(`login.save_id`)}
               labelPlacement="end"
             />
           </Box>
           <Box p={1}>
             <Button variant="contained" fullWidth onClick={handleLoginButton}>
-              SIGN IN
+              {t(`login.sign_in`)}
             </Button>
           </Box>
         </Box>

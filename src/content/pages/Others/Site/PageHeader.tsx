@@ -2,6 +2,7 @@ import { Button, Grid, Typography } from "@mui/material";
 import AddTwoToneIcon from "@mui/icons-material/AddTwoTone";
 import AvatarIcon from "src/components/AvatarIcon";
 import LinkTwoToneIcon from "@mui/icons-material/LinkTwoTone";
+import { useTranslation } from "react-i18next";
 
 interface PageHeaderProps {
   isAdmin: boolean;
@@ -11,24 +12,21 @@ interface PageHeaderProps {
 function PageHeader(props: PageHeaderProps) {
   const { isAdmin, onOpenModal } = props;
 
-  const title = {
-    title: 'Site',
-    subTitle: 'Useful WebSite List'
-  };
+  const { t } = useTranslation();
 
   return (
     <Grid container justifyContent="space-between" alignItems="center">
       <Grid item display="flex" alignItems="center">
         <Grid item>
-          <AvatarIcon alt={title.title}>
+          <AvatarIcon alt={t(`site.title`)}>
             <LinkTwoToneIcon fontSize="large" />
           </AvatarIcon>
         </Grid>
         <Grid item justifyContent="space-between" alignItems="center">
           <Typography variant="h3" component="h3">
-            {title.title}
+            {t(`site.title`)}
           </Typography>
-          <Typography variant="subtitle2">{title.subTitle}</Typography>
+          <Typography variant="subtitle2">{t(`site.subtitle`)}</Typography>
         </Grid>
       </Grid>
       {isAdmin &&

@@ -15,18 +15,39 @@
     "site": "Site",
     "weather": "Weather"
   },
+  "login": {
+    "title": "SIGN IN",
+    "id": "ID",
+    "id_ph": "Enter your ID",
+    "password": "PASSWORD",
+    "password_ph": "Enter your Password",
+    "save_id": "Save ID",
+    "sign_in": "SIGN IN"
+  },
   "dashboard": {
     "title": "Dashboard",
     "subtitle": "Have a nice day!"
   },
   "about": {
-    "title": "Welcome, DYLABO",
+    "title": "Welcome To DYLABO",
     "subtitle": "About Me"
+  },
+  "notice": {
+    "title": "Notice",
+    "subtitle": "This is news about this site"
+  },
+  "site": {
+    "title": "Site",
+    "subtitle": "Useful Web Site List"
+  },
+  "weather": {
+    "title": "Weather",
+    "subtitle": "The weather is fickle"
   },
   "tooltip": {
     "detail": "Detail",
-    "changeLanguage": "Change Language",
-    "darkMode": "Dark Mode",
-    "lightMode": "Light Mode"
+    "change_language": "Change Language",
+    "dark_mode": "Dark Mode",
+    "light_mode": "Light Mode"
   }
 }

@@ -16,10 +16,21 @@ export interface LoginData {
 
 export type UserTypes = 'USER' | 'ADMIN' | 'SUPER';
 
+// page
+export interface Paging {
+  page?: number;
+  size?: number;
+  sort?: string;
+}
+
 // notice
 export type NoticeTypes = 'NOTICE' | 'VERSION' | 'ETC';
 
-export interface NoticeData extends BaseCData, BaseUData{
+export interface NoticeSearch {
+
+}
+
+export interface NoticeData extends BaseCData, BaseUData {
   id?: number;
   noticeType: NoticeTypes;
   title: string;

@@ -1,11 +1,7 @@
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import Logo from "src/components/LogoSign";
 
 function PageHeader() {
-  const title = {
-    title: 'DYLABO'
-  };
-
   return (
     <Box
       mx={2}

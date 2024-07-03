@@ -1,8 +1,11 @@
 import { Grid, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import AvatarIcon from "src/components/AvatarIcon";
+import { useTranslation } from "react-i18next";
 
 function PageHeader() {
+  const { t } = useTranslation();
+
   const user = {
     name: "DYLABO",
     avatarLight: '/static/images/dylabo/main-logo.png',
@@ -21,10 +24,10 @@ function PageHeader() {
       </Grid>
       <Grid item>
         <Typography variant="h3" component="h3" gutterBottom>
-          Welcome, {user.name}!
+          {t(`about.title`)}
         </Typography>
         <Typography variant="subtitle2">
-          About Me
+          {t(`about.subtitle`)}
         </Typography>
       </Grid>
     </Grid>

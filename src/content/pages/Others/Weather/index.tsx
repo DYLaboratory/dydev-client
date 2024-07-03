@@ -11,6 +11,7 @@ import PageTitleWrapper from "src/components/PageTitleWrapper";
 import PageHeader from "src/components/PageHeader";
 import Footer from "src/components/Footer";
 import DashboardTwoToneIcon from "@mui/icons-material/DashboardTwoTone";
+import { useTranslation } from "react-i18next";
 
 interface WeatherMainTypes {
   city: {
@@ -83,11 +84,7 @@ interface DustBody {
 }
 
 function Weather() {
-  const header = {
-    title: "Weather",
-    subTitle: 'The weather is fickle',
-    icon: <DashboardTwoToneIcon fontSize="large" />
-  };
+  const { t } = useTranslation();
 
   const [city, setCity] = useState<{ id: string, name: string }>({
     id: "Seoul",
@@ -235,9 +232,9 @@ function Weather() {
       </Helmet>
       <PageTitleWrapper>
         <PageHeader
-          title={header.title}
-          subTitle={header.subTitle}
-          icon={header.icon}
+          title={t(`weather.title`)}
+          subTitle={t(`weather.subtitle`)}
+          icon={<DashboardTwoToneIcon fontSize="large" />}
         />
       </PageTitleWrapper>
       <Container maxWidth="lg">

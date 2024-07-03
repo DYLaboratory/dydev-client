@@ -6,19 +6,27 @@ function HeaderLanguage() {
   const { t, i18n } = useTranslation();
 
   const handleToggleLanguage = () => {
-    let lang = 'ko';
+    let lang = 'en';
 
-    if (i18n.language === 'ko') {
-      lang = 'en';
-    } else {
+    // storage에서 가져오기
+    const appLang = localStorage.getItem('appLang');
+
+    if (!appLang || appLang === 'en') {
       lang = 'ko';
+    } else {
+      lang = 'en'
     }
 
-    i18n.changeLanguage(lang);
+    // 스토리지 값 세팅
+    localStorage.setItem('appLang', lang);
+
+    if (i18n.language !== lang) {
+      i18n.changeLanguage(lang);
+    }
   }
 
   return (
-    <Tooltip arrow title={t(`tooltip.changeLanguage`)}>
+    <Tooltip arrow title={t(`tooltip.change_language`)}>
       <IconButton color="primary" onClick={handleToggleLanguage}>
         <LanguageTwoToneIcon />
       </IconButton>

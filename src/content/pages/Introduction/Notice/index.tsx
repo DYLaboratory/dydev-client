@@ -5,7 +5,7 @@ import Footer from "src/components/Footer";
 import PageHeader from "./PageHeader";
 
 import { useEffect, useState } from "react";
-import { NoticeData, NoticeTypes } from "src/models/data/dataModels";
+import { NoticeData, NoticeTypes, Paging } from "src/models/data/dataModels";
 import { useAppSelector } from "src/app/hooks";
 import { getNoticeList } from "src/services/introduction/noticeApi";
 import NoticeTable from "src/content/pages/Introduction/Notice/NoticeTable";
@@ -36,17 +36,21 @@ function NoticeList() {
 
   const [notices, setNotices] = useState<NoticeData[]>([]);
 
+  const paging: Paging = {
+    sort: "createDateTime,desc"
+  }
+
   useEffect(() => {
     setLoading(true);
     fetchNoticeList();
   }, []);
 
   // get (s)
-  const fetchNoticeList = () => {
-    getNoticeList()
+  const fetchNoticeList = async () => {
+    await getNoticeList({}, paging)
       .then(
         res => {
-          setNotices(res.data);
+          setNotices(res.data.content);
           setLoading(false);
         },
         err => {

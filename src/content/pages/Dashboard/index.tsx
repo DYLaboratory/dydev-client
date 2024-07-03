@@ -6,16 +6,21 @@ import DashboardTwoToneIcon from "@mui/icons-material/DashboardTwoTone";
 import PageHeader from "src/components/PageHeader";
 import WeatherCard from "src/content/pages/Dashboard/WeatherCard";
 import { ReactElement } from "react";
+import NoticeCard from "src/content/pages/Dashboard/NoticeCard";
+import { useTranslation } from "react-i18next";
 
 function Dashboard() {
+  const { t } = useTranslation();
+
   const header = {
-    title: "Dashboard",
-    subTitle: 'Have a nice day!',
+    title: t(`dashboard.title`) ,
+    subTitle: t(`dashboard.subtitle`),
     icon: <DashboardTwoToneIcon fontSize="large" />
   };
 
   const list: ReactElement[] = [
-    <WeatherCard key={0} />
+    <WeatherCard key={0} />,
+    <NoticeCard key={1} />
   ]
 
   return (
@@ -39,7 +44,7 @@ function Dashboard() {
           spacing={4}>
           {list.map((v, i) => {
             return (
-              <Grid item md={4} xs={12} key={i}>
+              <Grid item xs={12} md={4} key={i}>
                 {v}
               </Grid>
             )
