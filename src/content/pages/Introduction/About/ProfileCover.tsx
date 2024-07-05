@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import { Avatar, Box, Card, CardMedia, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
+import { ReactElement } from "react";
 
 const AvatarWrapper = styled(Card)(
   ({ theme }) => `
@@ -28,30 +29,38 @@ const CardCover = styled(Card)(
 `
 );
 
-function ProfileCover({ user }) {
+interface ProfileCoverProps {
+  coverImg: string;
+  avatar: string;
+  name: string;
+  fullName: string;
+  description: ReactElement;
+  jobtitle: string;
+  location: string;
+}
+
+function ProfileCover(props: ProfileCoverProps) {
+  const { coverImg, avatar, name, fullName, description, jobtitle, location } = props;
+
   return (
     <>
       <CardCover>
-        <CardMedia image={user.coverImg} />
+        <CardMedia image={coverImg} />
       </CardCover>
       <AvatarWrapper>
-        <Avatar variant="rounded" alt={user.name} src={user.avatar} />
+        <Avatar variant="rounded" alt={name} src={avatar} />
       </AvatarWrapper>
       <Box py={2} pl={2}>
         <Typography gutterBottom variant="h4">
-          {user.name}
+          {fullName}
         </Typography>
-        <Typography variant="subtitle2">{user.description}</Typography>
+        <Typography variant="subtitle2">{description}</Typography>
         <Typography sx={{ py: 2 }} variant="subtitle2" color="text.primary">
-          {user.jobtitle} | {user.location}
+          {jobtitle} | {location}
         </Typography>
       </Box>
     </>
   );
 }
-
-ProfileCover.propTypes = {
-  user: PropTypes.object.isRequired
-};
 
 export default ProfileCover;

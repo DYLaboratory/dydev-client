@@ -22,7 +22,7 @@ function ContactMe() {
   const content = {
     email: "ldy033000@gmail.com",
     github: "https://github.com/leedy-dev",
-    blog: "Coming soon"
+    linkedIn: "https://www.linkedin.com/in/lee-dy"
   }
 
   const copyToClipboard = async text => {
@@ -65,7 +65,7 @@ function ContactMe() {
         <Box pl={2} flex={1} >
           <Typography variant="h3">Email</Typography>
           <Typography gutterBottom display="flex" alignItems="center">
-            {content.email}&nbsp;
+            Gmail&nbsp;
             <ContentCopyTwoToneIcon fontSize="small" cursor="pointer" onClick={() => copyToClipboard(content.email)}/>
           </Typography>
         </Box>
@@ -77,7 +77,7 @@ function ContactMe() {
         <Box pl={2} flex={1} >
           <Typography variant="h3">Github</Typography>
           <Typography gutterBottom display="flex" alignItems="center">
-            <Link href={content.github}>{content.github}</Link>&nbsp;
+            <Link href={content.github} target="_blank" rel="noopener noreferrer">Github Profile</Link>&nbsp;
             <ContentCopyTwoToneIcon fontSize="small" cursor="pointer" onClick={() => copyToClipboard(content.github)}/>
           </Typography>
         </Box>
@@ -87,10 +87,10 @@ function ContactMe() {
           <TableChartTwoToneIcon />
         </AvatarPrimary>
         <Box pl={2} flex={1} >
-          <Typography variant="h3">Blog</Typography>
+          <Typography variant="h3">LinkedIn</Typography>
           <Typography gutterBottom display="flex" alignItems="center">
-            {content.blog}&nbsp;
-            {/*<ContentCopyTwoToneIcon fontSize="small" cursor="pointer" onClick={() => copyToClipboard(content.blog)}/>*/}
+            <Link href={content.linkedIn} target="_blank" rel="noopener noreferrer">LinkedIn Profile</Link>&nbsp;
+            <ContentCopyTwoToneIcon fontSize="small" cursor="pointer" onClick={() => copyToClipboard(content.linkedIn)}/>
           </Typography>
         </Box>
       </Box>
