@@ -11,6 +11,8 @@
     "notice": "공지사항",
     "blog": "블로그",
     "feed": "피드",
+    "game": "게임",
+    "sudoku": "스도쿠",
     "others": "기타",
     "site": "사이트",
     "weather": "날씨"
@@ -30,11 +32,15 @@
   },
   "about": {
     "title": "DYLABO에 오신 것을 환영합니다",
-    "subtitle": "저는 이런 사람입니다."
+    "subtitle": "저는 이런 사람입니다"
   },
   "notice": {
     "title": "공지사항",
     "subtitle": "버전 업데이트 소식 및 공지사항 입니다"
+  },
+  "feed": {
+    "title": "피드",
+    "subtitle": "기억에 남는 순간들"
   },
   "site": {
     "title": "사이트",

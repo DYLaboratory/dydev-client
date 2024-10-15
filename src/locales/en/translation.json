@@ -11,6 +11,8 @@
     "notice": "Notice",
     "blog": "Blog",
     "feed": "Feed",
+    "game": "Game",
+    "sudoku": "Sudoku",
     "others": "Others",
     "site": "Site",
     "weather": "Weather"
@@ -35,6 +37,10 @@
   "notice": {
     "title": "Notice",
     "subtitle": "This is news about this site"
+  },
+  "feed": {
+    "title": "Feed",
+    "subtitle": "Memorable Moments in My Life"
   },
   "site": {
     "title": "Site",

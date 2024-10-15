@@ -32,6 +32,7 @@ const Notice = Loader(
 )
 
 /* Blog */
+const Feed = Loader(lazy(() => import('src/content/pages/Blog/Feed')));
 
 /* Others */
 const Site = Loader(lazy(() => import('src/content/pages/Others/Site')));
@@ -222,7 +223,22 @@ const routes: RouteObject[] = [
       },
       {
         path: 'feed',
-        // element: <UserSettings />
+        element: <Feed />
+      }
+    ]
+  },
+
+  /* game */
+  {
+    path: 'game',
+    element: <SidebarLayout />,
+    children: [
+      {
+        path: '',
+        element: <Navigate to='sudoku' replace />
+      },
+      {
+        path: 'sudoku',
         element: <StatusComingSoon isMain />
       }
     ]

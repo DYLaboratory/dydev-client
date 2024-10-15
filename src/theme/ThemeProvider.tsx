@@ -5,7 +5,7 @@ import { themeCreator } from './base';
 
 export const ThemeContext = createContext((themeName: string): void => {});
 
-const themeList = ['PureLightTheme', 'NebularFighterTheme'];
+const themeList = ['PureLightTheme', 'NebulaFighterTheme'];
 
 const APP_THEME = 'appTheme';
 

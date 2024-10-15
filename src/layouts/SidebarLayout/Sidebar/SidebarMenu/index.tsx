@@ -38,6 +38,7 @@ import WorkspacePremiumTwoToneIcon from '@mui/icons-material/WorkspacePremiumTwo
 import CameraFrontTwoToneIcon from '@mui/icons-material/CameraFrontTwoTone';
 import DisplaySettingsTwoToneIcon from '@mui/icons-material/DisplaySettingsTwoTone';
 import FilterDramaTwoToneIcon from '@mui/icons-material/FilterDramaTwoTone';
+import GridOnTwoToneIcon from '@mui/icons-material/GridOnTwoTone';
 import { useAppSelector } from "src/app/hooks";
 import { useTranslation } from "react-i18next";
 
@@ -269,6 +270,29 @@ function SidebarMenu() {
                 to="/blog/blog"
                 startIcon={<TableChartTwoToneIcon />}>
                 {t(`sideMenu.blog`)}
+              </Button>
+            </ListItem>
+          </List>
+        </SubMenuWrapper>
+      </List>
+
+      <List
+        component="div"
+        subheader={
+          <ListSubheader component="div" disableSticky>
+            {t(`sideMenu.game`)}
+          </ListSubheader>
+        }>
+        <SubMenuWrapper>
+          <List component="div">
+            <ListItem component="div">
+              <Button
+                disableRipple
+                component={RouterLink}
+                onClick={closeSidebar}
+                to="/game/sudoku"
+                startIcon={<GridOnTwoToneIcon />}>
+                {t(`sideMenu.sudoku`)}
               </Button>
             </ListItem>
           </List>
