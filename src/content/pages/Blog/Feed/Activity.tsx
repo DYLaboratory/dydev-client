@@ -18,6 +18,7 @@ import ThumbUpAltTwoToneIcon from '@mui/icons-material/ThumbUpAltTwoTone';
 import CommentTwoToneIcon from '@mui/icons-material/CommentTwoTone';
 import ShareTwoToneIcon from '@mui/icons-material/ShareTwoTone';
 import Text from 'src/components/Text';
+import { FeedData } from "src/models/data/dataModels";
 
 const CardActionsWrapper = styled(CardActions)(
   ({ theme }) => `
@@ -26,11 +27,17 @@ const CardActionsWrapper = styled(CardActions)(
 `
 );
 
-function Activity() {
+interface FeedActivityProps {
+  feed: FeedData
+}
+
+function Activity(props: FeedActivityProps) {
+  const { feed } = props;
+
   return (
     <Card>
       <CardHeader
-        avatar={<Avatar src="/static/images/avatars/5.jpg" />}
+        avatar={<Avatar src="/static/images/avatars/me.jpg" />}
         action={
           <IconButton color="primary">
             <MoreHorizTwoToneIcon fontSize="medium" />
@@ -38,24 +45,19 @@ function Activity() {
         }
         titleTypographyProps={{ variant: 'h4' }}
         subheaderTypographyProps={{ variant: 'subtitle2' }}
-        title="Allison Lipshutz"
+        title="DY Lee"
         subheader={
           <>
-            Managing Partner,{' '}
+            Project Manager,{' '}
             <Link href="#" underline="hover">
-              #software
+              #developer
             </Link>
-            ,{' '}
-            <Link href="#" underline="hover">
-              #managers
-            </Link>
-            , Google Inc.
           </>
         }
       />
       <Box px={3} pb={2}>
         <Typography variant="h4" fontWeight="normal">
-          Welcome to organizing your remote office for maximum productivity.
+          {feed.title}
         </Typography>
       </Box>
       <CardMedia
@@ -65,13 +67,13 @@ function Activity() {
       />
       <Box p={3}>
         <Typography variant="h2" sx={{ pb: 1 }}>
-          Organizing Your Remote Office for Maximum Productivity
+          {feed.content}
         </Typography>
         <Typography variant="subtitle2">
           <Link href="#" underline="hover">
-            example.com
+            {feed.link}
           </Link>{' '}
-          • 4 mins read
+          • {feed.createDateTime}
         </Typography>
       </Box>
       <Divider />

@@ -38,6 +38,16 @@ export interface NoticeData extends BaseCData, BaseUData {
   viewCount?: number;
 }
 
+// feed
+export interface FeedData extends BaseCData {
+  id?: number;
+  title: string;
+  content: string;
+  place?: string;
+  link?: string;
+  viewCount?: number;
+}
+
 // site
 export type SiteTypes =
   | 'DEVELOP'

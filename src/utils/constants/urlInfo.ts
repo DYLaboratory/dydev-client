@@ -13,6 +13,10 @@ const EXTERNAL_URL = "/external";
 const INTRODUCTION_URL = "/introduction";
 const NOTICE_URL = '/notice';
 
+// blog
+const FEED_URL = "/feed";
+const BLOG_URL = "/blog";
+
 // others
 const OTHERS_URL = "/others";
 const WEB_SITE_URL = '/web-site';
@@ -40,6 +44,12 @@ const URL_INFO = {
     // introduction
     NOTICE: API_PREFIX_COMMON + NOTICE_URL,
     ADMIN_NOTICE: API_PREFIX_ADMIN + NOTICE_URL,
+
+    // life
+    FEED: API_PREFIX_COMMON + FEED_URL,
+    ADMIN_FEED: API_PREFIX_ADMIN + FEED_URL,
+    BLOG: API_PREFIX_COMMON + BLOG_URL,
+    ADMIN_BLOG: API_PREFIX_ADMIN + BLOG_URL,
 
     // others
     WEB_SITE: API_PREFIX_COMMON + WEB_SITE_URL,

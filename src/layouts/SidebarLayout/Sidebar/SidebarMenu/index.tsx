@@ -1,14 +1,6 @@
 import { useContext } from 'react';
 
-import {
-  alpha,
-  Box,
-  Button,
-  List,
-  ListItem,
-  ListSubheader,
-  styled
-} from '@mui/material';
+import { alpha, Box, Button, List, ListItem, ListSubheader, styled } from '@mui/material';
 import { NavLink as RouterLink } from 'react-router-dom';
 import { SidebarContext } from 'src/contexts/SidebarContext';
 
@@ -18,8 +10,6 @@ import ImportContactsTwoToneIcon from '@mui/icons-material/ImportContactsTwoTone
 import DynamicFeedTwoToneIcon from '@mui/icons-material/DynamicFeedTwoTone';
 import TableChartTwoToneIcon from '@mui/icons-material/TableChartTwoTone';
 import LinkTwoToneIcon from '@mui/icons-material/LinkTwoTone';
-
-import DesignServicesTwoToneIcon from '@mui/icons-material/DesignServicesTwoTone';
 import BrightnessLowTwoToneIcon from '@mui/icons-material/BrightnessLowTwoTone';
 import MmsTwoToneIcon from '@mui/icons-material/MmsTwoTone';
 import AccountCircleTwoToneIcon from '@mui/icons-material/AccountCircleTwoTone';
@@ -247,7 +237,7 @@ function SidebarMenu() {
         component="div"
         subheader={
           <ListSubheader component="div" disableSticky>
-            {t(`sideMenu.blog`)}
+            {t(`sideMenu.life`)}
           </ListSubheader>
         }>
         <SubMenuWrapper>
@@ -257,7 +247,7 @@ function SidebarMenu() {
                 disableRipple
                 component={RouterLink}
                 onClick={closeSidebar}
-                to="/blog/feed"
+                to="/life/feed"
                 startIcon={<DynamicFeedTwoToneIcon />}>
                 {t(`sideMenu.feed`)}
               </Button>
@@ -267,7 +257,7 @@ function SidebarMenu() {
                 disableRipple
                 component={RouterLink}
                 onClick={closeSidebar}
-                to="/blog/blog"
+                to="/life/blog"
                 startIcon={<TableChartTwoToneIcon />}>
                 {t(`sideMenu.blog`)}
               </Button>

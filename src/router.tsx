@@ -209,21 +209,21 @@ const routes: RouteObject[] = [
 
   /* blog */
   {
-    path: 'blog',
+    path: 'life',
     element: <SidebarLayout />,
     children: [
       {
         path: '',
-        element: <Navigate to="blog" replace />
+        element: <Navigate to="feed" replace />
+      },
+      {
+        path: 'feed',
+        element: <Feed />
       },
       {
         path: 'blog',
         // element: <UserSettings />
         element: <StatusComingSoon isMain />
-      },
-      {
-        path: 'feed',
-        element: <Feed />
       }
     ]
   },
