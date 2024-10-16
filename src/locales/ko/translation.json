@@ -56,5 +56,8 @@
     "change_language": "언어 변경",
     "dark_mode": "다크 모드",
     "light_mode": "라이트 모드"
+  },
+  "message":{
+    "no-feed": "최신 피드가 없습니다."
   }
 }

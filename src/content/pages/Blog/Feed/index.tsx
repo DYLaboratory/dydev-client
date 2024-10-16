@@ -20,6 +20,7 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import SaveIcon from "@mui/icons-material/Save";
 import { styled } from "@mui/material/styles";
 import ListItem from "@mui/material/ListItem";
+import { useTranslation } from "react-i18next";
 
 const ListItemWrapper = styled(ListItem)(`
   display: flex;
@@ -45,6 +46,8 @@ interface ModalType {
 
 function Feed() {
   const isAdmin = useAppSelector(state => state.user).isAdmin;
+
+  const { t } = useTranslation();
 
   const { successAlert, errAlert } = useSnackbarAlert();
 
@@ -163,6 +166,9 @@ function Feed() {
                   <Activity key={f.id} feed={f}/>
                 )
               }
+              <Typography variant="h3" component="h3">
+                {t(`message.no-feed`)}
+              </Typography>
             </Grid>
           </Grid>
         </Container>

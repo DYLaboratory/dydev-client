@@ -56,5 +56,8 @@
     "change_language": "Change Language",
     "dark_mode": "Dark Mode",
     "light_mode": "Light Mode"
+  },
+  "message":{
+    "no-feed": "There are no recent feeds."
   }
 }
