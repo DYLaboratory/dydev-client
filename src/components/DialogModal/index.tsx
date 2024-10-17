@@ -12,7 +12,7 @@ const DialogBox = styled(Dialog)(
 
 function DialogModal(props: DialogProps) {
   return (
-    <DialogBox open={props.open} onClose={props.onClose}>
+    <DialogBox {...props} open={props.open} onClose={props.onClose}>
       {props.children}
     </DialogBox>
   )

@@ -1,6 +1,16 @@
 import { Helmet } from 'react-helmet-async';
 import PageTitleWrapper from 'src/components/PageTitleWrapper';
-import { Button, Container, Grid, OutlinedInput, Typography } from '@mui/material';
+import {
+  Button,
+  Container,
+  Grid,
+  OutlinedInput,
+  Table,
+  TableBody,
+  TableCell,
+  TableRow,
+  Typography
+} from '@mui/material';
 import Footer from 'src/components/Footer';
 import PageHeader from './PageHeader';
 
@@ -13,7 +23,6 @@ import { getFeedList, setDeleteFeed, setInsertFeed } from "src/services/life/fee
 import DialogModal from "src/components/DialogModal";
 import DialogTitle from "@mui/material/DialogTitle";
 import LoadingProgress from "src/components/LoadingProgress";
-import List from "@mui/material/List";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 import CancelIcon from "@mui/icons-material/Cancel";
@@ -22,9 +31,8 @@ import { styled } from "@mui/material/styles";
 import ListItem from "@mui/material/ListItem";
 import { useTranslation } from "react-i18next";
 
-const ListItemWrapper = styled(ListItem)(`
-  display: flex;
-  justify-content: space-between;
+const TableCellWrapper = styled(TableCell)(`
+  border: none;
 `);
 
 const ListItemEndWrapper = styled(ListItem)(`
@@ -34,7 +42,6 @@ const ListItemEndWrapper = styled(ListItem)(`
 
 const OutlinedInputWrapper = styled(OutlinedInput)(
   ({ theme }) => `
-    margin-left: 20px;
     background-color: ${theme.colors.alpha.white[100]};
 `
 );
@@ -179,89 +186,109 @@ function Feed() {
       <Footer />
 
       {/* modal */}
-      <DialogModal maxWidth="lg" onClose={handleCloseModal} open={modalState.isOpen}>
+      <DialogModal fullWidth maxWidth="lg" scroll="body" onClose={handleCloseModal} open={modalState.isOpen}>
         <DialogTitle gutterBottom>
           {modalState.isNew ? "Add New Feed" : "Edit Feed"}
         </DialogTitle>
         {editLoading && <LoadingProgress />}
 
         {!editLoading &&
-        <List sx={{pt: 0}}>
-          <ListItemWrapper>
-            <Typography variant="h4" component="h4">
-              title
-            </Typography>
-            <OutlinedInputWrapper
-              name="title"
-              type="text"
-              placeholder="Title"
-              value={feed.title}
-              onChange={handleInputChange}
-            />
-          </ListItemWrapper>
-
-          <ListItemWrapper>
-            <Typography variant="h4" component="h4">
-              content
-            </Typography>
-            <OutlinedInputWrapper
-              name="content"
-              type="text"
-              placeholder="Content"
-              value={feed.content}
-              onChange={handleInputChange}
-            />
-          </ListItemWrapper>
-
-          <ListItemWrapper>
-            <Typography variant="h4" component="h4">
-              place
-            </Typography>
-            <OutlinedInputWrapper
-              name="place"
-              type="text"
-              placeholder="Place"
-              value={feed.place}
-              onChange={handleInputChange}
-            />
-          </ListItemWrapper>
-
-          <ListItemWrapper>
-            <Typography variant="h4" component="h4">
-              link
-            </Typography>
-            <OutlinedInputWrapper
-              name="link"
-              type="text"
-              placeholder="Link"
-              value={feed.link}
-              onChange={handleInputChange}
-            />
-          </ListItemWrapper>
-
-          <ListItemEndWrapper>
-            <Button color="inherit" onClick={handleCloseModal}>
-              <ListItemAvatar>
-                <Avatar>
-                  <CancelIcon/>
-                </Avatar>
-              </ListItemAvatar>
-              <Typography variant="h4">
-                CANCEL
-              </Typography>
-            </Button>
-            <Button color="inherit" onClick={handleClickSaveButton}>
-              <ListItemAvatar>
-                <Avatar>
-                  <SaveIcon/>
-                </Avatar>
-              </ListItemAvatar>
-              <Typography variant="h4">
-                SAVE
-              </Typography>
-            </Button>
-          </ListItemEndWrapper>
-        </List>
+          <>
+            <Table>
+              <TableBody>
+                <TableRow>
+                  <TableCellWrapper width="5%">
+                    <Typography variant="h4" component="h4">
+                      title
+                    </Typography>
+                  </TableCellWrapper>
+                  <TableCellWrapper width="95%">
+                    <OutlinedInputWrapper
+                      name="title"
+                      type="text"
+                      placeholder="Title"
+                      value={feed.title}
+                      onChange={handleInputChange}
+                      fullWidth
+                    />
+                  </TableCellWrapper>
+                </TableRow>
+                <TableRow>
+                  <TableCellWrapper width="5%">
+                    <Typography variant="h4" component="h4">
+                      content
+                    </Typography>
+                  </TableCellWrapper>
+                  <TableCellWrapper width="95%">
+                    <OutlinedInputWrapper
+                      name="content"
+                      type="text"
+                      placeholder="Content"
+                      value={feed.content}
+                      onChange={handleInputChange}
+                      fullWidth
+                    />
+                  </TableCellWrapper>
+                </TableRow>
+                <TableRow>
+                  <TableCellWrapper width="5%">
+                    <Typography variant="h4" component="h4">
+                      place
+                    </Typography>
+                  </TableCellWrapper>
+                  <TableCellWrapper width="95%">
+                    <OutlinedInputWrapper
+                      name="place"
+                      type="text"
+                      placeholder="place"
+                      value={feed.place}
+                      onChange={handleInputChange}
+                      fullWidth
+                    />
+                  </TableCellWrapper>
+                </TableRow>
+                <TableRow>
+                  <TableCellWrapper width="5%">
+                    <Typography variant="h4" component="h4">
+                      link
+                    </Typography>
+                  </TableCellWrapper>
+                  <TableCellWrapper width="95%">
+                    <OutlinedInputWrapper
+                      name="link"
+                      type="text"
+                      placeholder="link"
+                      value={feed.link}
+                      onChange={handleInputChange}
+                      fullWidth
+                    />
+                  </TableCellWrapper>
+                </TableRow>
+              </TableBody>
+            </Table>
+            <ListItemEndWrapper>
+              <Button color="inherit" onClick={handleCloseModal}>
+                <ListItemAvatar>
+                  <Avatar>
+                    <CancelIcon/>
+                  </Avatar>
+                </ListItemAvatar>
+                <Typography variant="h4">
+                  CANCEL
+                </Typography>
+              </Button>
+              <Button color="inherit" onClick={handleClickSaveButton}>
+                <ListItemAvatar>
+                  <Avatar>
+                    <SaveIcon/>
+                  </Avatar>
+                </ListItemAvatar>
+                <Typography variant="h4">
+                  SAVE
+                </Typography>
+              </Button>
+            </ListItemEndWrapper>
+          </>
         }
       </DialogModal>
     </>
