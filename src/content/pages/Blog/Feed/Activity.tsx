@@ -19,6 +19,7 @@ import CommentTwoToneIcon from '@mui/icons-material/CommentTwoTone';
 import ShareTwoToneIcon from '@mui/icons-material/ShareTwoTone';
 import Text from 'src/components/Text';
 import { FeedData } from "src/models/data/dataModels";
+import { convertDatePattern } from "src/utils/stringUtils";
 
 const CardActionsWrapper = styled(CardActions)(
   ({ theme }) => `
@@ -73,7 +74,7 @@ function Activity(props: FeedActivityProps) {
           <Link href="#" underline="hover">
             {feed.link}
           </Link>{' '}
-          • {feed.createDateTime}
+          • {convertDatePattern("dateTime", feed.createDateTime)}
         </Typography>
       </Box>
       <Divider />

@@ -21,6 +21,7 @@ import { NoticeData, NoticeTypes } from "src/models/data/dataModels";
 import { styled } from "@mui/material/styles";
 import { useNavigate } from "react-router";
 import { noticeTypeOptions } from "src/content/pages/Introduction/Notice/index";
+import { convertDatePattern } from "src/utils/stringUtils";
 
 interface Filters {
   type?: NoticeTypes;
@@ -186,7 +187,7 @@ function NoticeTable(props: RecentOrdersTableProps) {
                       color="text.primary"
                       gutterBottom
                       noWrap>
-                      {notice.createDateTime.substring(0, 10)}
+                      {convertDatePattern("date", notice.createDateTime)}
                     </Typography>
                   </TableCell>
                   <TableCell>

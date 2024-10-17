@@ -166,9 +166,12 @@ function Feed() {
                   <Activity key={f.id} feed={f}/>
                 )
               }
-              <Typography variant="h3" component="h3">
-                {t(`message.no-feed`)}
-              </Typography>
+              {
+                feeds.length === 0 &&
+                  <Typography variant="h3" component="h3">
+                    {t(`message.no-feed`)}
+                  </Typography>
+              }
             </Grid>
           </Grid>
         </Container>

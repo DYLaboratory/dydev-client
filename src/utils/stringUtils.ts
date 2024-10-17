@@ -171,3 +171,13 @@ export function changeDataWithType(value, dataType) {
   }
   return temp;
 }
+
+export function convertDatePattern(type: "date" | "dateTime", date: string) {
+  if (type === "date") {
+    return date.substring(0, 10);
+  } else if (type === "dateTime") {
+    return date.substring(0, 10) + " " + date.substring(11, 16);
+  } else {
+    return null;
+  }
+}
