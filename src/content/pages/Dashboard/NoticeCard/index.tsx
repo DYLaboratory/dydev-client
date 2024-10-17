@@ -15,12 +15,15 @@ import { getNoticeList } from "src/services/introduction/noticeApi";
 import { NoticeData } from "src/models/data/dataModels";
 import { useSnackbarAlert } from "src/utils/errUtils";
 import DashboardCard from "src/content/pages/Dashboard/DashboardCard";
+import { useTranslation } from "react-i18next";
 
 const PointerTableRow = styled(TableRow)`
   cursor: pointer;
 `
 
 function NoticeCard() {
+  const { t } = useTranslation();
+
   const navigate = useNavigate();
 
   const theme = useTheme();
@@ -58,7 +61,7 @@ function NoticeCard() {
   }, []);
 
   return (
-    <DashboardCard title="공지사항" loading={loading} url="/introduction/notice">
+    <DashboardCard title={t(`sideMenu.notice`)} loading={loading} url="/introduction/notice">
       <TableContainer>
         <Table>
           <TableHead>

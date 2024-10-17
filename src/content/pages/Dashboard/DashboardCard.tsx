@@ -4,6 +4,7 @@ import { ReactElement } from "react";
 import LoadingProgress from "src/components/LoadingProgress";
 import { useNavigate } from "react-router";
 import { styled } from "@mui/material/styles";
+import { useTranslation } from "react-i18next";
 
 const CardWrapper = styled(Card)`
   height: 330px;
@@ -13,13 +14,15 @@ interface DashboardCardProps {
   title: string;
   rightTitle?: ReactElement;
   url?: string;
-  loading: boolean;
+  loading?: boolean;
   error?: string;
   children: ReactElement | ReactElement[];
 }
 
 function DashboardCard(props: DashboardCardProps) {
   const { title, rightTitle, url, loading, error, children } = props;
+
+  const { t } = useTranslation();
 
   const navigate = useNavigate();
 
@@ -33,7 +36,7 @@ function DashboardCard(props: DashboardCardProps) {
           variant="h4">
           {title}&nbsp;
           {url &&
-            <Tooltip title="자세히보기">
+            <Tooltip title={t(`tooltip.more`)}>
               <LoginTwoToneIcon fontSize="small" cursor="pointer" onClick={() => navigate(url)} />
             </Tooltip>
           }

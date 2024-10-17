@@ -35,12 +35,12 @@ interface ProfileCoverProps {
   name: string;
   fullName: string;
   description: ReactElement;
-  jobtitle: string;
+  jobTitle: string;
   location: string;
 }
 
 function ProfileCover(props: ProfileCoverProps) {
-  const { coverImg, avatar, name, fullName, description, jobtitle, location } = props;
+  const { coverImg, avatar, name, fullName, description, jobTitle, location } = props;
 
   return (
     <>
@@ -56,7 +56,7 @@ function ProfileCover(props: ProfileCoverProps) {
         </Typography>
         <Typography variant="subtitle2">{description}</Typography>
         <Typography sx={{ py: 2 }} variant="subtitle2" color="text.primary">
-          {jobtitle} | {location}
+          {jobTitle} | {location}
         </Typography>
       </Box>
     </>

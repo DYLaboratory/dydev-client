@@ -8,6 +8,7 @@ import WeatherCard from "src/content/pages/Dashboard/WeatherCard";
 import { ReactElement } from "react";
 import NoticeCard from "src/content/pages/Dashboard/NoticeCard";
 import { useTranslation } from "react-i18next";
+import AboutCard from "src/content/pages/Dashboard/AboutCard";
 
 function Dashboard() {
   const { t } = useTranslation();
@@ -19,8 +20,9 @@ function Dashboard() {
   };
 
   const list: ReactElement[] = [
-    <WeatherCard key={0} />,
-    <NoticeCard key={1} />
+    <AboutCard key={0} />,
+    <NoticeCard key={1} />,
+    <WeatherCard key={2} />
   ]
 
   return (

@@ -1,4 +1,20 @@
 {
+  "main": {
+    "greeting": "Nice to meet you!",
+    "subGreeting1": "I'm Dong-yeop Lee, a web developer",
+    "subGreeting2": "This is a space where I can freely develop and test.",
+    "subGreeting3": "If you want to know about me, please visit to this page."
+  },
+  "myInfo": {
+    "name": "DY Lee",
+    "fullName": "Dong-yeop Lee",
+    "mainDesc": "I’m a web developer specializing in Java, dedicated to continuous growth and development.",
+    "desc1": "I'm a proactive and goal-oriented person with three years of experience as a web developer.",
+    "desc2": "With my quick adaptability and effective communication skills, I can fit well within any organization.",
+    "desc3": "I strive for continuous improvement to contribute to the growth of not only myself but also my colleagues and team.",
+    "jobTitle": "Web Developer",
+    "location": "Seoul, Korea"
+  },
   "header": {
     "language": "Language",
     "theme": "Theme",
@@ -52,6 +68,7 @@
     "subtitle": "The weather is fickle"
   },
   "tooltip": {
+    "more": "more",
     "detail": "Detail",
     "change_language": "Change Language",
     "dark_mode": "Dark Mode",

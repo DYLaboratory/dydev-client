@@ -14,6 +14,7 @@ import AirTwoToneIcon from "@mui/icons-material/AirTwoTone";
 import OpacityTwoToneIcon from "@mui/icons-material/OpacityTwoTone";
 import { useNavigate } from "react-router";
 import DashboardCard from "src/content/pages/Dashboard/DashboardCard";
+import { useTranslation } from "react-i18next";
 
 interface WeatherTypes {
   dt: number;
@@ -68,6 +69,8 @@ const cityTypes = [
 ]
 
 function WeatherCard() {
+  const { t } = useTranslation();
+
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState<boolean>(true);
@@ -159,7 +162,7 @@ function WeatherCard() {
   return (
     <DashboardCard
       loading={loading}
-      title="날씨 정보"
+      title={t(`sideMenu.weather`)}
       rightTitle={
         <Typography display="flex" alignItems="center">
           {present && present.date + " "  + present.time}
