@@ -1,17 +1,6 @@
 import { Helmet } from 'react-helmet-async';
 import PageTitleWrapper from 'src/components/PageTitleWrapper';
-import {
-  Box,
-  Button,
-  Container,
-  Grid,
-  OutlinedInput,
-  Table,
-  TableBody,
-  TableCell,
-  TableRow,
-  Typography
-} from '@mui/material';
+import { Container, Grid, Typography } from '@mui/material';
 import Footer from 'src/components/Footer';
 import PageHeader from './PageHeader';
 
@@ -20,16 +9,8 @@ import { useAppSelector } from "src/app/hooks";
 import { useSnackbarAlert } from "src/utils/errUtils";
 import { useEffect, useState } from "react";
 import { FeedData } from "src/models/data/dataModels";
-import { getFeedList, setDeleteFeed, setInsertFeed } from "src/services/life/feedApi";
-import DialogModal from "src/components/DialogModal";
-import DialogTitle from "@mui/material/DialogTitle";
+import { getFeedList, setDeleteFeed } from "src/services/life/feedApi";
 import LoadingProgress from "src/components/LoadingProgress";
-import ListItemAvatar from "@mui/material/ListItemAvatar";
-import Avatar from "@mui/material/Avatar";
-import CancelIcon from "@mui/icons-material/Cancel";
-import SaveIcon from "@mui/icons-material/Save";
-import { styled } from "@mui/material/styles";
-import ListItem from "@mui/material/ListItem";
 import { useTranslation } from "react-i18next";
 import FeedModal from "src/content/pages/Blog/Feed/FeedModal";
 
@@ -50,7 +31,9 @@ function Feed() {
 
   const initialFeedData: FeedData = {
     title: '',
-    content: ''
+    content: '',
+    place: '',
+    link: ''
   }
 
   const [feed, setFeed] = useState<FeedData>(initialFeedData);
@@ -63,6 +46,8 @@ function Feed() {
 
   // get (s)
   const fetchFeedList = async () => {
+    setFetchLoading(true);
+
     await getFeedList()
       .then(
         res => {
@@ -77,32 +62,13 @@ function Feed() {
   }
   // get (e)
 
-  // insert / update (s)
+  // change input (s)
   const handleInputChange = e => {
     const changeValue = {};
     changeValue[e.target.name] = e.target.value;
     setFeed({ ...feed, ...changeValue });
   }
-
-  const handleClickSaveButton = () => {
-    setEditLoading(true);
-    if (modalState.isNew) {
-      setInsertFeed(feed)
-        .then(
-          () => {
-            successAlert('등록을 완료하였습니다.');
-            setEditLoading(false);
-            handleCloseModal();
-            getFeedList();
-          },
-          () => {
-            errAlert('등록 중 오류가 발생하였습니다.');
-            setEditLoading(false);
-          }
-        );
-    }
-  }
-  // insert / update (e)
+  // change input (e)
 
   // delete (s)
   const handleDeleteButton = (id: number) => {
@@ -176,10 +142,11 @@ function Feed() {
       <FeedModal
         modalState={modalState}
         editLoading={editLoading}
+        setEditLoading={setEditLoading}
         feed={feed}
+        fetchFeedList={fetchFeedList}
         handleCloseModal={handleCloseModal}
         handleInputChange={handleInputChange}
-        handleClickSaveButton={handleClickSaveButton}
       />
     </>
   );

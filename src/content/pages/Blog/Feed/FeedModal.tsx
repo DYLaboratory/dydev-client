@@ -1,16 +1,6 @@
 import DialogTitle from "@mui/material/DialogTitle";
 import LoadingProgress from "src/components/LoadingProgress";
-import {
-  Box,
-  Button,
-  DialogContent,
-  OutlinedInput,
-  Table,
-  TableBody,
-  TableCell,
-  TableRow,
-  Typography
-} from "@mui/material";
+import { Box, Button, OutlinedInput, Table, TableBody, TableCell, TableRow, Typography } from "@mui/material";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 import CancelIcon from "@mui/icons-material/Cancel";
@@ -20,6 +10,9 @@ import { styled } from "@mui/material/styles";
 import ListItem from "@mui/material/ListItem";
 import { FeedData } from "src/models/data/dataModels";
 import { ChangeEvent, ChangeEventHandler, useRef, useState } from "react";
+import { hasText } from "src/utils/stringUtils";
+import { setInsertFeed } from "src/services/life/feedApi";
+import { useSnackbarAlert } from "src/utils/errUtils";
 
 const TableCellWrapper = styled(TableCell)(`
   border: none;
@@ -43,14 +36,36 @@ const ImageBox = styled(Box)(`
   max-width: 100%;
 `);
 
-const ImageItem = styled("img")(() => ({
-    width: "180px",
-    height: "180px",
-    objectFit: "cover",
-    margin: "5px",
-    flexShrink: 0
+const ImageItem = styled(Box)(`
+  position: relative;
+  width: 180px;
+  height: 180px;
+  margin: 10px;
+  flex-shrink: 0;
+`);
+
+const FeedImage = styled("img")(() => ({
+  width: "100%",
+  height: "100%",
+  objectFit: "cover"
+}));
+
+const RemoveImageButton = styled('button')(({ theme }) => ({
+  position: 'absolute',
+  top: '-10px',
+  right: '-10px',
+  backgroundColor: theme.palette.primary.dark,  // 기본 색상
+  color: 'white',
+  border: 'none',
+  borderRadius: '50%',
+  width: '20px',
+  height: '20px',
+  cursor: 'pointer',
+  transition: 'background-color 0.3s ease',  // 부드러운 전환
+  '&:hover': {
+    backgroundColor: 'red',  // 호버 시 색상 변경
   }
-));
+}));
 
 interface ModalType {
   isNew: boolean;
@@ -60,14 +75,17 @@ interface ModalType {
 interface FeedModalProps {
   modalState: ModalType;
   editLoading: boolean;
+  setEditLoading: (loading: boolean) => void;
   feed: FeedData;
+  fetchFeedList: () => void;
   handleCloseModal: () => void;
   handleInputChange: ChangeEventHandler<HTMLTextAreaElement | HTMLInputElement>;
-  handleClickSaveButton: () => void;
 }
 
 function FeedModal(props: FeedModalProps) {
-  const { handleCloseModal, handleInputChange, handleClickSaveButton, modalState, editLoading, feed } = props;
+  const { modalState, editLoading, setEditLoading, feed, fetchFeedList, handleCloseModal, handleInputChange } = props;
+
+  const { successAlert, errAlert } = useSnackbarAlert();
 
   const handleCloseModalReset = () => {
     handleCloseModal();
@@ -75,7 +93,7 @@ function FeedModal(props: FeedModalProps) {
   }
 
   /* 이미지 */
-  const [images, setImages] = useState<string[]>([]);
+  const [images, setImages] = useState<{ id: number, file: File }[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleImageUpload = (e: ChangeEvent<HTMLInputElement>) => {
@@ -86,19 +104,12 @@ function FeedModal(props: FeedModalProps) {
         return;
       }
 
-      const fileArray = Array.from(files); // 파일들을 배열로 변환
-      const newImage: string[] = [];
+      const newImages = Array.from(files)
+        .map((f, idx) => (
+          { id: idx, file: f }
+        ));
 
-      fileArray.forEach((file) => {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          newImage.push(reader.result as string);  // 파일의 URL을 배열에 추가
-          if (newImage.length === fileArray.length) {
-            setImages((prev) => [...prev, ...newImage]); // 모든 파일이 로드되면 상태 업데이트
-          }
-        };
-        reader.readAsDataURL(file);  // 파일을 Data URL로 읽기
-      });
+      setImages([...images, ...newImages]);
     }
   };
 
@@ -113,6 +124,54 @@ function FeedModal(props: FeedModalProps) {
     }
   };
 
+  const handleClickRemoveImage = id => {
+    setImages(images.filter(image => image.id !== id));
+  }
+
+  // insert / update (s)
+  const handleClickSaveButton = () => {
+    // validate
+    if (!hasText(feed.title)) {
+      alert('제목을 입력하세요.');
+      return;
+    } else if (!hasText(feed.content)) {
+      alert('내용을 입력하세요.');
+      return;
+    } else if (images.length === 0) {
+      alert('이미지를 등록하세요.');
+      return;
+    }
+
+    setEditLoading(true);
+
+    // convert
+    const formData = new FormData();
+    formData.append('feed', new Blob([JSON.stringify(feed)], { type: 'application/json' })); // feed
+
+    images.forEach(image => {
+      formData.append('uploadFiles', image.file);
+    }); // image
+
+    // save
+    if (modalState.isNew) {
+      setInsertFeed(formData)
+        .then(
+          () => {
+            successAlert('등록을 완료하였습니다.');
+            setEditLoading(false);
+            handleCloseModal();
+            fetchFeedList();
+          },
+          () => {
+            errAlert('등록 중 오류가 발생하였습니다.');
+            setEditLoading(false);
+          }
+        );
+    }
+  }
+  // insert / update (e)
+
+  // table column size
   const cellSize = ["20%", "80%"];
 
   return (
@@ -229,11 +288,14 @@ function FeedModal(props: FeedModalProps) {
               <TableCellWrapper width={cellSize[1]}>
                 <ImageBox>
                   {images.map((image, idx) => (
-                    <ImageItem
-                      key={idx}
-                      src={image}
-                      alt={`Thumbnail ${idx + 1}`}
-                    />
+                    <ImageItem key={idx}>
+                      <FeedImage
+                        key={idx}
+                        src={URL.createObjectURL(image.file)}
+                        alt={`Thumbnail ${idx + 1}`}
+                      />
+                      <RemoveImageButton onClick={() => handleClickRemoveImage(image.id)}>X</RemoveImageButton>
+                    </ImageItem>
                   ))}
                 </ImageBox>
                 <Button onClick={handleClickAddImage}>

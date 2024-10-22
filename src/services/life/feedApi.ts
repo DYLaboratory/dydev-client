@@ -6,8 +6,8 @@ export const getFeedList = () => {
   return apiClient.get(URL_INFO.API_V1.FEED.concat("/list"));
 }
 
-export const setInsertFeed = (data: FeedData) => {
-  return apiClient.post(URL_INFO.API_V1.ADMIN_FEED, data);
+export const setInsertFeed = (data: FormData) => {
+  return apiClient.post(URL_INFO.API_V1.ADMIN_FEED, data, { headers: { 'Content-Tope': 'multipart/form-data' } });
 }
 
 export const setDeleteFeed = (id: number) => {
