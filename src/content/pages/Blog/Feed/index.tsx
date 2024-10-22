@@ -1,6 +1,7 @@
 import { Helmet } from 'react-helmet-async';
 import PageTitleWrapper from 'src/components/PageTitleWrapper';
 import {
+  Box,
   Button,
   Container,
   Grid,
@@ -30,21 +31,7 @@ import SaveIcon from "@mui/icons-material/Save";
 import { styled } from "@mui/material/styles";
 import ListItem from "@mui/material/ListItem";
 import { useTranslation } from "react-i18next";
-
-const TableCellWrapper = styled(TableCell)(`
-  border: none;
-`);
-
-const ListItemEndWrapper = styled(ListItem)(`
-  display: flex;
-  justify-content: flex-end;
-`);
-
-const OutlinedInputWrapper = styled(OutlinedInput)(
-  ({ theme }) => `
-    background-color: ${theme.colors.alpha.white[100]};
-`
-);
+import FeedModal from "src/content/pages/Blog/Feed/FeedModal";
 
 interface ModalType {
   isNew: boolean;
@@ -186,111 +173,14 @@ function Feed() {
       <Footer />
 
       {/* modal */}
-      <DialogModal fullWidth maxWidth="lg" scroll="body" onClose={handleCloseModal} open={modalState.isOpen}>
-        <DialogTitle gutterBottom>
-          {modalState.isNew ? "Add New Feed" : "Edit Feed"}
-        </DialogTitle>
-        {editLoading && <LoadingProgress />}
-
-        {!editLoading &&
-          <>
-            <Table>
-              <TableBody>
-                <TableRow>
-                  <TableCellWrapper width="5%">
-                    <Typography variant="h4" component="h4">
-                      title
-                    </Typography>
-                  </TableCellWrapper>
-                  <TableCellWrapper width="95%">
-                    <OutlinedInputWrapper
-                      name="title"
-                      type="text"
-                      placeholder="Title"
-                      value={feed.title}
-                      onChange={handleInputChange}
-                      fullWidth
-                    />
-                  </TableCellWrapper>
-                </TableRow>
-                <TableRow>
-                  <TableCellWrapper width="5%">
-                    <Typography variant="h4" component="h4">
-                      content
-                    </Typography>
-                  </TableCellWrapper>
-                  <TableCellWrapper width="95%">
-                    <OutlinedInputWrapper
-                      name="content"
-                      type="text"
-                      placeholder="Content"
-                      value={feed.content}
-                      onChange={handleInputChange}
-                      fullWidth
-                    />
-                  </TableCellWrapper>
-                </TableRow>
-                <TableRow>
-                  <TableCellWrapper width="5%">
-                    <Typography variant="h4" component="h4">
-                      place
-                    </Typography>
-                  </TableCellWrapper>
-                  <TableCellWrapper width="95%">
-                    <OutlinedInputWrapper
-                      name="place"
-                      type="text"
-                      placeholder="place"
-                      value={feed.place}
-                      onChange={handleInputChange}
-                      fullWidth
-                    />
-                  </TableCellWrapper>
-                </TableRow>
-                <TableRow>
-                  <TableCellWrapper width="5%">
-                    <Typography variant="h4" component="h4">
-                      link
-                    </Typography>
-                  </TableCellWrapper>
-                  <TableCellWrapper width="95%">
-                    <OutlinedInputWrapper
-                      name="link"
-                      type="text"
-                      placeholder="link"
-                      value={feed.link}
-                      onChange={handleInputChange}
-                      fullWidth
-                    />
-                  </TableCellWrapper>
-                </TableRow>
-              </TableBody>
-            </Table>
-            <ListItemEndWrapper>
-              <Button color="inherit" onClick={handleCloseModal}>
-                <ListItemAvatar>
-                  <Avatar>
-                    <CancelIcon/>
-                  </Avatar>
-                </ListItemAvatar>
-                <Typography variant="h4">
-                  CANCEL
-                </Typography>
-              </Button>
-              <Button color="inherit" onClick={handleClickSaveButton}>
-                <ListItemAvatar>
-                  <Avatar>
-                    <SaveIcon/>
-                  </Avatar>
-                </ListItemAvatar>
-                <Typography variant="h4">
-                  SAVE
-                </Typography>
-              </Button>
-            </ListItemEndWrapper>
-          </>
-        }
-      </DialogModal>
+      <FeedModal
+        modalState={modalState}
+        editLoading={editLoading}
+        feed={feed}
+        handleCloseModal={handleCloseModal}
+        handleInputChange={handleInputChange}
+        handleClickSaveButton={handleClickSaveButton}
+      />
     </>
   );
 }
