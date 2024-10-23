@@ -6,6 +6,9 @@ const LOGIN_URL = '/auth/sign-in';
 const LOGOUT_URL = '/auth/sign-out';
 const SESSION_URL = '/session';
 
+// common
+const FILE_URL = '/file';
+
 // dashboard
 const EXTERNAL_URL = "/external";
 
@@ -37,6 +40,9 @@ const URL_INFO = {
     LOGIN_URL: LOGIN_URL,
     LOGOUT_URL: LOGOUT_URL,
     SESSION_URL: SESSION_URL,
+
+    // common
+    FILE: API_PREFIX_COMMON + FILE_URL,
 
     // dashboard
     EXTERNAL: API_PREFIX_COMMON + EXTERNAL_URL,

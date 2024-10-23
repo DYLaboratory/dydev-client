@@ -14,6 +14,13 @@ export interface LoginData {
   password: string;
 }
 
+// file
+export interface FileData {
+  id?: number;
+  seq?: number;
+  ext?: string;
+}
+
 export type UserTypes = 'USER' | 'ADMIN' | 'SUPER';
 
 // page
@@ -46,6 +53,7 @@ export interface FeedData extends BaseCData {
   place?: string;
   link?: string;
   viewCount?: number;
+  fileList?: FileData[];
 }
 
 // site

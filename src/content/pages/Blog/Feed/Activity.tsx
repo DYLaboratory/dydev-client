@@ -1,15 +1,14 @@
 import {
+  Avatar,
   Box,
-  CardMedia,
-  Typography,
+  Button,
   Card,
+  CardActions,
   CardHeader,
   Divider,
-  Avatar,
   IconButton,
-  Button,
-  CardActions,
-  Link
+  Link,
+  Typography
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
@@ -20,6 +19,8 @@ import ShareTwoToneIcon from '@mui/icons-material/ShareTwoTone';
 import Text from 'src/components/Text';
 import { FeedData } from "src/models/data/dataModels";
 import { convertDatePattern } from "src/utils/stringUtils";
+import URL_INFO from "../../../../utils/constants/urlInfo";
+import { CONSTANTS } from "src/utils/constants";
 
 const CardActionsWrapper = styled(CardActions)(
   ({ theme }) => `
@@ -27,6 +28,19 @@ const CardActionsWrapper = styled(CardActions)(
      padding: ${theme.spacing(3)};
 `
 );
+
+const ImageBox = styled(Box)(`
+  display: flex;
+  scroll-behavior: smooth;
+  white-space: nowrap;
+  padding: 20px;
+`);
+
+const ImageContainer = styled('img')(() => ({
+  width: "260px",
+  height: "260px",
+  marginRight: "20px"
+}));
 
 interface FeedActivityProps {
   feed: FeedData
@@ -61,11 +75,16 @@ function Activity(props: FeedActivityProps) {
           {feed.title}
         </Typography>
       </Box>
-      <CardMedia
-        sx={{ minHeight: 280 }}
-        image="/static/images/placeholders/covers/6.jpg"
-        title="Card Cover"
-      />
+      {/*<CardMedia*/}
+      {/*  sx={{ minHeight: 280 }}*/}
+      {/*  image="/static/images/placeholders/covers/6.jpg"*/}
+      {/*  title="Card Cover"*/}
+      {/*/>*/}
+      <ImageBox>
+        {feed.fileList.map(file =>
+          <ImageContainer key={file.id} src={CONSTANTS.API_V1_BASE_URL + URL_INFO.API_V1.FILE + "/image/" + file.id} alt="" />
+        )}
+      </ImageBox>
       <Box p={3}>
         <Typography variant="h2" sx={{ pb: 1 }}>
           {feed.content}
