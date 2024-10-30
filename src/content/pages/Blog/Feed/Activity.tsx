@@ -44,9 +44,9 @@ const ImageBox = styled(Box)(`
 `);
 
 const ImageContainer = styled('img')(() => ({
-  width: "260px",
-  height: "260px",
-  marginRight: "20px"
+  maxHeight: "260px",
+  marginRight: "20px",
+  boxShadow: "3px 3px 5px #000000"
 }));
 
 interface FeedActivityProps {

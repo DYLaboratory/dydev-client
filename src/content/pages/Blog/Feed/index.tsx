@@ -1,10 +1,10 @@
-import { Helmet } from 'react-helmet-async';
-import PageTitleWrapper from 'src/components/PageTitleWrapper';
-import { Container, Grid, Typography } from '@mui/material';
-import Footer from 'src/components/Footer';
-import PageHeader from './PageHeader';
+import { Helmet } from "react-helmet-async";
+import PageTitleWrapper from "src/components/PageTitleWrapper";
+import { Container, Grid, Typography } from "@mui/material";
+import Footer from "src/components/Footer";
+import PageHeader from "./PageHeader";
 
-import Activity from './Activity';
+import Activity from "./Activity";
 import { useAppSelector } from "src/app/hooks";
 import { useSnackbarAlert } from "src/utils/errUtils";
 import { useEffect, useState } from "react";
@@ -96,7 +96,18 @@ function Feed() {
   }
 
   const handleDeleteFeed = (id: number) => {
-
+    if (confirm('피드를 삭제하시겠습니까?')) {
+      setDeleteFeed(id)
+        .then(
+          () => {
+            successAlert('피드를 삭제하였습니다.');
+            fetchFeedList();
+          },
+          () => {
+            errAlert('피드 삭제 중 오류가 발생하였습니다.');
+          }
+        );
+    }
   }
   // edit (e)
 

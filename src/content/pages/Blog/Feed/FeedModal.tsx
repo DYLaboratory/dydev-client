@@ -9,9 +9,9 @@ import DialogModal from "src/components/DialogModal";
 import { styled } from "@mui/material/styles";
 import ListItem from "@mui/material/ListItem";
 import { FeedData, FileData } from "src/models/data/dataModels";
-import { ChangeEvent, ChangeEventHandler, useRef, useState } from "react";
+import { ChangeEvent, ChangeEventHandler, useEffect, useRef, useState } from "react";
 import { hasText } from "src/utils/stringUtils";
-import { setInsertFeed, setUpdateFeed } from "src/services/life/feedApi";
+import { setDeleteFeed, setInsertFeed, setUpdateFeed } from "src/services/life/feedApi";
 import { useSnackbarAlert } from "src/utils/errUtils";
 import { CONSTANTS } from "src/utils/constants";
 import URL_INFO from "../../../../utils/constants/urlInfo";
@@ -40,16 +40,14 @@ const ImageBox = styled(Box)(`
 
 const ImageItem = styled(Box)(`
   position: relative;
-  width: 180px;
-  height: 180px;
-  margin: 10px;
   flex-shrink: 0;
+  height: 260px;
+  margin: 10px 20px 10px 10px;
+  box-shadow: 3px 3px 5px #000000;
 `);
 
 const FeedImage = styled("img")(() => ({
-  width: "100%",
-  height: "100%",
-  objectFit: "cover"
+  maxHeight: "100%",
 }));
 
 const RemoveImageButton = styled('button')(({ theme }) => ({
@@ -96,9 +94,14 @@ function FeedModal(props: FeedModalProps) {
 
   const { successAlert, errAlert } = useSnackbarAlert();
 
+  useEffect(() => {
+    setThumbnails([ ...feed.fileList ]);
+  }, [modalState.isOpen]);
+
   const handleCloseModalReset = () => {
     handleCloseModal();
     setUploadImages([]);
+    setThumbnails([]);
   }
 
   /* 이미지 */
@@ -144,7 +147,7 @@ function FeedModal(props: FeedModalProps) {
       setFeed(
         {
           ...feed,
-          deleteFiles: [ ...(feed?.deleteFiles), { id: id }]
+          deleteFiles: feed && feed.deleteFiles ? [ ...feed.deleteFiles, { id: id }] : [{ id: id }]
         }
       );
     }
