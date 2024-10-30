@@ -28,6 +28,7 @@ import { CONSTANTS } from "src/utils/constants";
 import AccountBoxTwoToneIcon from "@mui/icons-material/AccountBoxTwoTone";
 import InboxTwoToneIcon from "@mui/icons-material/InboxTwoTone";
 import { useRef, useState } from "react";
+import { useAppSelector } from "src/app/hooks";
 
 const CardActionsWrapper = styled(CardActions)(
   ({ theme }) => `
@@ -58,6 +59,8 @@ interface FeedActivityProps {
 function Activity(props: FeedActivityProps) {
   const { feed, handleEditFeed, handleDeleteFeed } = props;
 
+  const isAdmin = useAppSelector(state => state.user).isAdmin;
+
   const ref = useRef(null);
   const [isOpenMore, setOpenMore] = useState<boolean>(false);
 
@@ -75,9 +78,10 @@ function Activity(props: FeedActivityProps) {
         <CardHeader
           avatar={<Avatar src="/static/images/avatars/me.jpg" />}
           action={
-            <IconButton ref={ref} color="primary" onClick={handleOpenMore}>
-              <MoreHorizTwoToneIcon fontSize="medium" />
-            </IconButton>
+            isAdmin &&
+              <IconButton ref={ref} color="primary" onClick={handleOpenMore}>
+                <MoreHorizTwoToneIcon fontSize="medium" />
+              </IconButton>
           }
           titleTypographyProps={{ variant: 'h4' }}
           subheaderTypographyProps={{ variant: 'subtitle2' }}

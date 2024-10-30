@@ -35,19 +35,17 @@ const ImageBox = styled(Box)(`
   display: flex;
   white-space: nowrap;
   overflow-x: auto;
-  max-width: 100%;
 `);
 
 const ImageItem = styled(Box)(`
   position: relative;
   flex-shrink: 0;
-  height: 260px;
   margin: 10px 20px 10px 10px;
-  box-shadow: 3px 3px 5px #000000;
 `);
 
 const FeedImage = styled("img")(() => ({
-  maxHeight: "100%",
+  maxHeight: "260px",
+  boxShadow: "3px 3px 5px #000000"
 }));
 
 const RemoveImageButton = styled('button')(({ theme }) => ({

@@ -136,9 +136,8 @@ function Feed() {
             <Grid item xs={12}>
               {
                 feeds.map((f, idx) =>
-                  <ActivityCard>
+                  <ActivityCard key={f.id}>
                     <Activity
-                      key={f.id}
                       feed={f}
                       handleEditFeed={() => handleEditFeed(f.id)}
                       handleDeleteFeed={() => handleDeleteFeed(f.id)}
