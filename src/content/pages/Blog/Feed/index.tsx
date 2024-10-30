@@ -33,7 +33,8 @@ function Feed() {
     title: '',
     content: '',
     place: '',
-    link: ''
+    link: '',
+    fileList: []
   }
 
   const [feed, setFeed] = useState<FeedData>(initialFeedData);
@@ -70,25 +71,6 @@ function Feed() {
   }
   // change input (e)
 
-  // delete (s)
-  const handleDeleteButton = (id: number) => {
-    if (confirm('해당 피드를 삭제하시겠습니까?')) {
-      setFetchLoading(true);
-      setDeleteFeed(id)
-        .then(
-          () => {
-            successAlert('삭제를 완료하였습니다.');
-            setFetchLoading(false);
-            getFeedList();
-          },
-          () => {
-            errAlert('삭제 중 오류가 발생하였습니다.');
-            setFetchLoading(false);
-          }
-        );
-    }
-  }
-
   // modal (s)
   const initialModalState: ModalType = {
     isNew: true,
@@ -102,6 +84,21 @@ function Feed() {
     setFeed(initialFeedData);
   }
   // modal (e)
+
+  // edit (s)
+  const handleEditFeed = (id: number) => {
+    setModalState({
+      isNew: false,
+      isOpen: true
+    });
+
+    setFeed(feeds.find(f => f.id === id));
+  }
+
+  const handleDeleteFeed = (id: number) => {
+
+  }
+  // edit (e)
 
   return (
     <>
@@ -123,7 +120,12 @@ function Feed() {
             <Grid item xs={12}>
               {
                 feeds.map((f, idx) =>
-                  <Activity key={f.id} feed={f}/>
+                  <Activity
+                    key={f.id}
+                    feed={f}
+                    handleEditFeed={() => handleEditFeed(f.id)}
+                    handleDeleteFeed={() => handleDeleteFeed(f.id)}
+                  />
                 )
               }
               {
@@ -144,6 +146,7 @@ function Feed() {
         editLoading={editLoading}
         setEditLoading={setEditLoading}
         feed={feed}
+        setFeed={setFeed}
         fetchFeedList={fetchFeedList}
         handleCloseModal={handleCloseModal}
         handleInputChange={handleInputChange}

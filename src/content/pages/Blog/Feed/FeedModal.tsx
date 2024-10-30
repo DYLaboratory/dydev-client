@@ -8,11 +8,13 @@ import SaveIcon from "@mui/icons-material/Save";
 import DialogModal from "src/components/DialogModal";
 import { styled } from "@mui/material/styles";
 import ListItem from "@mui/material/ListItem";
-import { FeedData } from "src/models/data/dataModels";
+import { FeedData, FileData } from "src/models/data/dataModels";
 import { ChangeEvent, ChangeEventHandler, useRef, useState } from "react";
 import { hasText } from "src/utils/stringUtils";
-import { setInsertFeed } from "src/services/life/feedApi";
+import { setInsertFeed, setUpdateFeed } from "src/services/life/feedApi";
 import { useSnackbarAlert } from "src/utils/errUtils";
+import { CONSTANTS } from "src/utils/constants";
+import URL_INFO from "../../../../utils/constants/urlInfo";
 
 const TableCellWrapper = styled(TableCell)(`
   border: none;
@@ -72,50 +74,60 @@ interface ModalType {
   isOpen: boolean;
 }
 
+interface FileType {
+  seq: number;
+  file: File;
+  id?: number;
+}
+
 interface FeedModalProps {
   modalState: ModalType;
   editLoading: boolean;
   setEditLoading: (loading: boolean) => void;
   feed: FeedData;
+  setFeed: (prev: FeedData) => void;
   fetchFeedList: () => void;
   handleCloseModal: () => void;
   handleInputChange: ChangeEventHandler<HTMLTextAreaElement | HTMLInputElement>;
 }
 
 function FeedModal(props: FeedModalProps) {
-  const { modalState, editLoading, setEditLoading, feed, fetchFeedList, handleCloseModal, handleInputChange } = props;
+  const { modalState, editLoading, setEditLoading, feed, setFeed, fetchFeedList, handleCloseModal, handleInputChange } = props;
 
   const { successAlert, errAlert } = useSnackbarAlert();
 
   const handleCloseModalReset = () => {
     handleCloseModal();
-    setImages([]);
+    setUploadImages([]);
   }
 
   /* 이미지 */
-  const [images, setImages] = useState<{ id: number, file: File }[]>([]);
+  const [uploadImages, setUploadImages] = useState<FileType[]>([]);
+  const [thumbnails, setThumbnails] = useState<(FileType | FileData)[]>(feed.fileList);
+
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleImageUpload = (e: ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (files) {
-      if (images.length + files.length > 5) {
+      if (uploadImages.length + feed.fileList.length + files.length > 5) {
         alert('이미지는 5개까지 등록 가능합니다.');
         return;
       }
 
       const newImages = Array.from(files)
         .map((f, idx) => (
-          { id: idx, file: f }
+          { seq: thumbnails.length + idx + 1, file: f }
         ));
 
-      setImages([...images, ...newImages]);
+      setUploadImages([...uploadImages, ...newImages]);
+      setThumbnails([...thumbnails, ...newImages]);
     }
   };
 
   const handleClickAddImage = () => {
     if (fileInputRef.current) {
-      if (images.length >= 5) {
+      if (uploadImages.length + feed.fileList.length                                                                                                                       >= 5) {
         alert('이미지는 5개까지 등록 가능합니다.');
         return;
       }
@@ -124,8 +136,18 @@ function FeedModal(props: FeedModalProps) {
     }
   };
 
-  const handleClickRemoveImage = id => {
-    setImages(images.filter(image => image.id !== id));
+  const handleClickRemoveImage = (id: number, seq: number) => {
+    setUploadImages(uploadImages.filter(image => image.seq !== seq));
+    setThumbnails(thumbnails.filter(t => t.seq !== seq));
+
+    if (id) {
+      setFeed(
+        {
+          ...feed,
+          deleteFiles: [ ...(feed?.deleteFiles), { id: id }]
+        }
+      );
+    }
   }
 
   // insert / update (s)
@@ -137,7 +159,7 @@ function FeedModal(props: FeedModalProps) {
     } else if (!hasText(feed.content)) {
       alert('내용을 입력하세요.');
       return;
-    } else if (images.length === 0) {
+    } else if (uploadImages.length === 0) {
       alert('이미지를 등록하세요.');
       return;
     }
@@ -146,14 +168,15 @@ function FeedModal(props: FeedModalProps) {
 
     // convert
     const formData = new FormData();
-    formData.append('feed', new Blob([JSON.stringify(feed)], { type: 'application/json' })); // feed
 
-    images.forEach(image => {
+    uploadImages.forEach(image => {
       formData.append('uploadFiles', image.file);
     }); // image
 
     // save
     if (modalState.isNew) {
+      formData.append('feed', new Blob([JSON.stringify(feed)], { type: 'application/json' })); // feed
+
       setInsertFeed(formData)
         .then(
           () => {
@@ -167,6 +190,31 @@ function FeedModal(props: FeedModalProps) {
             setEditLoading(false);
           }
         );
+    } else {
+      const insertFiles = thumbnails.filter(f => !f.id);
+      const updateFiles = thumbnails.filter(f => f.id);
+
+      const data = {
+        ...feed,
+        insertFiles: insertFiles,
+        updateFiles: updateFiles
+      }
+
+      formData.append('feed', new Blob([JSON.stringify(data)], { type: 'application/json' })); // feed
+
+      setUpdateFeed(feed.id, formData)
+        .then(
+          () => {
+            successAlert('수정을 완료하였습니다.');
+            setEditLoading(false);
+            handleCloseModal();
+            fetchFeedList();
+          },
+          () => {
+            errAlert('수정 중 오류가 발생하였습니다.');
+            setEditLoading(false);
+          }
+        );
     }
   }
   // insert / update (e)
@@ -175,7 +223,13 @@ function FeedModal(props: FeedModalProps) {
   const cellSize = ["20%", "80%"];
 
   return (
-    <DialogModal fullWidth maxWidth="lg" scroll="body" onClose={handleCloseModalReset} open={modalState.isOpen}>
+    <DialogModal
+      fullWidth
+      maxWidth="lg"
+      scroll="body"
+      onClose={handleCloseModalReset}
+      open={modalState.isOpen}
+      closeAfterTransition={false}>
       <DialogTitle gutterBottom>
         {modalState.isNew ? "Add New Feed" : "Edit Feed"}
       </DialogTitle>
@@ -287,14 +341,18 @@ function FeedModal(props: FeedModalProps) {
               </TableCellWrapper>
               <TableCellWrapper width={cellSize[1]}>
                 <ImageBox>
-                  {images.map((image, idx) => (
+                  {thumbnails.map((image, idx) => (
                     <ImageItem key={idx}>
                       <FeedImage
                         key={idx}
-                        src={URL.createObjectURL(image.file)}
+                        src={
+                          image.id
+                            ? CONSTANTS.API_V1_BASE_URL + URL_INFO.API_V1.FILE + "/image/" + image.id
+                            : URL.createObjectURL(image.file)
+                        }
                         alt={`Thumbnail ${idx + 1}`}
                       />
-                      <RemoveImageButton onClick={() => handleClickRemoveImage(image.id)}>X</RemoveImageButton>
+                      <RemoveImageButton onClick={() => handleClickRemoveImage(image.id, image.seq)}>X</RemoveImageButton>
                     </ImageItem>
                   ))}
                 </ImageBox>

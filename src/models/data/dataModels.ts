@@ -8,6 +8,10 @@ interface BaseUData {
   updateUserId?: string;
 }
 
+interface IdData {
+  id: number;
+}
+
 // login
 export interface LoginData {
   userId: string;
@@ -19,6 +23,7 @@ export interface FileData {
   id?: number;
   seq?: number;
   ext?: string;
+  file?: File;
 }
 
 export type UserTypes = 'USER' | 'ADMIN' | 'SUPER';
@@ -53,6 +58,13 @@ export interface FeedData extends BaseCData {
   place?: string;
   link?: string;
   viewCount?: number;
+
+  // update
+  insertFiles?: FileData[];
+  updateFiles?: FileData[];
+  deleteFiles?: IdData[];
+
+  // 변수 참조용
   fileList?: FileData[];
 }
 

@@ -6,7 +6,11 @@ export const getFeedList = () => {
 }
 
 export const setInsertFeed = (data: FormData) => {
-  return apiClient.post(URL_INFO.API_V1.ADMIN_FEED, data, { headers: { 'Content-Tope': 'multipart/form-data' } });
+  return apiClient.post(URL_INFO.API_V1.ADMIN_FEED, data, { headers: { 'Content-Type': 'multipart/form-data' } });
+}
+
+export const setUpdateFeed = (id: number, data: FormData) => {
+  return apiClient.put(URL_INFO.API_V1.ADMIN_FEED, data, { headers: { 'Content-Type': 'multipart/form-data' } });
 }
 
 export const setDeleteFeed = (id: number) => {
