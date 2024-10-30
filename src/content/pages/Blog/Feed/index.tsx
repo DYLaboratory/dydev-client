@@ -1,6 +1,6 @@
 import { Helmet } from "react-helmet-async";
 import PageTitleWrapper from "src/components/PageTitleWrapper";
-import { Container, Grid, Typography } from "@mui/material";
+import { Box, Container, Grid, Typography } from "@mui/material";
 import Footer from "src/components/Footer";
 import PageHeader from "./PageHeader";
 
@@ -13,6 +13,11 @@ import { getFeedList, setDeleteFeed } from "src/services/life/feedApi";
 import LoadingProgress from "src/components/LoadingProgress";
 import { useTranslation } from "react-i18next";
 import FeedModal from "src/content/pages/Blog/Feed/FeedModal";
+import styled from "@emotion/styled";
+
+const ActivityCard = styled(Box)`
+  margin-bottom: 20px;
+`;
 
 interface ModalType {
   isNew: boolean;
@@ -131,12 +136,14 @@ function Feed() {
             <Grid item xs={12}>
               {
                 feeds.map((f, idx) =>
-                  <Activity
-                    key={f.id}
-                    feed={f}
-                    handleEditFeed={() => handleEditFeed(f.id)}
-                    handleDeleteFeed={() => handleDeleteFeed(f.id)}
-                  />
+                  <ActivityCard>
+                    <Activity
+                      key={f.id}
+                      feed={f}
+                      handleEditFeed={() => handleEditFeed(f.id)}
+                      handleDeleteFeed={() => handleDeleteFeed(f.id)}
+                    />
+                  </ActivityCard>
                 )
               }
               {
