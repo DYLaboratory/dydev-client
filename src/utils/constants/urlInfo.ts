@@ -26,6 +26,7 @@ const WEB_SITE_URL = '/web-site';
 
 // my page
 const LOGIN_HISTORY_URL = "/login-history";
+const ACCESS_HISTORY_URL = "/access-history";
 
 const URL_INFO = {
   // PAGE 정의
@@ -62,7 +63,8 @@ const URL_INFO = {
     ADMIN_WEB_SITE: API_PREFIX_ADMIN + WEB_SITE_URL,
 
     // my page
-    LOGIN_HISTORY: API_PREFIX_COMMON + LOGIN_HISTORY_URL
+    LOGIN_HISTORY: API_PREFIX_COMMON + LOGIN_HISTORY_URL,
+    ACCESS_HISTORY: API_PREFIX_COMMON + ACCESS_HISTORY_URL
   },
 
   // 외부 URL

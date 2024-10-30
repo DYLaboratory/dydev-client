@@ -35,6 +35,12 @@ export interface Paging {
   sort?: string;
 }
 
+export interface AccessHistoryData extends BaseCData {
+  id?: number;
+  accessIp?: string;
+  previousSite?: string;
+}
+
 // notice
 export type NoticeTypes = 'NOTICE' | 'VERSION' | 'ETC';
 
