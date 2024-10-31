@@ -31,8 +31,8 @@ const Notice = Loader(
   lazy(() => import('src/content/pages/Introduction/Notice'))
 )
 
-/* Blog */
-const Feed = Loader(lazy(() => import('src/content/pages/Blog/Feed')));
+/* Life */
+const Feed = Loader(lazy(() => import('src/content/pages/Life/Feed')));
 
 /* Others */
 const Site = Loader(lazy(() => import('src/content/pages/Others/Site')));
@@ -40,6 +40,8 @@ const Weather = Loader(lazy(() => import('src/content/pages/Others/Weather')));
 
 /* My Page */
 const Settings = Loader(lazy(() => import('src/content/pages/MyPage/AccountSetting')));
+
+const SystemSettings = Loader(lazy(() => import('src/content/pages/System/Settings')));
 
 /* Login */
 const Login = Loader(lazy(() => import('src/content/pages/Login')));
@@ -207,7 +209,7 @@ const routes: RouteObject[] = [
     ]
   },
 
-  /* blog */
+  /* life */
   {
     path: 'life',
     element: <SidebarLayout />,
@@ -296,6 +298,23 @@ const routes: RouteObject[] = [
                 element: <NoticeEdit />
               }
             ]
+          }
+        ]
+      }
+    ]
+  },
+
+  // super
+  {
+    path: '',
+    element: <SidebarLayout withAuthSuper />,
+    children: [
+      {
+        path: 'system',
+        children: [
+          {
+            path: 'settings',
+            element: <SystemSettings />
           }
         ]
       }

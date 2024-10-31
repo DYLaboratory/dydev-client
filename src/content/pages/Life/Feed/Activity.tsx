@@ -39,6 +39,7 @@ const CardActionsWrapper = styled(CardActions)(
 
 const ImageBox = styled(Box)(`
   display: flex;
+  align-items: center;
   scroll-behavior: smooth;
   white-space: nowrap;
   padding: 20px;

@@ -12,7 +12,7 @@ import { FeedData } from "src/models/data/dataModels";
 import { getFeedList, setDeleteFeed } from "src/services/life/feedApi";
 import LoadingProgress from "src/components/LoadingProgress";
 import { useTranslation } from "react-i18next";
-import FeedModal from "src/content/pages/Blog/Feed/FeedModal";
+import FeedModal from "src/content/pages/Life/Feed/FeedModal";
 import styled from "@emotion/styled";
 
 const ActivityCard = styled(Box)`

@@ -33,25 +33,27 @@ const OutlinedInputWrapper = styled(OutlinedInput)(
 
 const ImageBox = styled(Box)(`
   display: flex;
+  align-items: center;
   white-space: nowrap;
   overflow-x: auto;
+  gap: 20px;
 `);
 
-const ImageItem = styled(Box)(`
+const FeedImageItem = styled(Box)(`
   position: relative;
-  flex-shrink: 0;
-  margin: 10px 20px 10px 10px;
 `);
 
 const FeedImage = styled("img")(() => ({
+  flexShrink: 0,
+  margin: "10px",
   maxHeight: "260px",
   boxShadow: "3px 3px 5px #000000"
 }));
 
 const RemoveImageButton = styled('button')(({ theme }) => ({
   position: 'absolute',
-  top: '-10px',
-  right: '-10px',
+  top: '0px',
+  right: '10px',
   backgroundColor: theme.palette.primary.dark,  // 기본 색상
   color: 'white',
   border: 'none',
@@ -343,9 +345,8 @@ function FeedModal(props: FeedModalProps) {
               <TableCellWrapper width={cellSize[1]}>
                 <ImageBox>
                   {thumbnails.map((image, idx) => (
-                    <ImageItem key={idx}>
+                    <FeedImageItem key={idx}>
                       <FeedImage
-                        key={idx}
                         src={
                           image.id
                             ? CONSTANTS.API_V1_BASE_URL + URL_INFO.API_V1.FILE + "/image/" + image.id
@@ -354,7 +355,7 @@ function FeedModal(props: FeedModalProps) {
                         alt={`Thumbnail ${idx + 1}`}
                       />
                       <RemoveImageButton onClick={() => handleClickRemoveImage(image.id, image.seq)}>X</RemoveImageButton>
-                    </ImageItem>
+                    </FeedImageItem>
                   ))}
                 </ImageBox>
                 <Button onClick={handleClickAddImage}>

@@ -17,7 +17,7 @@ const TabsWrapper = styled(Tabs)(
 `
 );
 
-function ManagementUserSettings() {
+function SystemSettings() {
   const [currentTab, setCurrentTab] = useState<string>('edit_profile');
 
   const tabs = [
@@ -70,4 +70,4 @@ function ManagementUserSettings() {
   );
 }
 
-export default ManagementUserSettings;
+export default SystemSettings;

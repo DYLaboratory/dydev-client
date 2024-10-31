@@ -50,16 +50,18 @@ function WithAuthComponent({ isAdmin }: WithAuthComponentProps) {
 
 interface SidebarLayoutProps {
   withAuth?: boolean;
+  withAuthSuper?: boolean;
   children?: ReactNode;
 }
 
-function SidebarLayout({ withAuth, children }: SidebarLayoutProps) {
+function SidebarLayout({ withAuth, withAuthSuper, children }: SidebarLayoutProps) {
   const theme = useTheme();
 
   const navigate = useNavigate();
 
   const dispatch = useAppDispatch();
   const isAdmin = useAppSelector(state => state.user).isAdmin;
+  const isSuper = useAppSelector(state => state.user).isSuper;
   const isLoading = useAppSelector(state => state.loading).isLoading;
 
   useEffect(() => {
@@ -70,7 +72,7 @@ function SidebarLayout({ withAuth, children }: SidebarLayoutProps) {
   }, []);
 
   useEffect(() => {
-    if (isLoading && withAuth && !isAdmin) {
+    if (isLoading && (withAuth && !isAdmin) || (withAuthSuper && !isSuper)) {
       alert('비정상적인 접근입니다.');
       navigate('/');
     }

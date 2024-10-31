@@ -27,6 +27,7 @@ import { UserState } from "src/models/state/stateModels";
 import { logOutAsync } from "src/features/auth/authSlice";
 import { useNavigate } from "react-router";
 import { clearLoginUserInfo } from "src/features/user/userSlice";
+import BrightnessLowTwoToneIcon from "@mui/icons-material/BrightnessLowTwoTone";
 
 const UserBoxButton = styled(Button)(
   ({ theme }) => `
@@ -73,6 +74,8 @@ interface UserInfoType {
 function HeaderUserbox() {
   const dispatch = useAppDispatch();
   const loginUser = useAppSelector<UserState>(state => state.user);
+
+  const isSuper = useAppSelector(state => state.user).isSuper;
 
   const navigate = useNavigate();
 
@@ -168,6 +171,16 @@ function HeaderUserbox() {
             <AccountTreeTwoToneIcon fontSize="small" />
             <ListItemText primary="Account Settings" />
           </ListItem>
+          {
+            isSuper &&
+              <ListItem
+                button
+                to="/system/settings"
+                component={NavLink}>
+                <BrightnessLowTwoToneIcon fontSize="small" />
+                <ListItemText primary="System Settings" />
+              </ListItem>
+          }
         </List>
         <Divider />
         <Box sx={{ m: 1 }}>

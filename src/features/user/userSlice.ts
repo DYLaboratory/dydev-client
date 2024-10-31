@@ -8,6 +8,7 @@ const initialState: UserState = {
   status: 'idle',
   isLogin: false,
   isAdmin: false,
+  isSuper: false,
   userId: null,
   userType: null,
   name: null,
@@ -27,6 +28,7 @@ export const userSlice = createSlice({
     clearLoginUserInfo: (state: UserState) => {
       state.isLogin = false;
       state.isAdmin = false;
+      state.isSuper = false;
       state.userId = null;
       state.userType = null;
       state.name = null;
@@ -49,6 +51,7 @@ export const userSlice = createSlice({
         if (data) {
           state.isLogin = true;
           state.isAdmin = data.isAdmin;
+          state.isSuper = data.isSuper;
           state.userId = data.userId;
           state.userType = data.userType;
           state.name = data.name;
