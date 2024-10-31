@@ -13,7 +13,9 @@ function App() {
   const content = useRoutes(router);
 
   useEffect(() => {
-    saveAccess();
+    saveAccess({
+      url: window.location.href
+    });
   }, [])
 
   return (

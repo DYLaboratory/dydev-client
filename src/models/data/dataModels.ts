@@ -38,7 +38,7 @@ export interface Paging {
 export interface AccessHistoryData extends BaseCData {
   id?: number;
   accessIp?: string;
-  previousSite?: string;
+  url?: string;
 }
 
 // notice
