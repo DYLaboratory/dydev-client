@@ -18,6 +18,15 @@ export interface LoginData {
   password: string;
 }
 
+// system settings
+export interface SystemSettingsData {
+  id?: number;
+  version: string;
+  defaultTheme: 'DARK' | 'WHITE' | null;
+  defaultLang: 'KR' | 'EN' | null;
+  feedDays: number;
+}
+
 // file
 export interface FileData {
   id?: number;

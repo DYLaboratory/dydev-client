@@ -4,9 +4,7 @@ import { Outlet } from "react-router-dom";
 
 import Sidebar from "./Sidebar";
 import Header from "./Header";
-import { useAppDispatch, useAppSelector } from "src/app/hooks";
-import { getUserAsync } from "src/features/user/userSlice";
-import { setLoading } from "src/features/loading/loadingSlice";
+import { useAppSelector } from "src/app/hooks";
 import { useNavigate } from "react-router";
 
 const SideLayoutBox = styled(Box)(
@@ -59,17 +57,9 @@ function SidebarLayout({ withAuth, withAuthSuper, children }: SidebarLayoutProps
 
   const navigate = useNavigate();
 
-  const dispatch = useAppDispatch();
   const isAdmin = useAppSelector(state => state.user).isAdmin;
   const isSuper = useAppSelector(state => state.user).isSuper;
   const isLoading = useAppSelector(state => state.loading).isLoading;
-
-  useEffect(() => {
-    dispatch(getUserAsync())
-      .then(() => {
-        dispatch(setLoading(true));
-      });
-  }, []);
 
   useEffect(() => {
     if (isLoading && (withAuth && !isAdmin) || (withAuthSuper && !isSuper)) {

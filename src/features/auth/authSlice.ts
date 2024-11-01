@@ -5,7 +5,15 @@ import { AuthState } from "src/models/state/stateModels";
 import { clearLoginUserInfo } from "src/features/user/userSlice";
 
 const initialState: AuthState = {
-  status: 'loading'
+  status: 'loading',
+  isLogin: false,
+  isAdmin: false,
+  isSuper: false,
+  userId: null,
+  userType: null,
+  name: null,
+  email: null,
+  lastLoginDateTime: null
 };
 
 export const loginAsync = createAsyncThunk(
@@ -40,7 +48,22 @@ export const authSlice = createSlice({
         state.status = 'loading';
       })
       .addCase(loginAsync.fulfilled, (state, action) => {
-          state.status = 'idle';
+        state.status = 'idle';
+
+        const data = action.payload?.data;
+
+        if (data) {
+          state.isLogin = true;
+          state.isAdmin = data.isAdmin;
+          state.isSuper = data.isSuper;
+          state.userId = data.userId;
+          state.userType = data.userType;
+          state.name = data.name;
+          state.email = data.email;
+          state.lastLoginDateTime = data.lastLoginDateTime;
+        } else {
+          clearLoginUserInfo();
+        }
       })
       .addCase(loginAsync.rejected, state => {
         state.status = 'failed';

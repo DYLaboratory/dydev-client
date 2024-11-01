@@ -1,5 +1,9 @@
+const API_PREFIX_SYSTEM = "/system";
 const API_PREFIX_ADMIN = "/admin";
 const API_PREFIX_COMMON = "/common";
+
+// settings
+const SETTINGS_URL = '/settings';
 
 // auth
 const LOGIN_URL = '/auth/sign-in';
@@ -41,6 +45,10 @@ const URL_INFO = {
     LOGIN_URL: LOGIN_URL,
     LOGOUT_URL: LOGOUT_URL,
     SESSION_URL: SESSION_URL,
+
+    // settings
+    SETTINGS: API_PREFIX_COMMON + SETTINGS_URL,
+    SYSTEM_SETTINGS: API_PREFIX_SYSTEM + SETTINGS_URL,
 
     // common
     FILE: API_PREFIX_COMMON + FILE_URL,
